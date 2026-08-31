@@ -1,0 +1,129 @@
+.concepts {
+  margin-bottom: 1rem;
+}
+
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.flow__piece {
+  display: inline-block;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.4rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border: 1px solid var(--line);
+}
+
+.flow__piece--producer {
+  background: var(--amber-soft);
+  color: var(--amber);
+  border-color: color-mix(in srgb, var(--amber) 35%, var(--line));
+}
+
+.flow__piece--obs {
+  background: var(--teal-soft);
+  color: var(--teal);
+  border-color: color-mix(in srgb, var(--teal) 35%, var(--line));
+}
+
+.flow__piece--observer {
+  background: var(--emit-soft);
+  color: var(--violet);
+  border-color: color-mix(in srgb, var(--violet) 35%, var(--line));
+}
+
+.flow__arrow {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.flow-explain {
+  margin: 0 0 1rem;
+  max-width: 48rem;
+  color: var(--ink);
+  line-height: 1.5;
+
+  code {
+    font-size: 0.88em;
+  }
+}
+
+.duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.duo__panel {
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  padding: 1.1rem 1.15rem 1.2rem;
+  background: var(--card);
+
+  h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1.15rem;
+  }
+
+  ul {
+    margin: 0.65rem 0 0;
+    padding-left: 1.15rem;
+    color: var(--muted);
+    line-height: 1.45;
+
+    li + li {
+      margin-top: 0.35rem;
+    }
+  }
+
+  code {
+    font-size: 0.88em;
+  }
+}
+
+.duo__panel--obs {
+  border-color: color-mix(in srgb, var(--teal) 35%, var(--line));
+  background: linear-gradient(160deg, var(--teal-soft) 0%, var(--card) 55%);
+
+  h2 {
+    color: var(--teal);
+  }
+}
+
+.duo__panel--observer {
+  border-color: color-mix(in srgb, var(--violet) 35%, var(--line));
+  background: linear-gradient(160deg, var(--emit-soft) 0%, var(--card) 55%);
+
+  h2 {
+    color: var(--violet);
+  }
+}
+
+.duo__tagline {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.sub-note {
+  margin: 0 0 1.75rem;
+  padding: 0.85rem 1rem;
+  border-left: 4px solid var(--amber);
+  background: var(--amber-soft);
+  border-radius: 0 0.5rem 0.5rem 0;
+  color: var(--ink);
+  line-height: 1.45;
+
+  code {
+    font-size: 0.88em;
+  }
+}

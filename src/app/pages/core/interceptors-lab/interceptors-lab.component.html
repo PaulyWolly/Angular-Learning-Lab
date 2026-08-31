@@ -1,0 +1,49 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>HTTP interceptors</h1>
+  <p class="lesson__lead">
+    An interceptor sits on every <code>HttpClient</code> call. Clone the request to attach headers
+    (here a demo <code>Authorization</code> when logged in). Register with
+    <code>provideHttpClient(withInterceptors([...]))</code>.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live: demo auth header</h2>
+    <p class="muted">
+      Logged in:
+      <strong [class.on]="auth.loggedIn()" [class.off]="!auth.loggedIn()">
+        {{ auth.loggedIn() ? 'yes' : 'no' }}
+      </strong>
+      — toggle, then fire a GET. The probe shows the outgoing Authorization header.
+    </p>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="auth.login()">Log in</button>
+      <button type="button" class="btn" (click)="auth.logout()">Log out</button>
+      <button type="button" class="btn" (click)="fireRequest()">Fire HTTP GET</button>
+    </div>
+
+    @if (probe.last(); as snap) {
+      <div class="probe">
+        <p>
+          <span class="chip">last request</span>
+          <code>{{ snap.at }}</code>
+          · {{ snap.method }}
+        </p>
+        <p class="probe__url"><code>{{ snap.url }}</code></p>
+        <p>
+          Authorization:
+          <strong>{{ snap.authorization ?? '(none)' }}</strong>
+        </p>
+      </div>
+    } @else {
+      <p class="muted">No request probed yet — click Fire HTTP GET.</p>
+    }
+
+    <app-lesson-syntax
+      [templateCode]="ixTpl"
+      [typescriptCode]="ixTs"
+      [typescriptModal]="ixModal"
+      modalTitle="demoAuthInterceptor — Full TypeScript"
+    />
+  </div>
+</section>

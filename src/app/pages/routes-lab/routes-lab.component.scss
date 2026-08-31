@@ -1,0 +1,63 @@
+.lesson {
+  width: 100%;
+  max-width: none;
+}
+
+.lesson__eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+}
+
+.lesson__lead {
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.lesson__card {
+  margin-bottom: 1rem;
+  padding: 1rem 1.1rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+
+  h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.05rem;
+  }
+
+  p,
+  ul {
+    margin: 0;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+
+  ul {
+    padding-left: 1.2rem;
+  }
+
+  li + li {
+    margin-top: 0.3rem;
+  }
+
+  pre {
+    margin: 0.65rem 0 0;
+    padding: 0.85rem 1rem;
+    overflow-x: auto;
+    background: var(--code);
+    color: #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    white-space: pre-wrap;
+  }
+}

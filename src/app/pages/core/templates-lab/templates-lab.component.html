@@ -1,0 +1,75 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Templates</h1>
+  <p class="lesson__lead">
+    Every component has one view. You either point at a
+    <strong>full-page HTML file</strong> with <code>templateUrl</code>, or paste the markup
+    <strong>inline</strong> with a backtick string: <code>template: &#96;...&#96;</code>. Same
+    bindings either way — the difference is where the HTML lives.
+  </p>
+
+  <div class="lesson__card">
+    <h2>This page · templateUrl (external HTML)</h2>
+    <p class="muted">
+      This lesson file is <code>templates-lab.component.html</code> — loaded by
+      <code>templateUrl</code>. Use this for multi-card pages, long copy, and anything you’d rather
+      edit as HTML (IDE formatters, syntax highlighting).
+    </p>
+    <div class="preview">
+      <code>templateUrl: './templates-lab.component.html'</code>
+      <span class="muted">← you are reading that file right now</span>
+    </div>
+    <app-lesson-syntax
+      [templateCode]="externalTpl"
+      [typescriptCode]="externalTs"
+      modalTitle="External templateUrl"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Live · inline backtick template</h2>
+    <p class="muted">
+      The green box below is a <strong>child component</strong> whose entire view is defined with
+      <code>template: &#96;...&#96;</code> inside its <code>.ts</code> file — no separate
+      <code>.html</code>. Change the name; the inline view updates with the same binding rules.
+    </p>
+    <label class="field">
+      Name passed into the inline child
+      <input
+        [value]="guestName"
+        (input)="guestName = $any($event.target).value"
+        autocomplete="off"
+      />
+    </label>
+    <app-inline-template-demo [name]="guestName" />
+    <app-lesson-syntax
+      [templateCode]="inlineTpl"
+      [typescriptCode]="inlineTs"
+      modalTitle="Inline template backticks"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>When to choose which</h2>
+    <ul class="compare">
+      <li>
+        <strong>templateUrl</strong> — full lessons, forms with many fields, anything longer than
+        ~15–20 lines. Matches Angular CLI defaults.
+      </li>
+      <li>
+        <strong>template: &#96;...&#96;</strong> — tiny widgets, teaching chips, one-file demos
+        (see also the Change Detection children in this app).
+      </li>
+      <li>
+        Never set both. Pair styles the same way: <code>styleUrl</code> vs
+        <code>styles: [&#96;...&#96;]</code>.
+      </li>
+    </ul>
+    <app-lesson-syntax
+      [templateCode]="tipsTpl"
+      [typescriptCode]="tipsTs"
+      [typescriptModal]="tipsModal"
+      modalTitle="template vs templateUrl — Full TypeScript"
+    />
+  </div>
+</section>

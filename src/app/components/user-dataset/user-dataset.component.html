@@ -1,0 +1,55 @@
+<section class="dataset" aria-labelledby="dataset-heading">
+  <div class="dataset__intro">
+    <h2 id="dataset-heading">Dataset — first 8 users</h2>
+    <p>
+      Loaded once via <code>HttpClient</code> + <code>shareReplay(1)</code>, and rendered with
+      <code>users$ | async</code> (see the async pipe section above). Nested fields are the
+      point — practice paths like <code>u.address.city</code>.
+    </p>
+  </div>
+
+  @if (users$ | async; as users) {
+    <div class="user-grid">
+      @for (u of users; track u.id) {
+        <article class="user-card">
+          <div class="user-card__id">
+            <span class="user-card__id-number">{{ u.id }}</span>: <span class="user-card__name-text">{{ u.name }}</span>
+          </div>
+          <dl>
+            <div>
+              <dt>Email</dt>
+              <dd>{{ u.email }}</dd>
+            </div>
+            <div>
+              <dt>Website</dt>
+              <dd>{{ u.website }}</dd>
+            </div>
+            <div>
+              <dt>City</dt>
+              <dd>{{ u.address.city }}</dd>
+            </div>
+            <div>
+              <dt>Company</dt>
+              <dd>{{ u.company.name }}</dd>
+            </div>
+          </dl>
+        </article>
+      }
+    </div>
+  } @else {
+    <p class="dataset__loading">Loading users…</p>
+  }
+
+  <div class="path-legend">
+    <h3>JSON paths used in this lab</h3>
+    <p class="path-legend__note">
+      Paths on the cards above. Nested paths like <code>u.address.geo.lat</code> show up later
+      when a step needs them.
+    </p>
+    <ul>
+      @for (path of paths; track path) {
+        <li><code>{{ path }}</code></li>
+      }
+    </ul>
+  </div>
+</section>

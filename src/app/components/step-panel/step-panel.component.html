@@ -1,0 +1,46 @@
+<section class="step" [attr.aria-labelledby]="'step-' + step() + '-title'">
+  <header class="step__head">
+    <span class="step__badge">Step {{ step() }}</span>
+    <h2 [id]="'step-' + step() + '-title'">{{ title() }}</h2>
+  </header>
+
+  <p class="step__why">{{ why() }}</p>
+
+  <div class="pipeline" aria-label="Pipeline">
+    @for (box of pipeline(); track $index; let last = $last) {
+      <span class="pipe-box">{{ box }}</span>
+      @if (!last) {
+        <span class="pipe-arrow" aria-hidden="true">→</span>
+      }
+    }
+  </div>
+
+  @if (narrate()) {
+    <p class="narrate" role="status">{{ narrate() }}</p>
+  }
+
+  <div class="step__actions">
+    @if (showRun()) {
+      <button type="button" class="run" [disabled]="running()" (click)="run.emit()">
+        {{ running() ? 'Running…' : 'Run Step ' + step() }}
+      </button>
+    }
+    <button type="button" class="complete-code" (click)="modalOpen.set(true)">
+      Complete Code
+    </button>
+  </div>
+
+  @if (modalOpen()) {
+    <app-code-modal
+      [title]="'Step ' + step() + ' — Complete Code'"
+      [code]="completeCode()"
+      (closed)="modalOpen.set(false)"
+    />
+  }
+
+  <div class="step__body">
+    <ng-content />
+  </div>
+
+  <pre class="step__code"><code>{{ code() }}</code></pre>
+</section>

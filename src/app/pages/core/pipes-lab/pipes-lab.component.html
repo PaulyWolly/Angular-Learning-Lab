@@ -1,0 +1,63 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Pipes</h1>
+  <p class="lesson__lead">
+    A <strong>pipe</strong> transforms a value in the template with
+    <code>| pipeName</code>. Built-ins cover dates, currency, case, and more. Custom pipes
+    implement <code>PipeTransform</code>. Each card shows Template + TypeScript.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Shared inputs</h2>
+    <p class="muted">These values feed every pipe demo below.</p>
+    <label class="field">
+      Raw name
+      <input name="pipeName" [(ngModel)]="name" />
+    </label>
+    <label class="field">
+      Price
+      <input name="pipePrice" type="number" [(ngModel)]="price" />
+    </label>
+    <app-lesson-syntax [templateCode]="inputsTpl" [typescriptCode]="inputsTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>uppercase</h2>
+    <div class="preview"><strong>{{ name | uppercase }}</strong></div>
+    <app-lesson-syntax [templateCode]="uppercaseTpl" [typescriptCode]="uppercaseTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>titleCase (custom)</h2>
+    <p class="muted">Custom pipe — implements <code>PipeTransform</code>.</p>
+    <div class="preview"><strong>{{ name | titleCase }}</strong></div>
+    <app-lesson-syntax
+      [templateCode]="titleCaseTpl"
+      [typescriptCode]="titleCaseTs"
+      [typescriptModal]="titleCaseModal"
+      modalTitle="titleCase — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>date</h2>
+    <div class="preview"><strong>{{ now | date: 'medium' }}</strong></div>
+    <app-lesson-syntax [templateCode]="dateTpl" [typescriptCode]="dateTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>currency</h2>
+    <div class="preview"><strong>{{ price | currency: 'USD' }}</strong></div>
+    <app-lesson-syntax [templateCode]="currencyTpl" [typescriptCode]="currencyTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>number</h2>
+    <p class="muted">ratio = {{ ratio }}</p>
+    <div class="preview"><strong>{{ ratio | number: '1.0-2' }}</strong></div>
+    <app-lesson-syntax [templateCode]="numberTpl" [typescriptCode]="numberTs" />
+    <p class="muted">
+      Also remember the <code>async</code> pipe from the RxJS lab — that one subscribes for you.
+    </p>
+  </div>
+</section>

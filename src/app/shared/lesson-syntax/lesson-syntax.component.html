@@ -1,0 +1,74 @@
+<div class="syntax">
+  <div class="syntax__head">
+    <p class="syntax__label">Syntax</p>
+    @if (showTsModalBtn() || showHtmlModalBtn()) {
+      <div class="syntax__modal-btns">
+        @if (showTsModalBtn()) {
+          <button type="button" class="syntax__modal-btn" (click)="openModal('ts')">
+            Full TypeScript
+          </button>
+        }
+        @if (showHtmlModalBtn()) {
+          <button type="button" class="syntax__modal-btn" (click)="openModal('tpl')">
+            Full HTML Template
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  <p class="syntax__bridge">
+    Class fields in <strong>TypeScript</strong> show up in the <strong>Template</strong> —
+    e.g. <code>title = 'Welcome'</code> → <code>{{ curlyExample }}</code> displays
+    <em>Welcome</em>.
+  </p>
+
+  <!-- TypeScript first: data starts in the class -->
+  <div class="syntax__block">
+    <div class="syntax__lang-row">
+      <p class="syntax__lang">TypeScript (class)</p>
+      <button
+        type="button"
+        class="syntax__copy"
+        (click)="copy('ts')"
+        [attr.aria-label]="copiedKind() === 'ts' ? 'Copied TypeScript' : 'Copy TypeScript'"
+      >
+        {{ copiedKind() === 'ts' ? 'Copied' : 'Copy' }}
+      </button>
+    </div>
+    <pre><code>{{ typescriptCode() }}</code></pre>
+  </div>
+
+  <div class="syntax__block">
+    <div class="syntax__lang-row">
+      <p class="syntax__lang">Template (HTML)</p>
+      <button
+        type="button"
+        class="syntax__copy"
+        (click)="copy('tpl')"
+        [attr.aria-label]="copiedKind() === 'tpl' ? 'Copied Template' : 'Copy Template'"
+      >
+        {{ copiedKind() === 'tpl' ? 'Copied' : 'Copy' }}
+      </button>
+    </div>
+    <pre><code>{{ templateCode() }}</code></pre>
+  </div>
+</div>
+
+@if (modalKind() === 'ts' && typescriptModal()) {
+  <app-code-modal
+    [title]="modalTitle()"
+    [code]="typescriptModal()"
+    hint="Class fields and methods that power this demo."
+    (closed)="closeModal()"
+  />
+}
+
+@if (modalKind() === 'tpl' && showHtmlModalBtn()) {
+  <app-code-modal
+    [title]="resolvedTemplateModalTitle()"
+    [code]="resolvedTemplateModal()"
+    hint="Complete template markup for this demo — controls and bindings included."
+    (closed)="closeModal()"
+  />
+}

@@ -1,0 +1,65 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Lazy Loading</h1>
+  <p class="lesson__lead">
+    <strong>Lazy loading</strong> means JS is downloaded only when needed — not in the initial
+    bundle. This page shows <em>two</em> flavors: route-level (<code>loadComponent</code>) and
+    on-demand import when you click a button. Each card pairs Template + TypeScript.
+  </p>
+
+  <div class="lesson__card highlight">
+    <h2>1. Route lazy load (you’re here)</h2>
+    <p>
+      This page instance was created at <strong>{{ loadedAt }}</strong>. Navigating to
+      <code>/routes/lazy</code> ran <code>loadComponent</code> and fetched this route’s chunk.
+      Reload on Home, open DevTools → Network, then come back here to see that chunk.
+    </p>
+    <ul>
+      <li>
+        <strong>Eager</strong> —
+        <code>component: SomeComponent</code> (imported at the top of <code>app.routes.ts</code>)
+      </li>
+      <li>
+        <strong>Lazy</strong> —
+        <code>loadComponent: () =&gt; import(...).then(...)</code> (dynamic import)
+      </li>
+    </ul>
+    <app-lesson-syntax [templateCode]="routeTpl" [typescriptCode]="routeTs" />
+  </div>
+
+  <div class="lesson__card action-card">
+    <h2>2. On-demand lazy load (button)</h2>
+    <p>
+      Click below to <code>import()</code> a <strong>separate</strong> component file. Watch Network
+      for another chunk — then the panel appears via <code>NgComponentOutlet</code>.
+    </p>
+    <div class="actions">
+      <button
+        type="button"
+        class="btn btn--primary"
+        [disabled]="loadingPanel() || !!lazyPanel()"
+        (click)="loadPanel()"
+      >
+        {{ loadingPanel() ? 'Loading chunk…' : lazyPanel() ? 'Panel loaded' : 'Lazy load panel' }}
+      </button>
+      @if (lazyPanel()) {
+        <button type="button" class="btn" (click)="clearPanel()">Clear panel</button>
+      }
+    </div>
+    @if (panelLoadedAt()) {
+      <p class="muted">Panel import finished at {{ panelLoadedAt() }}</p>
+    }
+    @if (loadError()) {
+      <p class="error">{{ loadError() }}</p>
+    }
+    @if (lazyPanel(); as cmp) {
+      <ng-container *ngComponentOutlet="cmp" />
+    }
+    <app-lesson-syntax
+      [templateCode]="onDemandTpl"
+      [typescriptCode]="onDemandTs"
+      [typescriptModal]="onDemandModal"
+      modalTitle="On-demand lazy load — Full TypeScript"
+    />
+  </div>
+</section>

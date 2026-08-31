@@ -1,0 +1,86 @@
+@use '../lesson-shared';
+
+.xss-grid {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+
+  @media (min-width: 48rem) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &--two {
+    @media (min-width: 48rem) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+.xss-panel {
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 0.55rem;
+  background: #fff;
+
+  h3 {
+    margin: 0 0 0.2rem;
+    font-size: 0.95rem;
+  }
+
+  .tag {
+    margin: 0 0 0.55rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  &--safe {
+    border-color: color-mix(in srgb, var(--teal) 40%, var(--line));
+  }
+
+  &--warn {
+    border-color: color-mix(in srgb, var(--amber) 50%, var(--line));
+    background: color-mix(in srgb, var(--amber-soft) 40%, #fff);
+  }
+
+  &--danger {
+    border-color: color-mix(in srgb, var(--danger) 45%, var(--line));
+    background: color-mix(in srgb, var(--danger-soft) 45%, #fff);
+  }
+}
+
+.xss-out {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.4rem;
+  background: #faf8f4;
+  border: 1px dashed var(--line);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  word-break: break-word;
+  white-space: pre-wrap;
+  min-height: 2.75rem;
+
+  &--html {
+    white-space: normal;
+  }
+}
+
+.btn--danger {
+  border-color: transparent;
+  background: var(--danger);
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    filter: brightness(0.95);
+    background: var(--danger);
+  }
+}
+
+.field textarea {
+  width: min(100%, 40rem);
+  font-family: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+}

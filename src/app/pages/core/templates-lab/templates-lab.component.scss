@@ -1,0 +1,26 @@
+@use '../lesson-shared';
+
+.compare {
+  margin: 0 0 0.75rem;
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+
+  strong {
+    color: var(--ink);
+  }
+
+  code {
+    font-size: 0.82rem;
+  }
+}
+
+.preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.85rem;
+}

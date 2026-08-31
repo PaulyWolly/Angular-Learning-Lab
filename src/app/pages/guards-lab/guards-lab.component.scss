@@ -1,0 +1,116 @@
+.lesson {
+  width: 100%;
+  max-width: none;
+}
+
+.lesson__eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+}
+
+.lesson__lead {
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.lesson__banner {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--amber);
+  background: var(--amber-soft);
+  border-radius: 0 0.5rem 0.5rem 0;
+  line-height: 1.45;
+}
+
+.lesson__card {
+  margin-bottom: 1rem;
+  padding: 1rem 1.1rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+
+  h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.05rem;
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  pre {
+    margin: 0.65rem 0 0;
+    padding: 0.85rem 1rem;
+    overflow-x: auto;
+    background: var(--code);
+    color: #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    white-space: pre-wrap;
+  }
+}
+
+.on {
+  color: var(--teal);
+}
+
+.off {
+  color: var(--amber);
+}
+
+.muted {
+  margin-top: 0.65rem !important;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.lesson__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    background: #f4f1eb;
+  }
+
+  &--primary {
+    border-color: transparent;
+    background: var(--teal);
+    color: #fff;
+
+    &:hover {
+      filter: brightness(0.95);
+      background: var(--teal);
+    }
+  }
+
+  &--link {
+    display: inline-flex;
+    align-items: center;
+  }
+}

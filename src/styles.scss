@@ -1,0 +1,59 @@
+@use '@angular/material/prebuilt-themes/azure-blue.css';
+
+:root {
+  --bg: #f4f1eb;
+  --ink: #1c1917;
+  --muted: #57534e;
+  --card: #fffdf8;
+  --line: #d6d3d1;
+  --teal: #0f766e;
+  --teal-soft: #acdfd4;
+  --amber: #b45309;
+  --amber-soft: #fef3c7;
+  --emit: #7c3aed;
+  --emit-soft: #ede9fe;
+  --violet: #6d28d9;
+  --code: #1e293b;
+  --green: #0f766e;
+  --limegreen: #84cc16;
+  --danger: #b91c1c;
+  --danger-soft: #fee2e2;
+  --white: #ffffff;
+  --shell-width: 80%;
+  --shell-max: 90rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Segoe UI', 'Source Sans 3', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+app-root {
+  display: block;
+  height: 100%;
+}
+
+code,
+pre {
+  font-family: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, monospace;
+}
+
+a {
+  color: var(--teal);
+}

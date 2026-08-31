@@ -1,0 +1,63 @@
+.routes-shell {
+  width: 100%;
+}
+
+.routes-shell__head {
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.routes-shell__eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.routes-shell__hint {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+
+  code {
+    font-size: 0.82rem;
+  }
+}
+
+.routes-shell__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+
+  a {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 0.4rem;
+    background: var(--card);
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    &:hover {
+      background: #f4f1eb;
+    }
+
+    &.is-active {
+      border-color: transparent;
+      background: var(--teal);
+      color: #fff;
+    }
+  }
+}
+
+.routes-shell__outlet {
+  min-height: 12rem;
+}

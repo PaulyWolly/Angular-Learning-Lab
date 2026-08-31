@@ -1,0 +1,64 @@
+@use '../lesson-shared';
+
+.forms-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 1rem;
+}
+
+.forms-tabs__btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  background: var(--card);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #f4f1eb;
+  }
+
+  &.is-active {
+    border-color: transparent;
+    background: var(--teal);
+    color: #fff;
+  }
+}
+
+.form {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 28rem;
+}
+
+.form__error {
+  margin: -0.35rem 0 0.5rem !important;
+  color: var(--danger);
+  font-size: 0.85rem;
+}
+
+.field select {
+  appearance: none;
+  width: min(100%, 24rem);
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  font: inherit;
+  font-weight: 400;
+  background: #fff;
+}
+
+.preview code {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

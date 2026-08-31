@@ -1,0 +1,110 @@
+.lesson {
+  width: 100%;
+  max-width: none;
+}
+
+.lesson__eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+}
+
+.lesson__lead {
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.lesson__card {
+  margin-bottom: 1rem;
+  padding: 1rem 1.1rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+
+  h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.05rem;
+  }
+
+  p,
+  ul {
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  ul {
+    padding-left: 1.2rem;
+  }
+
+  li + li {
+    margin-top: 0.35rem;
+  }
+
+  &.highlight {
+    border-color: color-mix(in srgb, var(--teal) 40%, var(--line));
+    background: linear-gradient(160deg, var(--teal-soft) 0%, var(--card) 60%);
+  }
+}
+
+.muted {
+  margin-top: 0.65rem !important;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.error {
+  margin: 0.65rem 0 0;
+  color: #b91c1c;
+  font-size: 0.9rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  padding: 0.5rem 0.9rem;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: #f4f1eb;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: default;
+  }
+
+  &--primary {
+    border-color: transparent;
+    background: var(--teal);
+    color: #fff;
+
+    &:hover:not(:disabled) {
+      filter: brightness(0.95);
+      background: var(--teal);
+    }
+  }
+}
+
+.action-card {
+  border-color: color-mix(in srgb, var(--violet) 25%, var(--line));
+}

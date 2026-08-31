@@ -1,0 +1,32 @@
+@use '../core/lesson-shared';
+
+.form {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 28rem;
+}
+
+.form__error {
+  margin: -0.35rem 0 0.5rem !important;
+  color: var(--danger);
+  font-size: 0.85rem;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 4.5rem;
+}
+
+.on {
+  color: var(--teal);
+}
+
+.off {
+  color: var(--amber);
+}
+
+.btn--link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}

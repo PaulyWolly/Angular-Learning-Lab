@@ -1,0 +1,79 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <p class="back">
+    <a routerLink="/users">← All users</a>
+  </p>
+
+  @if (user(); as u) {
+    <h1>{{ u.name }}</h1>
+    <p class="lesson__lead">
+      <code>{{ u.email }}</code> · {{ u.company.name }} · {{ u.address.city }}
+    </p>
+
+    <div class="lesson__card">
+      <h2>User via resolver</h2>
+      <p class="muted">
+        <code>userResolver</code> prefetches the user into <code>route.data</code>
+        <em>before</em> this component activates. Jumping between ids re-runs the resolver
+        (<code>runGuardsAndResolvers: 'paramsOrQueryParamsChange'</code>).
+      </p>
+      <app-lesson-syntax [templateCode]="resolverTpl" [typescriptCode]="resolverTs" />
+    </div>
+
+    <div class="lesson__card">
+      <h2>Posts (via switchMap)</h2>
+      <p class="muted">
+        Route id = <strong>{{ userId() }}</strong>. Open another user from the list (or change the
+        URL) — <code>switchMap</code> cancels the previous posts request. Resolver handles the
+        user; switchMap handles in-page cancellation for posts.
+      </p>
+      @if (posts$ | async; as posts) {
+        <ul class="list">
+          @for (p of posts; track p.id) {
+            <li>
+              <strong>{{ p.title }}</strong>
+              <span class="muted">{{ p.body }}</span>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="muted">Loading posts…</p>
+      }
+
+      <app-lesson-syntax [templateCode]="detailTpl" [typescriptCode]="detailTs" />
+    </div>
+
+    <div class="lesson__card">
+      <h2>combineLatest · user + posts</h2>
+      <p class="muted">
+        <code>combineLatest</code> emits when <em>each</em> source has emitted at least once, then
+        again whenever either updates. Useful for a summary that needs both the resolved user and
+        the posts list together.
+      </p>
+      @if (summary$ | async; as s) {
+        <div class="preview">
+          <strong>{{ s.name }}</strong>
+          <span class="muted">{{ s.city }} · {{ s.postCount }} posts</span>
+          <p>Top post: <em>{{ s.topTitle }}</em></p>
+        </div>
+      } @else {
+        <p class="muted">Waiting for user + posts…</p>
+      }
+      <app-lesson-syntax [templateCode]="combineTpl" [typescriptCode]="combineTs" />
+    </div>
+
+    <div class="lesson__card">
+      <h2>Jump to another user</h2>
+      <div class="demo-row">
+        @for (id of [1, 2, 3, 4, 5]; track id) {
+          <a class="btn" [routerLink]="['/users', id]" [class.btn--primary]="id === userId()">
+            #{{ id }}
+          </a>
+        }
+      </div>
+    </div>
+  } @else {
+    <h1>User not found</h1>
+    <p class="lesson__lead">Try another id from the <a routerLink="/users">users list</a>.</p>
+  }
+</section>

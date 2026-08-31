@@ -1,0 +1,18 @@
+<div
+  class="modal-backdrop"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-label]="title()"
+  (click)="onBackdropClick($event)"
+>
+  <article class="modal">
+    <header class="modal__head">
+      <h2>{{ title() }}</h2>
+      <button type="button" class="modal__close" aria-label="Close" (click)="closed.emit()">
+        ×
+      </button>
+    </header>
+    <p class="modal__hint">{{ hint() }}</p>
+    <pre class="modal__code"><code>{{ code() }}</code></pre>
+  </article>
+</div>

@@ -1,0 +1,106 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Data Binding</h1>
+  <p class="lesson__lead">
+    Binding connects class fields to the template. Learn the four you’ll hear in interviews:
+    <strong>interpolation</strong>, <strong>property</strong>, <strong>event</strong>, and
+    <strong>two-way</strong>. Each card shows a live demo plus <strong>Template</strong> and
+    <strong>TypeScript</strong> syntax.
+  </p>
+
+  <div class="lesson__card">
+    <h2>1. String interpolation — double curly braces</h2>
+    <p class="muted">
+      One-way: class → template. Change the class field (buttons or the input below) and Angular
+      change detection re-renders <code>{{ curlyDisplayName }}</code> in the DOM.
+    </p>
+    <div class="demo-row">
+      <button type="button" class="btn" (click)="displayName = 'Leanne Graham'">Leanne</button>
+      <button type="button" class="btn" (click)="displayName = 'Paul'">Paul</button>
+      <button type="button" class="btn" (click)="displayName = 'Welcome'">Welcome</button>
+    </div>
+    <label class="field">
+      Edit the class field (via event binding — taught in card 3)
+      <input
+        name="displayName"
+        [value]="displayName"
+        (input)="displayName = $any($event.target).value"
+      />
+    </label>
+    <div class="preview">
+      Hello, <strong>{{ displayName }}</strong>
+    </div>
+    <app-lesson-syntax
+      [templateCode]="interpolationTpl"
+      [typescriptCode]="interpolationTs"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>2. Property binding — <code>[property]</code></h2>
+    <p class="muted">One-way: set a DOM/property from an expression.</p>
+    <div class="demo-row">
+      <label>
+        <input type="checkbox" [(ngModel)]="isDisabled" />
+        isDisabled
+      </label>
+      <label>
+        <input type="checkbox" [(ngModel)]="isHighlight" />
+        isHighlight
+      </label>
+    </div>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" [disabled]="isDisabled">
+        Save (disabled = {{ isDisabled }})
+      </button>
+      <span class="chip" [class.on]="isHighlight">class.on = {{ isHighlight }}</span>
+    </div>
+    <aside class="lesson__banner" role="note">
+      <strong>Interview gotcha — booleans need <code>[disabled]</code>, not interpolation.</strong>
+      <code>{{ disabledInterpExample }}</code> writes the <em>string</em>
+      <code>"false"</code> when the flag is false. In HTML, a boolean attribute that is
+      <em>present</em> still disables the control — so the button stays disabled.
+      Use <code>[disabled]="isDisabled"</code> so Angular sets the real boolean DOM property.
+      Same idea for <code>checked</code>, <code>readonly</code>, etc.
+    </aside>
+    <app-lesson-syntax
+      [templateCode]="propertyTpl"
+      [typescriptCode]="propertyTs"
+      [typescriptModal]="propertyModal"
+      modalTitle="disabled — wrong vs right"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>3. Event binding — <code>(event)</code></h2>
+    <p class="muted">One-way: template → class (user actions call methods).</p>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="bumpClicks()">Click me</button>
+      <span>clickCount = <strong>{{ clickCount }}</strong></span>
+      &nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn--secondary" (click)="resetClicks()">Reset</button>
+    </div>
+    <app-lesson-syntax [templateCode]="eventTpl" [typescriptCode]="eventTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>4. Two-way binding — <code>[(ngModel)]</code></h2>
+    <p class="muted">
+      Banana in a box: property + event together. Needs <code>FormsModule</code>. Change the input
+      and the preview updates; it’s the same field in both directions.
+    </p>
+    <label class="field">
+      notes
+      <textarea name="notes" rows="3" [(ngModel)]="notes"></textarea>
+    </label>
+    <div class="preview">
+      Live preview: <em>{{ notes }}</em>
+    </div>
+    <app-lesson-syntax
+      [templateCode]="twoWayTpl"
+      [typescriptCode]="twoWayTs"
+      [typescriptModal]="twoWayModal"
+      modalTitle="Two-way — Full TypeScript"
+    />
+  </div>
+</section>

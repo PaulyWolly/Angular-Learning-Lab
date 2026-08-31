@@ -1,0 +1,109 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>XSS · stay safe in the template</h1>
+  <p class="lesson__lead">
+    <strong>Cross-site scripting (XSS)</strong> means attacker-controlled text runs as code in
+    someone else’s browser. Angular helps by default: interpolation escapes HTML, and
+    <code>[innerHTML]</code> is sanitized. The dangerous move is
+    <code>bypassSecurityTrustHtml</code> on user or API strings.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live: paste a “payload”</h2>
+    <p class="muted">
+      Pretend this came from a comment field or a reckless API. Load a sample or edit it, then
+      compare the three outputs.
+    </p>
+    <div class="demo-row">
+      @for (s of samples; track s.label) {
+        <button type="button" class="btn" (click)="loadSample(s.value)">{{ s.label }}</button>
+      }
+    </div>
+    <label class="field">
+      Untrusted string
+      <textarea
+        rows="3"
+        [ngModel]="payload()"
+        (ngModelChange)="payload.set($event); unsafeBypassHtml = null"
+      ></textarea>
+    </label>
+
+    <div class="xss-grid">
+      <article class="xss-panel xss-panel--safe">
+        <h3>Interpolation (escaped)</h3>
+        <p class="tag">Safe · escapes HTML</p>
+        <pre class="xss-out">{{ payload() }}</pre>
+      </article>
+
+      <article class="xss-panel xss-panel--safe">
+        <h3>[innerText]</h3>
+        <p class="tag">Safe · text node</p>
+        <div class="xss-out" [innerText]="payload()"></div>
+      </article>
+
+      <article class="xss-panel xss-panel--warn">
+        <h3>[innerHTML] (sanitized)</h3>
+        <p class="tag">Angular strips scripts / handlers</p>
+        <div class="xss-out xss-out--html" [innerHTML]="payload()"></div>
+        <p class="muted">
+          Sanitizer kept:
+          <code>{{ sanitizedHtml() || '(empty after sanitize)' }}</code>
+        </p>
+      </article>
+    </div>
+
+    <app-lesson-syntax
+      [templateCode]="safeTpl"
+      [typescriptCode]="safeTs"
+      modalTitle="Safe outputs"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>bypassSecurityTrustHtml — use rarely</h2>
+    <p class="muted">
+      First panel: HTML <em>we</em> authored in the class (acceptable when you truly need markup).
+      Second panel: the anti-pattern — bypassing with the payload above. Only click if you want to
+      see why interviews warn about this.
+    </p>
+
+    <div class="xss-grid xss-grid--two">
+      <article class="xss-panel xss-panel--safe">
+        <h3>Trusted app HTML</h3>
+        <p class="tag">bypass on a constant we wrote</p>
+        <div class="xss-out xss-out--html" [innerHTML]="trustedAppHtml"></div>
+      </article>
+
+      <article class="xss-panel xss-panel--danger">
+        <h3>Unsafe bypass (anti-pattern)</h3>
+        <p class="tag">Never with user / API input</p>
+        <div class="demo-row">
+          <button type="button" class="btn btn--danger" (click)="enableUnsafeBypass()">
+            Apply bypass to payload
+          </button>
+          <button type="button" class="btn" (click)="clearUnsafeBypass()">Clear</button>
+        </div>
+        @if (unsafeBypassHtml) {
+          <div class="xss-out xss-out--html" [innerHTML]="unsafeBypassHtml"></div>
+        } @else {
+          <p class="muted">Not applied — sanitized path stays in the card above.</p>
+        }
+      </article>
+    </div>
+
+    <aside class="lesson__banner" role="note">
+      <strong>Rules of thumb</strong>
+      Prefer interpolation / <code>[innerText]</code> / components for untrusted data. Use
+      <code>[innerHTML]</code> only when you need markup, and trust Angular’s sanitizer — or HTML
+      you authored. Never <code>bypassSecurityTrustHtml(userInput)</code>. Validate on the server
+      too.
+    </aside>
+
+    <app-lesson-syntax
+      [templateCode]="bypassTpl"
+      [typescriptCode]="bypassTs"
+      [typescriptModal]="bypassModal"
+      modalTitle="DomSanitizer — Full TypeScript"
+    />
+  </div>
+</section>

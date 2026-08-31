@@ -1,0 +1,216 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Angular Material · Form Controls</h1>
+  <p class="lesson__lead">
+    Material form controls provide accessible floating labels, custom prefixes/suffixes, built-in validation styling, error messages, and animations.
+  </p>
+
+  <!-- Card 1: Text inputs -->
+  <div class="lesson__card">
+    <h2>1. Text Inputs &amp; Floating Labels (<code>mat-form-field</code>)</h2>
+    <p class="muted">
+      Use <code>appearance="outline"</code> for modern boxed styling. Add <code>matPrefix</code> for icons or currency symbols, and <code>matSuffix</code> for action buttons.
+    </p>
+    <div class="demo-form-row">
+      <mat-form-field appearance="outline" class="demo-field">
+        <mat-label>Email Address</mat-label>
+        <input
+          matInput
+          type="email"
+          [(ngModel)]="emailInput"
+          placeholder="name@example.com"
+          autocomplete="email"
+        />
+        <mat-icon matPrefix>mail</mat-icon>
+        @if (emailInput) {
+          <button matSuffix mat-icon-button (click)="emailInput = ''" aria-label="Clear input">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+        <mat-hint>Type something to test the clear suffix</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="demo-field">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          [type]="hidePassword() ? 'password' : 'text'"
+          value="supersecret123"
+        />
+        <mat-icon matPrefix>lock</mat-icon>
+        <button
+          matSuffix
+          mat-icon-button
+          (click)="togglePassword()"
+          [attr.aria-label]="hidePassword() ? 'Show password' : 'Hide password'"
+        >
+          <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-hint>Toggle password visibility</mat-hint>
+      </mat-form-field>
+    </div>
+    <app-lesson-syntax
+      [templateCode]="inputTpl"
+      [typescriptCode]="inputTs"
+      [typescriptModal]="inputModal"
+      modalTitle="Text Inputs — Full TypeScript"
+    />
+  </div>
+
+  <!-- Card 2: Selects, Radios, Toggles -->
+  <div class="lesson__card">
+    <h2>2. Selects, Radios &amp; Switches</h2>
+    <p class="muted">
+      Clean UI selectors that adapt to mobile screens and keyboard navigation out of the box.
+    </p>
+    <div class="demo-controls-wrap">
+      <mat-form-field appearance="outline" class="demo-field">
+        <mat-label>Primary Framework</mat-label>
+        <mat-select [(ngModel)]="selectedFramework">
+          <mat-option value="Angular">Angular v20 (Signals &amp; Standalone)</mat-option>
+          <mat-option value="React">React 19 (Hooks &amp; Server Components)</mat-option>
+          <mat-option value="Vue">Vue 3 (Composition API)</mat-option>
+          <mat-option value="Svelte">Svelte 5 (Runes)</mat-option>
+        </mat-select>
+        <mat-hint>Selected: {{ selectedFramework }}</mat-hint>
+      </mat-form-field>
+
+      <div class="controls-subgroup">
+        <label class="control-label">User Role:</label>
+        <mat-radio-group [(ngModel)]="userRole" class="demo-radio-group">
+          <mat-radio-button value="developer">Developer</mat-radio-button>
+          <mat-radio-button value="designer">Designer</mat-radio-button>
+          <mat-radio-button value="manager">Manager</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="controls-subgroup">
+        <mat-slide-toggle [(ngModel)]="notificationsEnabled" color="primary">
+          Notifications: <strong>{{ notificationsEnabled ? 'Enabled' : 'Disabled' }}</strong>
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <app-lesson-syntax
+      [templateCode]="controlsTpl"
+      [typescriptCode]="controlsTs"
+      [typescriptModal]="controlsModal"
+      modalTitle="Selects & Radios — Full TypeScript"
+    />
+  </div>
+
+  <!-- Card 3: Datepicker -->
+  <div class="lesson__card">
+    <h2>3. Datepicker (<code>mat-datepicker</code>)</h2>
+    <p class="muted">
+      Accessible calendar picker. Uses <code>provideNativeDateAdapter()</code> for standard JavaScript <code>Date</code> objects.
+    </p>
+    <div class="demo-datepicker-wrap">
+      <mat-form-field appearance="outline" class="demo-field">
+        <mat-label>Select Start Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="selectedDate"
+          [min]="minDate"
+          [max]="maxDate"
+        />
+        <mat-hint>Selected: {{ selectedDate ? selectedDate.toLocaleDateString() : 'None' }}</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker" />
+        <mat-datepicker #picker />
+      </mat-form-field>
+    </div>
+    <app-lesson-syntax
+      [templateCode]="datepickerTpl"
+      [typescriptCode]="datepickerTs"
+      [typescriptModal]="datepickerModal"
+      modalTitle="Datepicker — Full TypeScript"
+    />
+  </div>
+
+  <!-- Card 4: Reactive Material Form -->
+  <div class="lesson__card">
+    <h2>4. Complete Reactive Form with Live Validation</h2>
+    <p class="muted">
+      Material form fields bind smoothly to Angular’s <code>FormGroup</code> and <code>FormControl</code>, reacting instantly to validity changes.
+    </p>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmitProfile()" class="profile-form">
+      <div class="profile-form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="fullName" placeholder="Jane Doe" />
+          <mat-icon matPrefix>person</mat-icon>
+          @if (profileForm.get('fullName')?.hasError('required')) {
+            <mat-error>Full name is required.</mat-error>
+          }
+          @if (profileForm.get('fullName')?.hasError('minlength')) {
+            <mat-error>Name must be at least 3 characters.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Work Email</mat-label>
+          <input matInput type="email" formControlName="workEmail" placeholder="jane@company.com" />
+          <mat-icon matPrefix>email</mat-icon>
+          @if (profileForm.get('workEmail')?.hasError('required')) {
+            <mat-error>Email address is required.</mat-error>
+          }
+          @if (profileForm.get('workEmail')?.hasError('email')) {
+            <mat-error>Please enter a valid email address.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Department</mat-label>
+          <mat-select formControlName="department">
+            <mat-option value="Engineering">Engineering</mat-option>
+            <mat-option value="Product">Product Management</mat-option>
+            <mat-option value="Design">UI/UX Design</mat-option>
+            <mat-option value="QA">Quality Assurance</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Start Date</mat-label>
+          <input matInput [matDatepicker]="startPicker" formControlName="startDate" />
+          <mat-datepicker-toggle matIconSuffix [for]="startPicker" />
+          <mat-datepicker #startPicker />
+        </mat-form-field>
+      </div>
+
+      <div class="form-checkbox-row">
+        <mat-checkbox formControlName="agreeTerms" color="primary">
+          I agree to the development guidelines and policies.
+        </mat-checkbox>
+        @if (profileForm.get('agreeTerms')?.touched && profileForm.get('agreeTerms')?.hasError('required')) {
+          <p class="checkbox-error">You must accept the terms before submitting.</p>
+        }
+      </div>
+
+      <div class="form-btn-row">
+        <button mat-flat-button color="primary" type="submit" [disabled]="profileForm.invalid">
+          <mat-icon>check</mat-icon> Save Profile
+        </button>
+        <button mat-stroked-button type="button" (click)="onResetForm()">
+          <mat-icon>refresh</mat-icon> Reset
+        </button>
+        <span class="status-indicator" [class.valid]="profileForm.valid" [class.invalid]="profileForm.invalid">
+          Status: <strong>{{ profileForm.valid ? 'VALID' : 'INVALID' }}</strong>
+        </span>
+      </div>
+    </form>
+
+    @if (submittedData(); as data) {
+      <div class="submission-preview">
+        <h4>Last Submitted Values:</h4>
+        <pre><code>{{ data | json }}</code></pre>
+      </div>
+    }
+
+    <app-lesson-syntax
+      [templateCode]="formTpl"
+      [typescriptCode]="formTs"
+      [typescriptModal]="formModal"
+      modalTitle="Complete Form — Full TypeScript"
+    />
+  </div>
+</section>

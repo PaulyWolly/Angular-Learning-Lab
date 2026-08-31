@@ -1,0 +1,148 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Angular Material · Overview &amp; Setup</h1>
+  <p class="lesson__lead">
+    <strong>Angular Material</strong> is the official component library implementing Material Design.
+    In modern Angular, each component is standalone — import only the specific
+    <code>Mat*Module</code> pieces you need.
+  </p>
+
+  <div class="lesson__card">
+    <h2>1. Setup Checklist</h2>
+    <p class="muted">
+      Three quick steps to configure Angular Material in an Angular app:
+    </p>
+    <div class="setup-grid">
+      <div class="setup-step">
+        <span class="setup-num">1</span>
+        <div>
+          <strong>Install</strong>
+          <p><code>npm i &#64;angular/material &#64;angular/cdk</code></p>
+        </div>
+      </div>
+      <div class="setup-step">
+        <span class="setup-num">2</span>
+        <div>
+          <strong>Animations</strong>
+          <p><code>provideAnimationsAsync()</code> in <code>app.config.ts</code></p>
+        </div>
+      </div>
+      <div class="setup-step">
+        <span class="setup-num">3</span>
+        <div>
+          <strong>Theme &amp; Icons</strong>
+          <p>Prebuilt theme in <code>styles.scss</code> + Material Icons in <code>index.html</code></p>
+        </div>
+      </div>
+    </div>
+    <app-lesson-syntax
+      [templateCode]="setupTpl"
+      [typescriptCode]="setupTs"
+      [typescriptModal]="setupModal"
+      modalTitle="Material Setup — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>2. Buttons &amp; Ripple Effects</h2>
+    <p class="muted">
+      Material buttons include built-in hover states, focus management, and ripple animations.
+    </p>
+    <div class="demo-row">
+      <button mat-button>Basic</button>
+      <button mat-flat-button color="primary">Flat Primary</button>
+      <button mat-stroked-button>Stroked</button>
+      <button mat-icon-button color="accent" (click)="likeCard()" aria-label="Favorite button">
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-fab extended color="primary" (click)="likeCard()">
+        <mat-icon>thumb_up</mat-icon> Like ({{ likesCount() }})
+      </button>
+    </div>
+    <app-lesson-syntax
+      [templateCode]="buttonsTpl"
+      [typescriptCode]="buttonsTs"
+      [typescriptModal]="buttonsModal"
+      modalTitle="Buttons — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>3. Cards (<code>mat-card</code>)</h2>
+    <p class="muted">
+      Cards group related information with consistent surface elevation, headers, media, and action buttons.
+    </p>
+    <div class="card-preview-wrap">
+      <mat-card class="demo-card" appearance="outlined">
+        <mat-card-header>
+          <div mat-card-avatar class="demo-avatar">
+            <mat-icon>school</mat-icon>
+          </div>
+          <mat-card-title>Angular Material in Action</mat-card-title>
+          <mat-card-subtitle>Standalone Components</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            Material Design components provide accessible, consistent, tested UI building blocks.
+            They work directly with signals, reactive forms, and modern Angular features.
+          </p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button color="warn" (click)="likeCard()">
+            <mat-icon>favorite</mat-icon> {{ likesCount() }} Likes
+          </button>
+          <button mat-flat-button color="primary" (click)="shareCard()">
+            <mat-icon>share</mat-icon> Share
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <app-lesson-syntax
+      [templateCode]="cardTpl"
+      [typescriptCode]="cardTs"
+      [typescriptModal]="cardModal"
+      modalTitle="Card — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>4. Badges &amp; Chips</h2>
+    <p class="muted">
+      Badges attach unread counters to any element; chips allow tagging, filtering, or choices.
+    </p>
+    <div class="demo-row">
+      <button
+        mat-icon-button
+        [matBadge]="unreadCount()"
+        [matBadgeHidden]="unreadCount() === 0"
+        matBadgeColor="warn"
+        aria-label="Notifications badge"
+      >
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <button type="button" class="btn" (click)="incrementBadge()">+1 Notification</button>
+      <button type="button" class="btn" (click)="clearBadge()">Clear</button>
+    </div>
+
+    <div class="chip-section">
+      <p class="muted">Selected topic: <strong>{{ selectedChip() }}</strong></p>
+      <mat-chip-set aria-label="Topic selection">
+        @for (chip of availableChips; track chip) {
+          <mat-chip
+            [highlighted]="selectedChip() === chip"
+            (click)="selectChip(chip)"
+          >
+            {{ chip }}
+          </mat-chip>
+        }
+      </mat-chip-set>
+    </div>
+
+    <app-lesson-syntax
+      [templateCode]="chipsTpl"
+      [typescriptCode]="chipsTs"
+      [typescriptModal]="chipsModal"
+      modalTitle="Badges & Chips — Full TypeScript"
+    />
+  </div>
+</section>

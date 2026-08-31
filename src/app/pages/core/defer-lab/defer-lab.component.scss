@@ -1,0 +1,79 @@
+@use '../lesson-shared';
+
+.defer-stage {
+  margin: 0.75rem 0 0;
+  min-height: 4.5rem;
+}
+
+.defer-placeholder {
+  appearance: none;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 1rem 1.1rem;
+  border: 1px dashed color-mix(in srgb, var(--teal) 45%, var(--line));
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--teal-soft) 25%, #fff);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: color-mix(in srgb, var(--teal-soft) 45%, #fff);
+  }
+
+  &--static,
+  &--tall {
+    cursor: default;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  &--tall {
+    min-height: 14rem;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 1.25rem;
+  }
+}
+
+.defer-status {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  border-radius: 0.5rem;
+  background: var(--amber-soft);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.9rem;
+
+  &--error {
+    background: var(--danger-soft);
+    color: var(--danger);
+  }
+}
+
+.compare {
+  margin: 0 0 0.75rem;
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+
+  strong {
+    color: var(--ink);
+  }
+
+  a {
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  code {
+    font-size: 0.82rem;
+  }
+}

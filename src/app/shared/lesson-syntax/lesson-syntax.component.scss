@@ -1,0 +1,122 @@
+:host {
+  display: block;
+  margin-top: 0.95rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--line);
+}
+
+.syntax__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.syntax__label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.syntax__bridge {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+
+  code {
+    font-size: 0.8rem;
+    color: var(--ink);
+  }
+
+  em {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--teal);
+  }
+}
+
+.syntax__modal-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.syntax__modal-btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  padding: 0.3rem 0.65rem;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.78rem;
+  cursor: pointer;
+
+  &:hover {
+    background: #f4f1eb;
+    border-color: color-mix(in srgb, var(--teal) 35%, var(--line));
+  }
+}
+
+.syntax__block {
+  & + & {
+    margin-top: 0.65rem;
+  }
+}
+
+.syntax__lang-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.syntax__lang {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.syntax__copy {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  background: #fff;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.72rem;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--ink);
+    border-color: color-mix(in srgb, var(--teal) 35%, var(--line));
+    background: #f4f1eb;
+  }
+}
+
+pre {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  background: var(--code);
+  color: #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+
+  code {
+    font-family: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, monospace;
+  }
+}

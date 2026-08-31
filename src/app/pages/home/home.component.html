@@ -1,0 +1,230 @@
+<section class="home">
+  <p class="home__eyebrow">Angular Learning Lab</p>
+  <h1>Learn by watching the pieces move</h1>
+  <p class="home__lead">
+    Interview-ready Angular skills: templates, DI, forms, signals, RxJS, routing, and a users
+    capstone — on Angular v20.
+  </p>
+
+  <div class="home__grid">
+    <a class="home__card" routerLink="/rxjs">
+      <h2>RxJS Lab</h2>
+      <p>Observables, operators, async pipe, and live search with JSONPlaceholder users.</p>
+      <span class="home__cta">Open lab →</span>
+    </a>
+
+    <a class="home__card" routerLink="/users">
+      <h2>Users · switchMap</h2>
+      <p>List → /users/:id (resolver + switchMap + combineLatest). Filter with shareable ?q=.</p>
+      <span class="home__cta">Open users →</span>
+    </a>
+
+    <a class="home__card" routerLink="/routes">
+      <h2>Routes</h2>
+      <p>Nested paths, lazy loading, CanActivate, CanDeactivate, and a protected page.</p>
+      <span class="home__cta">Open routes →</span>
+    </a>
+  </div>
+
+  <div class="home__fold" [class.is-open]="coreOpen()">
+    <button
+      type="button"
+      class="home__fold-toggle"
+      (click)="toggleCore()"
+      [attr.aria-expanded]="coreOpen()"
+      aria-controls="home-core-labs"
+    >
+      <span class="home__fold-title">Core</span>
+      <span class="home__fold-meta">14 labs · components, binding, forms, HTTP, XSS…</span>
+      <span class="home__fold-chevron" aria-hidden="true">{{ coreOpen() ? '▾' : '▸' }}</span>
+    </button>
+
+    @if (coreOpen()) {
+      <div class="home__grid home__grid--nested" id="home-core-labs">
+        <a class="home__card" routerLink="/core/components">
+          <h2>Components</h2>
+          <p>Anatomy, standalone + imports, inputs, outputs, and ng-content.</p>
+          <span class="home__cta">Open components →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/binding">
+          <h2>Data Binding</h2>
+          <p>Interpolation, property &amp; event binding, and two-way [(ngModel)].</p>
+          <span class="home__cta">Open binding →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/templates">
+          <h2>Templates</h2>
+          <p>External templateUrl HTML vs inline backtick template strings.</p>
+          <span class="home__cta">Open templates →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/defer">
+          <h2>&#64;defer</h2>
+          <p>Template-level lazy loading — interaction, timer, viewport vs loadComponent.</p>
+          <span class="home__cta">Open &#64;defer →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/forms">
+          <h2>Forms</h2>
+          <p>Reactive FormGroup and template-driven NgForm — tabbed side-by-side.</p>
+          <span class="home__cta">Open forms →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/http-states">
+          <h2>HTTP States</h2>
+          <p>Idle, loading, success, empty, error + retry as a discriminated union.</p>
+          <span class="home__cta">Open HTTP states →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/change-detection">
+          <h2>Change Detection</h2>
+          <p>Default vs OnPush — watch check counters, refs vs mutations.</p>
+          <span class="home__cta">Open CD →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/signals">
+          <h2>Signals</h2>
+          <p>signal, computed, and effect for local reactive UI state.</p>
+          <span class="home__cta">Open signals →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/pipes">
+          <h2>Pipes</h2>
+          <p>Built-in pipes plus a custom titleCase pipe.</p>
+          <span class="home__cta">Open pipes →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/directives">
+          <h2>Directives</h2>
+          <p>&#64;if / &#64;for, ngClass, modulus color, and custom *appUnless structural.</p>
+          <span class="home__cta">Open directives →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/services">
+          <h2>Services</h2>
+          <p>inject(), providedIn: 'root', and shared services in this app.</p>
+          <span class="home__cta">Open services →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/subjects">
+          <h2>Subjects · BehaviorSubject</h2>
+          <p>Subject vs BehaviorSubject — multicast bus and late-join replay.</p>
+          <span class="home__cta">Open subjects →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/interceptors">
+          <h2>HTTP Interceptors</h2>
+          <p>Clone requests and attach a demo Authorization header when logged in.</p>
+          <span class="home__cta">Open interceptors →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/xss">
+          <h2>XSS Safety</h2>
+          <p>Escaping vs innerHTML vs DomSanitizer — and why bypass is dangerous.</p>
+          <span class="home__cta">Open XSS →</span>
+        </a>
+      </div>
+    }
+  </div>
+
+  <div class="home__fold" [class.is-open]="materialOpen()">
+    <button
+      type="button"
+      class="home__fold-toggle"
+      (click)="toggleMaterial()"
+      [attr.aria-expanded]="materialOpen()"
+      aria-controls="home-material-labs"
+    >
+      <span class="home__fold-title">Angular Material</span>
+      <span class="home__fold-meta">5 labs · tables &amp; grids, form controls, dialogs, navigation…</span>
+      <span class="home__fold-chevron" aria-hidden="true">{{ materialOpen() ? '▾' : '▸' }}</span>
+    </button>
+
+    @if (materialOpen()) {
+      <div class="home__grid home__grid--nested" id="home-material-labs">
+        <a class="home__card" routerLink="/material/overview">
+          <h2>Overview &amp; Setup</h2>
+          <p>Package install, animations provider, theme setup, buttons, cards, badges, and chips.</p>
+          <span class="home__cta">Open overview →</span>
+        </a>
+
+        <a class="home__card" routerLink="/material/forms">
+          <h2>Form Controls</h2>
+          <p>mat-form-field, inputs, selects, switches, checkboxes, datepicker, and live validation.</p>
+          <span class="home__cta">Open forms →</span>
+        </a>
+
+        <a class="home__card" routerLink="/material/table">
+          <h2>Tables &amp; Grids</h2>
+          <p>MatTable, MatSort, MatPaginator, live search filter, row selection, and MatGridList.</p>
+          <span class="home__cta">Open tables &amp; grids →</span>
+        </a>
+
+        <a class="home__card" routerLink="/material/dialogs">
+          <h2>Dialogs &amp; Feedback</h2>
+          <p>MatDialog with data injection, MatSnackBar toasts, progress bars, spinners, and tooltips.</p>
+          <span class="home__cta">Open dialogs →</span>
+        </a>
+
+        <a class="home__card" routerLink="/material/navigation">
+          <h2>Navigation &amp; Menus</h2>
+          <p>MatToolbar, MatMenu dropdowns, MatTabs with badge counts, and MatExpansion accordion.</p>
+          <span class="home__cta">Open navigation →</span>
+        </a>
+      </div>
+    }
+  </div>
+
+  <div class="home__fold home__fold--progress" [class.is-open]="progressOpen()">
+    <button
+      type="button"
+      class="home__fold-toggle"
+      (click)="toggleProgress()"
+      [attr.aria-expanded]="progressOpen()"
+      aria-controls="home-progress"
+    >
+      <span class="home__fold-title">Progress</span>
+      <span class="home__fold-meta">
+        {{ progress.doneCount() }} / {{ progress.totalCount }} labs · {{ progress.percent() }}%
+      </span>
+      <span class="home__fold-chevron" aria-hidden="true">{{ progressOpen() ? '▾' : '▸' }}</span>
+    </button>
+
+    @if (progressOpen()) {
+      <div class="home__progress" id="home-progress">
+        <p class="home__progress-lead">
+          Check off labs as you go — saved in <code>localStorage</code> on this browser.
+        </p>
+        <div class="home__progress-bar" role="progressbar" [attr.aria-valuenow]="progress.percent()" aria-valuemin="0" aria-valuemax="100">
+          <span [style.width.%]="progress.percent()"></span>
+        </div>
+
+        @for (group of progressGroups; track group.label) {
+          <div class="home__progress-group">
+            <h3>{{ group.label }}</h3>
+            <ul>
+              @for (lab of group.labs; track lab.id) {
+                <li [class.is-done]="progress.isDone(lab.id)">
+                  <label>
+                    <input
+                      type="checkbox"
+                      [checked]="progress.isDone(lab.id)"
+                      (change)="progress.toggle(lab.id)"
+                    />
+                    <span>{{ lab.label }}</span>
+                  </label>
+                  <a [routerLink]="lab.path">Open</a>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+
+        <button type="button" class="home__progress-reset" (click)="progress.reset()">
+          Reset progress
+        </button>
+      </div>
+    }
+  </div>
+</section>

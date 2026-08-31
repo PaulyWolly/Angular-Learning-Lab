@@ -1,0 +1,44 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Signals</h1>
+  <p class="lesson__lead">
+    A <strong>signal</strong> is a reactive value. Read with <code>count()</code>, write with
+    <code>set</code> / <code>update</code>. <code>computed</code> derives values;
+    <code>effect</code> runs side work when dependencies change. Contrast with RxJS streams on the
+    RxJS lab — signals shine for local UI state.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live: signal + computed</h2>
+    <p>
+      count = <strong>{{ count() }}</strong>
+      · doubled = <strong>{{ doubled() }}</strong>
+      · label = <strong>{{ label() }}</strong>
+    </p>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="increment()">+</button>
+      <button type="button" class="btn" (click)="decrement()">−</button>
+      <button type="button" class="btn" (click)="setTen()">set(10)</button>
+      <button type="button" class="btn" (click)="reset()">reset</button>
+    </div>
+    <app-lesson-syntax
+      [templateCode]="signalTpl"
+      [typescriptCode]="signalTs"
+      [typescriptModal]="signalModal"
+      modalTitle="Signals — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>effect() log</h2>
+    <p class="muted">
+      Each change to <code>count()</code> pushes a line. Effects are for syncing side effects — not
+      for deriving display values (use <code>computed</code> for that).
+    </p>
+    <ul class="list">
+      @for (row of effectLog(); track $index) {
+        <li><code>{{ row }}</code></li>
+      }
+    </ul>
+  </div>
+</section>

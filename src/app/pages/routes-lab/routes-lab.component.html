@@ -1,0 +1,31 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Routes</h1>
+  <p class="lesson__lead">
+    Routes map a URL path to a component. Everything under
+    <code>/routes/*</code> sits inside a <strong>parent shell</strong> with its own
+    <code>&lt;router-outlet&gt;</code> — the shell stays mounted while child labs swap.
+    Each card shows Template + TypeScript.
+  </p>
+
+  <div class="lesson__card">
+    <h2>What you’re using in this app</h2>
+    <ul>
+      <li><code>/</code> → Home</li>
+      <li><code>/rxjs</code> → RxJS lab</li>
+      <li><code>/routes</code> → this overview</li>
+      <li><code>/routes/lazy</code> · <code>/routes/guards</code> · <code>/routes/protected</code></li>
+      <li><code>path: '**'</code> → wildcard fallback to Home</li>
+    </ul>
+    <app-lesson-syntax [templateCode]="routesTpl" [typescriptCode]="routesTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>RouterLink (nav)</h2>
+    <p>
+      Header and Footer use <code>routerLink</code> instead of plain
+      <code>href</code>, so the app navigates without a full page reload. Try the links in the footer.
+    </p>
+    <app-lesson-syntax [templateCode]="linkTpl" [typescriptCode]="linkTs" />
+  </div>
+</section>

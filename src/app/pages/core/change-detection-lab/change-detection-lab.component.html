@@ -1,0 +1,36 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Change detection</h1>
+  <p class="lesson__lead">
+    <strong>Default</strong> checks a component whenever its ancestors are checked.
+    <strong>OnPush</strong> skips the view unless an <code>&#64;Input</code> reference changes, an
+    event fires inside it, an async pipe marks it dirty, or you call
+    <code>markForCheck()</code>. Watch the check counters.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live: Default vs OnPush</h2>
+    <p class="muted">
+      Parent ticks: <strong>{{ parentTicks }}</strong>. Try Parent tick first — Default’s counter
+      climbs; OnPush usually stays put. Then change a reference vs mutate in place.
+    </p>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="tickParent()">Parent tick</button>
+      <button type="button" class="btn" (click)="changeLabel()">New label ref</button>
+      <button type="button" class="btn" (click)="mutateBoxed()">Mutate boxed.text</button>
+      <button type="button" class="btn" (click)="changeBoxedRef()">New boxed ref</button>
+    </div>
+
+    <div class="cd-grid">
+      <app-cd-default-child [label]="label" [boxed]="boxed" />
+      <app-cd-onpush-child [label]="label" [boxed]="boxed" />
+    </div>
+
+    <app-lesson-syntax
+      [templateCode]="cdTpl"
+      [typescriptCode]="cdTs"
+      [typescriptModal]="cdModal"
+      modalTitle="OnPush child — Full TypeScript"
+    />
+  </div>
+</section>

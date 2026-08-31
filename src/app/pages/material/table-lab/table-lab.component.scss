@@ -1,0 +1,164 @@
+@use '../../core/lesson-shared';
+
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 0.5rem 0 0.85rem;
+}
+
+.filter-field {
+  flex: 1 1 18rem;
+  max-width: 24rem;
+}
+
+.count-badge {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.table-container {
+  background: #fff;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  margin-bottom: 0.85rem;
+}
+
+table {
+  width: 100%;
+}
+
+.interactive-row {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: #f1f5f9;
+  }
+
+  &.selected-row {
+    background-color: var(--teal-soft);
+  }
+}
+
+.empty-table-cell {
+  text-align: center;
+  padding: 1.5rem !important;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.level-pill {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  &--lead {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  &--senior {
+    background: #e0e7ff;
+    color: #3730a3;
+  }
+
+  &--mid {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  &--junior {
+    background: #f1f5f9;
+    color: #475569;
+  }
+}
+
+.contrib-num {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--teal);
+}
+
+.selection-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  background: #e6fffa;
+  border: 1px solid #99f6e4;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  color: #115e59;
+
+  mat-icon {
+    color: #0f766e;
+  }
+
+  strong {
+    display: block;
+    font-size: 0.9rem;
+  }
+
+  span {
+    font-size: 0.8rem;
+  }
+}
+
+.slider-control-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.5rem 0 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  .cols-range {
+    cursor: pointer;
+  }
+}
+
+.grid-preview-wrap {
+  margin: 0.5rem 0 1rem;
+}
+
+.tile-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  color: #fff;
+  text-align: center;
+
+  strong {
+    font-size: 0.85rem;
+  }
+}
+
+.tile-teal {
+  background: #0f766e;
+  border-radius: 0.5rem;
+}
+
+.tile-amber {
+  background: #d97706;
+  border-radius: 0.5rem;
+}
+
+.tile-violet {
+  background: #7c3aed;
+  border-radius: 0.5rem;
+}
+
+.tile-slate {
+  background: #475569;
+  border-radius: 0.5rem;
+}

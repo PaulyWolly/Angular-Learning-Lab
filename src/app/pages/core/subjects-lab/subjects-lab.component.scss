@@ -1,0 +1,147 @@
+@use '../lesson-shared';
+
+.story__why {
+  margin: 0 0 1rem;
+  padding: 0.75rem 0.9rem;
+  border-left: 3px solid var(--amber);
+  background: var(--amber-soft);
+  border-radius: 0 0.4rem 0.4rem 0;
+  line-height: 1.5;
+  font-size: 0.92rem;
+}
+
+.story__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.75rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.story__panel {
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: #fff;
+  line-height: 1.5;
+
+  &--behavior {
+    border-color: color-mix(in srgb, var(--teal) 40%, var(--line));
+    background: color-mix(in srgb, var(--teal-soft) 35%, #fff);
+  }
+
+  p {
+    margin: 0 0 0.55rem;
+  }
+}
+
+.story__label {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--teal);
+}
+
+.story__code {
+  margin: 0 !important;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.4rem;
+  background: color-mix(in srgb, var(--code) 6%, #fff);
+  font-size: 0.85rem;
+  color: var(--muted);
+
+  code {
+    color: var(--ink);
+    font-size: 0.8rem;
+  }
+}
+
+.story__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin: 0 0 0.85rem;
+
+  th,
+  td {
+    border: 1px solid var(--line);
+    padding: 0.5rem 0.65rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  thead th {
+    background: #f4f1eb;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  tbody th {
+    background: color-mix(in srgb, var(--teal-soft) 25%, #fff);
+    font-weight: 600;
+    width: 28%;
+  }
+}
+
+.story__try {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border-left: 3px solid var(--teal);
+  background: color-mix(in srgb, var(--teal-soft) 40%, transparent);
+  border-radius: 0 0.4rem 0.4rem 0;
+  line-height: 1.5;
+  font-size: 0.92rem;
+}
+
+.feed {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.45rem 0.75rem;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid var(--line);
+    border-radius: 0.45rem;
+    background: #fff;
+    font-size: 0.9rem;
+  }
+
+  code {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  strong {
+    color: var(--teal);
+  }
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.75rem;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.compare__col {
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: #fff;
+
+  &--behavior {
+    border-color: color-mix(in srgb, var(--teal) 40%, var(--line));
+    background: color-mix(in srgb, var(--teal-soft) 30%, #fff);
+  }
+}
+
+.compare__title {
+  margin: 0 0 0.2rem;
+  font-size: 1rem;
+}
+

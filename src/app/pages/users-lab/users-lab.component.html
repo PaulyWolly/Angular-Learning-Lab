@@ -1,0 +1,64 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Users explorer</h1>
+  <p class="lesson__lead">
+    Pick a user to open <code>/users/:id</code>. The detail page loads that user’s posts with
+    <code>switchMap</code> — change users quickly and older HTTP calls are cancelled. Filter the
+    list with <code>?q=</code> so the URL is shareable.
+  </p>
+
+  <div class="lesson__card">
+    <h2>User list</h2>
+    <label class="search-label">
+      Filter (syncs to <code>?q=</code>)
+      <input
+        type="search"
+        [formControl]="searchCtrl"
+        placeholder="name, email, or city…"
+        autocomplete="off"
+      />
+    </label>
+
+    @if (filteredUsers$ | async; as users) {
+      @if (users.length) {
+        <ul class="user-list">
+          @for (u of users; track u.id) {
+            <li>
+              <a [routerLink]="['/users', u.id]">
+                <strong>{{ u.name }}</strong>
+                <span class="muted">{{ u.email }} · {{ u.address.city }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="muted">No users match that query. Clear the filter or try another term.</p>
+      }
+    } @else {
+      <p class="muted">Loading users…</p>
+    }
+
+    <app-lesson-syntax [templateCode]="listTpl" [typescriptCode]="listTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Query params ↔ search</h2>
+    <p class="muted">
+      Typing updates <code>/users?q=…</code> (debounced). Opening a shared link like
+      <code>/users?q=leanne</code> seeds the input and filters the list. Empty query removes
+      <code>q</code> from the URL.
+    </p>
+    <app-lesson-syntax [templateCode]="queryTpl" [typescriptCode]="queryTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Why switchMap on the detail page?</h2>
+    <p class="muted">
+      <code>switchMap</code> maps each new user id to a posts request and unsubscribes from the
+      previous one. That prevents stale posts flashing when you click users quickly. The
+      <strong>user</strong> itself is prefetched by a <code>ResolveFn</code> before the detail
+      activates.
+    </p>
+    <app-lesson-syntax [templateCode]="switchMapTpl" [typescriptCode]="switchMapTs" />
+  </div>
+</section>

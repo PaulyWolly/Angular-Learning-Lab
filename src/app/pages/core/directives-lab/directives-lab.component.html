@@ -1,0 +1,186 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Directives</h1>
+  <p class="lesson__lead">
+    Directives change the DOM or its behavior.
+    <strong>Structural</strong> add/remove elements (<code>&#64;if</code>, <code>&#64;for</code>, custom
+    <code>*appUnless</code>).
+    <strong>Attribute</strong> change appearance or behavior of an existing element
+    (<code>ngClass</code>, <code>appHighlight</code>, <code>appModulusColor</code>). Each card pairs
+    Template + TypeScript.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Structural — <code>&#64;if</code> / <code>&#64;for</code></h2>
+    <div class="demo-row">
+      <label>
+        <input type="checkbox" [(ngModel)]="showPanel" />
+        showPanel
+      </label>
+    </div>
+    @if (showPanel) {
+      <div class="preview">Panel is visible because <code>showPanel</code> is true.</div>
+    } @else {
+      <div class="preview muted">Panel hidden.</div>
+    }
+
+    <ul class="list">
+      @for (item of items; track item) {
+        <li>{{ item }}</li>
+      }
+    </ul>
+    <app-lesson-syntax [templateCode]="structuralTpl" [typescriptCode]="structuralTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Attribute — <code>ngClass</code> object vs ternary</h2>
+    <p class="muted callout">
+      Stress this: <code>&#123; &#125;</code> are <strong>not</strong> “ngClass wrappers.” They create a
+      JavaScript <em>object</em> (<code>className: boolean</code>). A ternary returns a
+      <em>string</em> — so it has <strong>no</strong> braces.       Mixing them
+      <strong class="invalid-example"
+        >(<code>&#123; n % 5 === 0 ? 'green' : 'red' &#125;</code>) is invalid.</strong
+      >
+    </p>
+    <div class="demo-row">
+      <button type="button" class="btn" (click)="bumpMod(-1)">−1</button>
+      <button type="button" class="btn btn--primary" (click)="bumpMod(1)">+1</button>
+      <span class="muted">modNumber % 5 === 0 → green, else red</span>
+    </div>
+    <div class="ngclass-compare">
+      <div class="ngclass-compare__col">
+        <p class="ngclass-compare__label">Object form — <code>&#123; &#125;</code> required</p>
+        <div
+          class="preview mod-swatch"
+          [ngClass]="{ green: modNumber % 5 === 0, red: modNumber % 5 !== 0 }"
+        >
+          {{ modNumber }}
+        </div>
+      </div>
+      <div class="ngclass-compare__col">
+        <p class="ngclass-compare__label">Ternary form — <strong>no</strong> <code>&#123; &#125;</code></p>
+        <div
+          class="preview mod-swatch"
+          [ngClass]="modNumber % 5 === 0 ? 'green' : 'red'"
+        >
+          {{ modNumber }}
+        </div>
+      </div>
+    </div>
+
+    <h3 class="subhead">Also: <code>ngStyle</code> with tone</h3>
+    <div class="demo-row">
+      <button type="button" class="btn" (click)="tone = 'calm'">calm</button>
+      <button type="button" class="btn" (click)="tone = 'alert'">alert</button>
+    </div>
+    <p
+      class="preview tone"
+      [ngClass]="{ 'tone--alert': tone === 'alert', 'tone--calm': tone === 'calm' }"
+      [ngStyle]="{ fontWeight: tone === 'alert' ? '700' : '400' }"
+    >
+      tone = {{ tone }}
+    </p>
+    <app-lesson-syntax [templateCode]="attributeTpl" [typescriptCode]="attributeTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Custom attribute — <code>appHighlight</code></h2>
+    <p class="muted">
+      Hover the lines — <code>HostListener</code> + <code>HostBinding</code> toggle background.
+    </p>
+    <p appHighlight>Default teal-soft highlight</p>
+    <p [appHighlight]="'#fef3c7'">Amber highlight via input binding</p>
+    <app-lesson-syntax
+      [templateCode]="customTpl"
+      [typescriptCode]="customTs"
+      [typescriptModal]="customModal"
+      [templateModal]="customTplModal"
+      modalTitle="appHighlight — Full TypeScript"
+      templateModalTitle="appHighlight — Full HTML Template"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Custom attribute — <code>appModulusColor</code> (parity)</h2>
+    <p class="muted">
+      Interpolation shows the number; the directive sets <code>style.color</code> from
+      <code>n&nbsp;%&nbsp;2</code> — <strong class="even-swatch">even → teal</strong>,
+      <strong class="odd-swatch">odd → red</strong>. Same idea as many interview “color by parity”
+      demos.
+    </p>
+    <div class="demo-row">
+      <button type="button" class="btn" (click)="bumpScore(-1)">−1</button>
+      <button type="button" class="btn btn--primary" (click)="bumpScore(1)">+1</button>
+      <span class="parity-readout">
+        score =
+        <strong [appModulusColor]="score">{{ score }}</strong>
+        <span class="muted">({{ score % 2 === 0 ? 'even' : 'odd' }})</span>
+      </span>
+    </div>
+    <app-lesson-syntax
+      [templateCode]="modulusTpl"
+      [typescriptCode]="modulusTs"
+      [typescriptModal]="modulusModal"
+      [templateModal]="modulusTplModal"
+      modalTitle="appModulusColor — Full TypeScript"
+      templateModalTitle="appModulusColor — Full HTML Template"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Custom structural — <code>*appUnless</code></h2>
+    <p class="muted">
+      Yes — in real apps you would usually write <code>&#64;if (!hideHint)</code> and stop.
+      We go the longer route on purpose: <code>*appUnless</code> is the classic interview exercise
+      for <code>TemplateRef</code> + <code>ViewContainerRef</code> — the engine behind
+      <code>*</code> microsyntax (and behind <code>&#64;if</code> / <code>&#64;for</code> themselves).
+      Learn it once here so you can explain how structural directives add/remove DOM, not only
+      how to flip a boolean.
+    </p>
+    <div class="demo-row">
+      <label>
+        <input type="checkbox" [(ngModel)]="hideHint" />
+        hideHint
+      </label>
+    </div>
+    <div class="ngclass-compare">
+      <div class="ngclass-compare__col">
+        <p class="ngclass-compare__label">Interview exercise — <code>*appUnless</code></p>
+        <p *appUnless="hideHint" class="preview">
+          Visible while <code>hideHint</code> is <strong>false</strong> — stamped by
+          <code>*appUnless</code>.
+        </p>
+      </div>
+      <div class="ngclass-compare__col">
+        <p class="ngclass-compare__label">Simpler (prefer this) — <code>&#64;if</code></p>
+        @if (!hideHint) {
+          <p class="preview">
+            Same result with <code>&#64;if (!hideHint)</code> — no custom directive.
+          </p>
+        }
+      </div>
+    </div>
+    @if (hideHint) {
+      <p class="muted">Both sides empty — condition true → views cleared / branch skipped.</p>
+    }
+
+    <h3 class="subhead">Lists: prefer <code>&#64;for</code> (not a custom structural)</h3>
+    <p class="muted">
+      Same idea for collections — don’t invent <code>*appRepeat</code>; use built-in control flow.
+    </p>
+    <ul class="list">
+      @for (item of items; track item) {
+        <li>{{ item }}</li>
+      }
+    </ul>
+
+    <app-lesson-syntax
+      [templateCode]="unlessTpl"
+      [typescriptCode]="unlessTs"
+      [typescriptModal]="unlessModal"
+      [templateModal]="unlessTplModal"
+      modalTitle="*appUnless — Full TypeScript"
+      templateModalTitle="*appUnless — Full HTML Template"
+    />
+  </div>
+</section>

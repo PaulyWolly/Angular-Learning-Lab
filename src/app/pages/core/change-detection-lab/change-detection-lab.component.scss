@@ -1,0 +1,11 @@
+@use '../lesson-shared';
+
+.cd-grid {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+
+  @media (min-width: 40rem) {
+    grid-template-columns: 1fr 1fr;
+  }
+}

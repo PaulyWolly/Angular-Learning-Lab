@@ -1,0 +1,161 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Forms</h1>
+  <p class="lesson__lead">
+    Two styles, same goal. <strong>Reactive</strong> builds a <code>FormGroup</code> in the class —
+    ideal for tests and complex rules. <strong>Template-driven</strong> uses
+    <code>[(ngModel)]</code> and validators in the HTML — quick for simple forms. Interview tip:
+    know both; prefer reactive for most app code.
+  </p>
+
+  <div class="forms-tabs" role="tablist" aria-label="Form style">
+    <button
+      type="button"
+      role="tab"
+      class="forms-tabs__btn"
+      [class.is-active]="tab() === 'reactive'"
+      [attr.aria-selected]="tab() === 'reactive'"
+      (click)="tab.set('reactive')"
+    >
+      Reactive
+    </button>
+    <button
+      type="button"
+      role="tab"
+      class="forms-tabs__btn"
+      [class.is-active]="tab() === 'template'"
+      [attr.aria-selected]="tab() === 'template'"
+      (click)="tab.set('template')"
+    >
+      Template-driven
+    </button>
+  </div>
+
+  @if (tab() === 'reactive') {
+    <div class="lesson__card" role="tabpanel">
+      <h2>Live: profile FormGroup</h2>
+      <p class="muted">
+        Validators live in TypeScript. Template binds with <code>[formGroup]</code> /
+        <code>formControlName</code>.
+      </p>
+      <form class="form" [formGroup]="profileForm" (ngSubmit)="submitReactive()">
+        <label class="field">
+          Name
+          <input formControlName="name" autocomplete="name" />
+        </label>
+        @if (nameCtrl.touched && nameCtrl.invalid) {
+          <p class="form__error">Name is required (min 2 characters).</p>
+        }
+
+        <label class="field">
+          Email
+          <input formControlName="email" type="email" autocomplete="email" />
+        </label>
+        @if (emailCtrl.touched && emailCtrl.invalid) {
+          <p class="form__error">Enter a valid email.</p>
+        }
+
+        <label class="field">
+          Role
+          <select formControlName="role">
+            <option value="learner">learner</option>
+            <option value="mentor">mentor</option>
+            <option value="interviewer">interviewer</option>
+          </select>
+        </label>
+
+        <div class="demo-row">
+          <button type="submit" class="btn btn--primary">Save</button>
+          <button type="button" class="btn" (click)="resetReactive()">Reset</button>
+          <span class="muted">
+            status:
+            <strong>{{ profileForm.valid ? 'valid' : 'invalid' }}</strong>
+          </span>
+        </div>
+      </form>
+
+      <div class="preview">
+        Live value:
+        <code>{{ profileForm.getRawValue() | json }}</code>
+      </div>
+
+      <app-lesson-syntax
+        [templateCode]="formTpl"
+        [typescriptCode]="formTs"
+        [typescriptModal]="formModal"
+        modalTitle="Reactive Form — Full TypeScript"
+      />
+    </div>
+  } @else {
+    <div class="lesson__card" role="tabpanel">
+      <h2>Live: NgForm + ngModel</h2>
+      <p class="muted">
+        Needs <code>FormsModule</code>. Template refs like <code>#f="ngForm"</code> and
+        <code>#name="ngModel"</code> expose validity. Same fields as the reactive tab for an easy
+        side-by-side comparison.
+      </p>
+      <form class="form" #f="ngForm" (ngSubmit)="submitTemplate(f)">
+        <label class="field">
+          Name
+          <input
+            name="name"
+            [(ngModel)]="tdName"
+            required
+            minlength="2"
+            #nameModel="ngModel"
+            autocomplete="name"
+          />
+        </label>
+        @if (nameModel.touched && nameModel.invalid) {
+          <p class="form__error">Name is required (min 2 characters).</p>
+        }
+
+        <label class="field">
+          Email
+          <input
+            name="email"
+            type="email"
+            [(ngModel)]="tdEmail"
+            required
+            email
+            #emailModel="ngModel"
+            autocomplete="email"
+          />
+        </label>
+        @if (emailModel.touched && emailModel.invalid) {
+          <p class="form__error">Enter a valid email.</p>
+        }
+
+        <label class="field">
+          Role
+          <select name="role" [(ngModel)]="tdRole" required>
+            <option value="learner">learner</option>
+            <option value="mentor">mentor</option>
+            <option value="interviewer">interviewer</option>
+          </select>
+        </label>
+
+        <div class="demo-row">
+          <button type="submit" class="btn btn--primary">Save</button>
+          <button type="button" class="btn" (click)="resetTemplate(f)">Reset</button>
+          <span class="muted">
+            status:
+            <strong>{{ f.valid ? 'valid' : 'invalid' }}</strong>
+          </span>
+        </div>
+      </form>
+
+      <div class="preview">
+        Live value:
+        <code>{{ { name: tdName, email: tdEmail, role: tdRole } | json }}</code>
+      </div>
+
+      <app-lesson-syntax
+        [templateCode]="tdTpl"
+        [typescriptCode]="tdTs"
+        [typescriptModal]="tdModal"
+        modalTitle="Template-driven Form — Full TypeScript"
+      />
+    </div>
+  }
+</section>

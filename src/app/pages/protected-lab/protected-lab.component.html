@@ -1,0 +1,20 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Protected page</h1>
+  <p class="lesson__lead">
+    You only see this because <code>demoAuthGuard</code> returned <code>true</code>
+    (<code>loggedIn()</code> was true).
+  </p>
+
+  <div class="lesson__card">
+    <p>
+      Demo status: logged in as
+      <strong>{{ auth.loggedIn() ? 'yes' : 'no' }}</strong>.
+      <button type="button" class="btn" (click)="auth.logout()">Log out</button>
+    </p>
+    <p class="muted">
+      Log out (here or in the header) clears demo auth and sends you to
+      <a routerLink="/routes/guards">Guards</a>. Visiting this URL while logged out does the same via the guard.
+    </p>
+  </div>
+</section>

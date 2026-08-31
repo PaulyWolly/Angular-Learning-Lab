@@ -1,0 +1,188 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Subjects · BehaviorSubject</h1>
+  <p class="lesson__lead">
+    One correction that unlocks this: a plain <strong>Subject</strong> does
+    <em>not</em> remember “what is now.” It only shouts to whoever is listening
+    <em>at that instant</em>. A <strong>BehaviorSubject</strong> <em>does</em> remember the current
+    value — so a component that shows up later still gets an answer.
+  </p>
+
+  <div class="lesson__card story">
+    <h2>Start here — plain English</h2>
+
+    <p class="story__why">
+      <strong>Why “late” at all?</strong> In an Angular app, components are created at different
+      times. The header might subscribe at startup. A dialog or route page you open
+      <em>later</em> also needs the same data (logged-in user, theme, last search). That second
+      component is a late subscriber — it wasn’t around when the first value was pushed. With a
+      plain Subject it would sit there empty until something happens again. With a BehaviorSubject
+      it immediately gets “whatever is current right now,” without waiting for another click or
+      HTTP call.
+    </p>
+
+    <div class="story__grid">
+      <div class="story__panel">
+        <p class="story__label">Subject ≈ live radio</p>
+        <p>
+          You turn on the radio <em>now</em>. You hear whatever is broadcast from this moment on.
+          Songs that played before you tuned in? Gone. You missed them.
+        </p>
+        <p class="story__code">
+          <code>next('ping')</code> = DJ says something.<br />
+          Subscribe late = you only hear the <em>next</em> ping.
+        </p>
+      </div>
+      <div class="story__panel story__panel--behavior">
+        <p class="story__label">BehaviorSubject ≈ sticky note</p>
+        <p>
+          There is always a note on the fridge (it starts with a default). Anyone who walks up
+          — even hours later — still reads the <em>current</em> note right away.
+        </p>
+        <p class="story__code">
+          <code>new BehaviorSubject('cream')</code> = first note.<br />
+          Open a new page later = you still get the latest note immediately.
+        </p>
+      </div>
+    </div>
+
+    <table class="story__table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Subject</th>
+          <th>BehaviorSubject</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Needs a starting value?</th>
+          <td>No</td>
+          <td>Yes (the seed)</td>
+        </tr>
+        <tr>
+          <th scope="row">Late subscriber</th>
+          <td>Waits for the next push</td>
+          <td>Gets the last value right away</td>
+        </tr>
+        <tr>
+          <th scope="row">Good for</th>
+          <td>One-off events (clicks, “user logged out”)</td>
+          <td>Current state (theme, logged-in user)</td>
+        </tr>
+        <tr>
+          <th scope="row">In this app</th>
+          <td>Event bus (panel ping / pong)</td>
+          <td>Late-join demo below</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="story__try">
+      <strong>Try this:</strong> On the compare card, click <code>next('ping')</code> a few times on
+      the Subject side, then <strong>Late-join</strong> — you’ll see “(nothing yet)”. Then set
+      BehaviorSubject to <code>teal</code> and Late-join — you’ll get <code>teal</code> immediately.
+      That one experiment is the whole interview answer.
+    </p>
+  </div>
+
+  <div class="lesson__card">
+    <h2>Live: publish from two “panels” (<code>Subject</code>)</h2>
+    <p class="muted">
+      Radio metaphor in action: both buttons talk into the same
+      <code>LabEventBusService</code>. Anyone already listening hears the ping. Someone who
+      “tuned in” later only hears <em>future</em> pings — not the ones that already happened.
+      Late-join hits: <strong>{{ lateJoinCount() }}</strong>
+    </p>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="publish('Panel A', 'ping')">
+        Panel A → ping
+      </button>
+      <button type="button" class="btn" (click)="publish('Panel B', 'pong')">
+        Panel B → pong
+      </button>
+      <button type="button" class="btn" (click)="publish('Header', 'nav clicked')">
+        Simulate header
+      </button>
+    </div>
+
+    <ul class="feed">
+      @if (feed$ | async; as events) {
+        @if (events.length === 0) {
+          <li class="muted">No events yet — publish something.</li>
+        } @else {
+          @for (ev of events; track $index) {
+            <li>
+              <code>{{ ev.at }}</code>
+              <strong>{{ ev.source }}</strong>
+              <span>{{ ev.message }}</span>
+            </li>
+          }
+        }
+      }
+    </ul>
+
+    <app-lesson-syntax
+      [templateCode]="busTpl"
+      [typescriptCode]="busTs"
+      [typescriptModal]="busModal"
+      modalTitle="Subject event bus — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Feel the difference — Late-join experiment</h2>
+    <p class="muted">
+      Left = radio (Subject). Right = sticky note (BehaviorSubject). Push values, then click
+      <strong>Late-join</strong> on each side and compare what the newcomer received.
+    </p>
+
+    <div class="compare">
+      <div class="compare__col">
+        <h3 class="compare__title">Subject · radio</h3>
+        <p class="muted">No seed · missed the past</p>
+        <div class="demo-row">
+          <button type="button" class="btn" (click)="pushPlain('ping')">
+            next('ping')
+          </button>
+          <button type="button" class="btn btn--primary" (click)="lateJoinPlain()">
+            Late-join
+          </button>
+        </div>
+        <p class="preview">
+          Emits so far: <strong>{{ plainEmitCount() }}</strong><br />
+          Late subscriber got:
+          <strong>{{ plainLateGot() ?? '(nothing yet — missed the past)' }}</strong>
+        </p>
+      </div>
+
+      <div class="compare__col compare__col--behavior">
+        <h3 class="compare__title">BehaviorSubject · sticky note</h3>
+        <p class="muted">Always has a current value</p>
+        <div class="demo-row">
+          <button type="button" class="btn" (click)="setBehavior('cream')">
+            next('cream')
+          </button>
+          <button type="button" class="btn" (click)="setBehavior('teal')">
+            next('teal')
+          </button>
+          <button type="button" class="btn btn--primary" (click)="lateJoinBehavior()">
+            Late-join
+          </button>
+        </div>
+        <p class="preview">
+          Current note (<code>.value</code>): <strong>{{ behaviorCurrent() }}</strong><br />
+          Late subscriber got immediately:
+          <strong>{{ behaviorLateGot() ?? '(click Late-join)' }}</strong>
+        </p>
+      </div>
+    </div>
+
+    <app-lesson-syntax
+      [templateCode]="behaviorTpl"
+      [typescriptCode]="behaviorTs"
+      [typescriptModal]="behaviorModal"
+      modalTitle="BehaviorSubject — Full TypeScript"
+    />
+  </div>
+</section>

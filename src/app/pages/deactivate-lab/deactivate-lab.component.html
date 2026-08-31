@@ -1,0 +1,51 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>CanDeactivate</h1>
+  <p class="lesson__lead">
+    <code>CanActivate</code> blocks <em>entering</em> a route (see Guards).
+    <code>CanDeactivate</code> blocks <em>leaving</em> when the component says the form is dirty.
+    Edit the draft, then try a sub-nav link or the Leave button below.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live: dirty draft form</h2>
+    <form class="form" [formGroup]="draftForm" (ngSubmit)="save()">
+      <label class="field">
+        Name
+        <input formControlName="name" autocomplete="off" />
+      </label>
+      @if (draftForm.controls.name.touched && draftForm.controls.name.invalid) {
+        <p class="form__error">Name is required (min 2 characters).</p>
+      }
+
+      <label class="field">
+        Notes
+        <textarea formControlName="notes" rows="3"></textarea>
+      </label>
+
+      <div class="demo-row">
+        <button type="submit" class="btn btn--primary">Save</button>
+        <button type="button" class="btn" (click)="resetDemo()">Reset</button>
+        <a class="btn btn--link" routerLink="/routes/guards">Leave to Guards</a>
+        <span class="muted">
+          dirty:
+          <strong [class.on]="draftForm.dirty" [class.off]="!draftForm.dirty">
+            {{ draftForm.dirty ? 'yes' : 'no' }}
+          </strong>
+        </span>
+      </div>
+    </form>
+
+    <p class="muted">
+      Type something (dirty = yes), click Leave or another Routes tab — confirm to leave, Cancel to
+      stay. Save marks the form pristine so leave is free.
+    </p>
+
+    <app-lesson-syntax
+      [templateCode]="formTpl"
+      [typescriptCode]="formTs"
+      [typescriptModal]="guardModal"
+      modalTitle="unsavedChangesGuard — Full TypeScript"
+    />
+  </div>
+</section>

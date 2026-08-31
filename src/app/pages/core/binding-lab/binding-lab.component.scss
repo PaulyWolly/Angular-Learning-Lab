@@ -1,0 +1,13 @@
+@use '../lesson-shared';
+
+.chip.on {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+}

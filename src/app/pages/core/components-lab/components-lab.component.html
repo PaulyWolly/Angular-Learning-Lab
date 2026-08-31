@@ -1,0 +1,189 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Components</h1>
+  <p class="lesson__lead">
+    A <strong>component</strong> is the main UI building block in Angular: a class +
+    <code>&#64;Component</code> metadata + a template. This lab covers anatomy,
+    <strong>inputs</strong> (data down), <strong>outputs</strong> (events up),
+    <strong>standalone / imports</strong>, and <strong>content projection</strong>
+    (<code>ng-content</code>).
+  </p>
+
+  <div class="lesson__card">
+    <h2>Anatomy — decorator, class, template</h2>
+    <p class="muted">
+      Every screen piece you see is a component. The selector becomes an HTML tag; the class
+      holds state; the template reads that state. The decorator also declares
+      <code>standalone</code> and an <code>imports</code> array (next card).
+    </p>
+    <div class="building-blocks">
+      <div class="building-blocks__item">
+        <span class="building-blocks__n">1</span>
+        <div>
+          <strong>&#64;Component</strong>
+          <p>selector, standalone, imports, template</p>
+        </div>
+      </div>
+      <div class="building-blocks__item">
+        <span class="building-blocks__n">2</span>
+        <div>
+          <strong>Class</strong>
+          <p>fields, methods, inject()</p>
+        </div>
+      </div>
+      <div class="building-blocks__item">
+        <span class="building-blocks__n">3</span>
+        <div>
+          <strong>Template</strong>
+          <p>HTML + bindings</p>
+        </div>
+      </div>
+      <div class="building-blocks__item">
+        <span class="building-blocks__n">4</span>
+        <div>
+          <strong>Composition</strong>
+          <p>parent hosts children</p>
+        </div>
+      </div>
+    </div>
+    <app-demo-greeter [name]="name" [title]="title" />
+    <app-lesson-syntax
+      [templateCode]="anatomyTpl"
+      [typescriptCode]="anatomyTs"
+      [typescriptModal]="anatomyModal"
+      modalTitle="Component anatomy — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Standalone + <code>imports</code></h2>
+    <p class="muted">
+      In Angular v20 (and this app), components are <strong>standalone by default</strong>. That means
+      each component declares what its <em>own template</em> needs in
+      <code>imports: […]</code> — you do <strong>not</strong> register children in an
+      <code>NgModule</code>.
+    </p>
+    <ul class="map-list">
+      <li>
+        <strong>standalone: true</strong> — this component is self-contained; list its template
+        dependencies in <code>imports</code>.
+      </li>
+      <li>
+        <strong>Child components</strong> — e.g. <code>DemoGreeterComponent</code> must be in
+        <code>imports</code> before you can write <code>&lt;app-demo-greeter&gt;</code>.
+      </li>
+      <li>
+        <strong>Directives / pipes / modules</strong> — e.g. <code>FormsModule</code> for
+        <code>[(ngModel)]</code>, <code>RouterLink</code> for <code>routerLink</code>,
+        <code>AsyncPipe</code> for <code>| async</code>.
+      </li>
+      <li>
+        <strong>Only what this template uses</strong> — don’t import unused pieces; each
+        standalone component opts in explicitly (good for tree-shaking and clarity).
+      </li>
+      <li>
+        <strong>When would standalone be false?</strong> Legacy NgModule apps. New code and this
+        lab stay on <code>standalone: true</code>.
+      </li>
+    </ul>
+    <app-lesson-syntax
+      [templateCode]="standaloneTpl"
+      [typescriptCode]="standaloneTs"
+      [typescriptModal]="standaloneModal"
+      modalTitle="standalone + imports — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Inputs — data flows down</h2>
+    <p class="muted">
+      Parent owns the values; child receives them with <code>input()</code> (or classic
+      <code>&#64;Input</code>). Change the fields below — the child updates. The labels
+      <strong>Name</strong> / <strong>Title</strong> edit class fields
+      <code>name</code> / <code>title</code>.
+    </p>
+    <div class="demo-row demo-row--stack">
+      <label>
+        Name
+        <input type="text" [(ngModel)]="name" />
+      </label>
+      <label>
+        Title
+        <input type="text" [(ngModel)]="title" />
+      </label>
+    </div>
+    <app-demo-greeter [name]="name" [title]="title" />
+    <app-lesson-syntax
+      [templateCode]="inputTpl"
+      [typescriptCode]="inputTs"
+      [typescriptModal]="inputModal"
+      modalTitle="input() — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Outputs — events flow up</h2>
+    <p class="muted">
+      The child emits; the parent listens with <code>(voted)="…"</code>. Prefer
+      <code>output()</code> in new code (signal-era API).
+    </p>
+    <div class="demo-row">
+      <app-demo-vote (voted)="onChildVoted($event)" />
+      <p class="preview">
+        Parent received last emit:
+        <strong>{{ parentVoteTotal }}</strong>
+      </p>
+    </div>
+    <app-lesson-syntax
+      [templateCode]="outputTpl"
+      [typescriptCode]="outputTs"
+      [typescriptModal]="outputModal"
+      modalTitle="output() — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Content projection — <code>ng-content</code></h2>
+    <p class="muted">
+      Markup between the child’s tags is stamped into <code>&lt;ng-content /&gt;</code>. That is
+      different from an input — you project a template, not a string property.
+    </p>
+    <app-demo-panel heading="Projected content">
+      <p>
+        This paragraph lives in the <strong>parent</strong> template. The panel only provides the
+        chrome; <code>ng-content</code> inserts whatever you nest inside.
+      </p>
+      <p class="muted">Useful for cards, dialogs, layout shells, and reusable wrappers.</p>
+    </app-demo-panel>
+    <app-lesson-syntax
+      [templateCode]="projectTpl"
+      [typescriptCode]="projectTs"
+      [typescriptModal]="projectModal"
+      modalTitle="ng-content — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Where this sits in the Core map</h2>
+    <p class="muted">
+      Components are the UI units. Other Core labs dig into each piece of the system:
+    </p>
+    <ul class="map-list">
+      <li>
+        <a routerLink="/core/templates">Templates</a> — templateUrl vs inline backticks
+      </li>
+      <li>
+        <a routerLink="/core/binding">Data Binding</a> — interpolation, property, event, two-way
+      </li>
+      <li>
+        <a routerLink="/core/directives">Directives</a> — change DOM structure / behavior
+      </li>
+      <li>
+        <a routerLink="/core/services">Services</a> — shared logic via DI
+      </li>
+      <li>
+        <a routerLink="/core/signals">Signals</a> — modern reactive state inside components
+      </li>
+    </ul>
+  </div>
+</section>

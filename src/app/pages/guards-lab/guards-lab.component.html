@@ -1,0 +1,41 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Guards</h1>
+  <p class="lesson__lead">
+    A <strong>guard</strong> runs before a route activates. It returns
+    <code>true</code> (allow), <code>false</code> (block), or a
+    <code>UrlTree</code> (redirect). Live controls plus Template + TypeScript; the full guard
+    opens in a modal.
+  </p>
+
+  @if (wasBlocked()) {
+    <aside class="lesson__banner" role="status">
+      You tried <code>/routes/protected</code> while logged out. The guard redirected you here.
+    </aside>
+  }
+
+  <div class="lesson__card">
+    <h2>Demo auth + CanActivate</h2>
+    <p>
+      Logged in:
+      <strong [class.on]="auth.loggedIn()" [class.off]="!auth.loggedIn()">
+        {{ auth.loggedIn() ? 'yes' : 'no' }}
+      </strong>
+    </p>
+    <div class="lesson__actions">
+      <button type="button" class="btn btn--primary" (click)="auth.login()">Log in</button>
+      <button type="button" class="btn" (click)="auth.logout()">Log out</button>
+      <a class="btn btn--link" routerLink="/routes/protected">Try /routes/protected</a>
+    </div>
+    <p class="muted">
+      Log in, then open Protected. Any Log out action returns you here (and the guard blocks
+      re-entry while logged out).
+    </p>
+    <app-lesson-syntax
+      [templateCode]="guardTpl"
+      [typescriptCode]="guardTs"
+      [typescriptModal]="guardModal"
+      modalTitle="demoAuthGuard — Full TypeScript"
+    />
+  </div>
+</section>

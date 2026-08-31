@@ -1,0 +1,68 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>HTTP states</h1>
+  <p class="lesson__lead">
+    Real UIs need more than “data or nothing.” Model the request as a
+    <strong>discriminated union</strong> — idle, loading, success, empty, error — and drive the
+    template with <code>&#64;switch</code>. Retry re-runs the last mode.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live: load / empty / fail / retry</h2>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="load('ok')">Load OK</button>
+      <button type="button" class="btn" (click)="load('empty')">Load empty</button>
+      <button type="button" class="btn" (click)="load('fail')">Load fail</button>
+      <button type="button" class="btn" (click)="retry()" [disabled]="state.status === 'idle'">
+        Retry
+      </button>
+      <button type="button" class="btn" (click)="reset()">Reset</button>
+    </div>
+
+    <div class="state-panel" [attr.data-status]="state.status">
+      @switch (state.status) {
+        @case ('idle') {
+          <p class="muted">Idle — pick a Load button to start a request.</p>
+        }
+        @case ('loading') {
+          <p><span class="chip">loading</span> Fetching users…</p>
+        }
+        @case ('empty') {
+          <p>
+            <span class="chip chip--amber">empty</span>
+            Request succeeded, but there is nothing to show.
+          </p>
+          <button type="button" class="btn btn--primary" (click)="retry()">Retry</button>
+        }
+        @case ('error') {
+          <p>
+            <span class="chip chip--danger">error</span>
+            {{ state.message }}
+          </p>
+          <button type="button" class="btn btn--primary" (click)="retry()">Retry</button>
+        }
+        @case ('success') {
+          <p>
+            <span class="chip">success</span>
+            {{ state.users.length }} users
+          </p>
+          <ul class="list">
+            @for (u of state.users; track u.id) {
+              <li>
+                <strong>{{ u.name }}</strong>
+                <span class="muted">{{ u.email }}</span>
+              </li>
+            }
+          </ul>
+        }
+      }
+    </div>
+
+    <app-lesson-syntax
+      [templateCode]="statesTpl"
+      [typescriptCode]="statesTs"
+      [typescriptModal]="statesModal"
+      modalTitle="HTTP UI state — Full TypeScript"
+    />
+  </div>
+</section>

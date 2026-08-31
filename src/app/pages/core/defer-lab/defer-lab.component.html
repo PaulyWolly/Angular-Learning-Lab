@@ -1,0 +1,94 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>&#64;defer</h1>
+  <p class="lesson__lead">
+    <code>&#64;defer</code> is <strong>template-level</strong> lazy loading — keep the route, delay
+    a heavy subtree until a trigger (interaction, timer, viewport, …). Contrast with route
+    <code>loadComponent</code> on the
+    <a routerLink="/routes/lazy">Lazy Loading</a> lab (whole page chunk).
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live: on interaction</h2>
+    <p class="muted">
+      Click or tab-focus the placeholder. Angular downloads the deferred panel chunk, then swaps
+      in <code>&#64;loading</code> (briefly) and the real component.
+    </p>
+    <div class="defer-stage">
+      @defer (on interaction) {
+        <app-defer-heavy-panel />
+      } @placeholder {
+        <button type="button" class="defer-placeholder">
+          Click / focus to load deferred panel…
+        </button>
+      } @loading (minimum 400ms) {
+        <p class="defer-status">Loading deferred panel…</p>
+      } @error {
+        <p class="defer-status defer-status--error">Could not load the deferred chunk.</p>
+      }
+    </div>
+    <app-lesson-syntax
+      [templateCode]="interactionTpl"
+      [typescriptCode]="interactionTs"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Live: on timer(2s)</h2>
+    <p class="muted">No click needed — ~2s after this card renders, the chunk loads.</p>
+    <div class="defer-stage">
+      @defer (on timer(2s)) {
+        <app-defer-heavy-panel />
+      } @placeholder {
+        <p class="defer-placeholder defer-placeholder--static">
+          Waiting on <code>on timer(2s)</code>…
+        </p>
+      } @loading (minimum 300ms) {
+        <p class="defer-status">Fetching…</p>
+      }
+    </div>
+    <app-lesson-syntax [templateCode]="timerTpl" [typescriptCode]="timerTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Live: on viewport</h2>
+    <p class="muted">
+      Scroll until the tall placeholder enters the viewport — then the deferred panel loads.
+    </p>
+    <div class="defer-stage defer-stage--viewport">
+      @defer (on viewport) {
+        <app-defer-heavy-panel />
+      } @placeholder {
+        <p class="defer-placeholder defer-placeholder--tall">
+          Scroll me into view to trigger <code>&#64;defer (on viewport)</code>…
+        </p>
+      } @loading (minimum 300ms) {
+        <p class="defer-status">Loading as you arrive…</p>
+      }
+    </div>
+    <app-lesson-syntax [templateCode]="viewportTpl" [typescriptCode]="viewportTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>&#64;defer vs loadComponent</h2>
+    <ul class="compare">
+      <li>
+        <strong>loadComponent</strong> — new route, new page chunk (see
+        <a routerLink="/routes/lazy">/routes/lazy</a>).
+      </li>
+      <li>
+        <strong>&#64;defer</strong> — same URL; only an island of the template loads later.
+      </li>
+      <li>
+        Know the siblings: <code>&#64;placeholder</code>, <code>&#64;loading</code>,
+        <code>&#64;error</code>.
+      </li>
+    </ul>
+    <app-lesson-syntax
+      [templateCode]="compareTpl"
+      [typescriptCode]="compareTs"
+      [typescriptModal]="compareModal"
+      modalTitle="@defer vs loadComponent — Full TypeScript"
+    />
+  </div>
+</section>

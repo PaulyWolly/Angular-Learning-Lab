@@ -1,0 +1,140 @@
+.dataset {
+  margin-bottom: 2rem;
+}
+
+.dataset__intro {
+  margin-bottom: 1rem;
+
+  h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1.35rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 42rem;
+    line-height: 1.45;
+  }
+}
+
+.dataset__loading {
+  color: var(--muted);
+}
+
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.user-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  padding: 0.7rem 0.85rem;
+
+  &__id {
+
+    font-variant-numeric: tabular-nums;
+    color: var(--teal);
+    font-weight: 700;
+    font-size: 1.2rem;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+
+  &__name {
+    margin: 0.1rem 0 0.35rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  dl {
+    margin: 0;
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  dl > div {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.05rem;
+    align-items: baseline;
+  }
+
+  dt {
+    margin: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+
+  dd {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.25;
+    word-break: break-word;
+  }
+}
+
+.path-legend {
+  background: var(--card);
+  border: 1px dashed var(--line);
+  border-radius: 0.65rem;
+  padding: 0.85rem 1rem;
+
+  h3 {
+    margin: 0 0 0.35rem;
+    font-size: 0.95rem;
+  }
+
+  &__note {
+    margin: 0 0 0.65rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    max-width: 40rem;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  li code {
+    display: inline-block;
+    padding: 0.2rem 0.45rem;
+    background: #f4f1eb;
+    border-radius: 0.3rem;
+    font-size: 0.78rem;
+  }
+}
+
+.user-card__id-number {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--limegreen);
+}
+
+user-card__name-text {
+  font-size: 1.0rem;
+  font-weight: 700;
+  color: var(--ink);
+}

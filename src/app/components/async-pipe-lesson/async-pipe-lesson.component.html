@@ -1,0 +1,68 @@
+<section class="async-lesson" aria-labelledby="async-lesson-heading">
+  <header class="async-lesson__head">
+    <span class="async-lesson__badge">Template pattern</span>
+    <h2 id="async-lesson-heading">async pipe — subscribe in the template</h2>
+  </header>
+
+  <p class="async-lesson__why">
+    <code>| async</code> subscribes for you, unwraps the latest value, and unsubscribes when the
+    view is destroyed. No manual <code>subscribe</code> / <code>DestroyRef</code> for that
+    subscription. The cards below the dataset use this same pattern.
+  </p>
+
+  <div class="pipeline" aria-label="Pipeline">
+    <span class="pipe-box">users$</span>
+    <span class="pipe-arrow" aria-hidden="true">→</span>
+    <span class="pipe-box">| async</span>
+    <span class="pipe-arrow" aria-hidden="true">→</span>
+    <span class="pipe-box">template (users)</span>
+  </div>
+
+  <p class="narrate" role="status">
+    Live below: same <code>users$</code> as the dataset — subscribed only via
+    <code>| async</code>.
+  </p>
+
+  <div class="async-lesson__actions">
+    <button type="button" class="complete-code" (click)="modalOpen.set(true)">
+      Complete Code
+    </button>
+  </div>
+
+  <div class="live-board">
+    <div class="panel-box">
+      <h3>Status</h3>
+      @if (users$ | async; as users) {
+        <p>
+          <strong>{{ users.length }}</strong> users received
+          <span class="muted">(subscription managed by async pipe)</span>
+        </p>
+        <ul class="name-list">
+          @for (u of users; track u.id) {
+            <li>{{ u.id }} — {{ u.name }}</li>
+          }
+        </ul>
+      } @else {
+        <p class="muted">Waiting for first emission…</p>
+      }
+    </div>
+    <div class="panel-box">
+      <h3>vs manual subscribe</h3>
+      <ul class="compare">
+        <li><strong>async pipe</strong> — display data; auto teardown</li>
+        <li><strong>subscribe()</strong> — Steps 1–5 narration &amp; animation</li>
+        <li><strong>takeUntilDestroyed</strong> — Step 6 long-lived valueChanges</li>
+      </ul>
+    </div>
+  </div>
+
+  <pre class="async-lesson__code"><code>{{ sampleCode }}</code></pre>
+
+  @if (modalOpen()) {
+    <app-code-modal
+      title="async pipe — Complete Code"
+      [code]="completeCode"
+      (closed)="modalOpen.set(false)"
+    />
+  }
+</section>

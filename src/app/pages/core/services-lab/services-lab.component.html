@@ -1,0 +1,52 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Services</h1>
+  <p class="lesson__lead">
+    A <strong>service</strong> holds shared logic or state. Register it with
+    <code>&#64;Injectable</code>, get it with <code>inject()</code> (or constructor DI). Each card
+    pairs Template + TypeScript (Full TypeScript opens the service class in a modal).
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live: CounterService (shared singleton)</h2>
+    <p>
+      Value: <strong>{{ counter.value() }}</strong>
+      <span class="muted"> — {{ counter.label() }}</span>
+    </p>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="counter.increment()">+</button>
+      <button type="button" class="btn" (click)="counter.decrement()">−</button>
+      <button type="button" class="btn" (click)="counter.reset()">Reset</button>
+    </div>
+    <p class="muted">
+      Navigate away and come back — the count stays, because
+      <code>providedIn: 'root'</code> makes one shared instance.
+    </p>
+    <app-lesson-syntax
+      [templateCode]="counterTpl"
+      [typescriptCode]="counterTs"
+      [typescriptModal]="counterModal"
+      modalTitle="CounterService — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Services you already use</h2>
+    <ul class="list">
+      <li>
+        <code>UsersService</code> — <code>users$</code> via HttpClient
+        @if (users$ | async; as users) {
+          <span class="chip">{{ users.length }} users cached</span>
+        }
+      </li>
+      <li>
+        <code>DemoAuthService</code> — logged in =
+        <strong>{{ auth.loggedIn() ? 'yes' : 'no' }}</strong>
+        (toggle in the header or on
+        <a routerLink="/routes/guards">Guards</a>)
+      </li>
+      <li><code>CounterService</code> — this page’s demo counter</li>
+    </ul>
+    <app-lesson-syntax [templateCode]="injectTpl" [typescriptCode]="injectTs" />
+  </div>
+</section>

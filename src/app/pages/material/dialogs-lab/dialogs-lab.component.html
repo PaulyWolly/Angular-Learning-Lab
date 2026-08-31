@@ -1,0 +1,136 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Angular Material · Dialogs &amp; Feedback</h1>
+  <p class="lesson__lead">
+    Material feedback tools include modal dialogs (<code>MatDialog</code>), ephemeral toast notifications (<code>MatSnackBar</code>),
+    progress indicators (<code>MatProgressBar</code>, <code>MatProgressSpinner</code>), and contextual tooltips (<code>MatTooltip</code>).
+  </p>
+
+  <!-- Card 1: Modal Dialog -->
+  <div class="lesson__card">
+    <h2>1. Modal Dialog (<code>MatDialog</code> + Data Passing)</h2>
+    <p class="muted">
+      Open a floating modal overlay with strong focus trapping, animation, and two-way result communication:
+    </p>
+
+    <div class="user-status-card">
+      <div class="user-info">
+        <mat-icon class="user-avatar">account_circle</mat-icon>
+        <div>
+          <strong>{{ currentUser().userName }}</strong>
+          <span>{{ currentUser().projectRole }}</span>
+        </div>
+      </div>
+      <button mat-flat-button color="primary" (click)="openDialog()">
+        <mat-icon>edit</mat-icon> Open Edit Dialog
+      </button>
+    </div>
+
+    @if (lastDialogResult(); as res) {
+      <p class="dialog-result-note">
+        <mat-icon>info</mat-icon> Result: <strong>{{ res }}</strong>
+      </p>
+    }
+
+    <app-lesson-syntax
+      [templateCode]="dialogTpl"
+      [typescriptCode]="dialogTs"
+      [typescriptModal]="dialogModal"
+      modalTitle="MatDialog — Full TypeScript"
+    />
+  </div>
+
+  <!-- Card 2: SnackBar -->
+  <div class="lesson__card">
+    <h2>2. SnackBar (Toast Notifications)</h2>
+    <p class="muted">
+      Display a temporary non-blocking notification with an optional action button:
+    </p>
+
+    <div class="snackbar-demo-row">
+      <button mat-flat-button color="accent" (click)="showSnackBar()">
+        <mat-icon>campaign</mat-icon> Show SnackBar
+      </button>
+      <span class="muted">Duration: 3500ms with interactive "Undo" action</span>
+    </div>
+
+    <app-lesson-syntax
+      [templateCode]="snackbarTpl"
+      [typescriptCode]="snackbarTs"
+      [typescriptModal]="snackbarModal"
+      modalTitle="SnackBar — Full TypeScript"
+    />
+  </div>
+
+  <!-- Card 3: Progress & Tooltips -->
+  <div class="lesson__card">
+    <h2>3. Progress Bars, Spinners &amp; Tooltips</h2>
+    <p class="muted">
+      Visual indicators for async loading, determinate tasks, and contextual hover hints:
+    </p>
+
+    <div class="progress-controls-row">
+      <label>
+        Progress: <strong>{{ progressValue }}%</strong>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          [(ngModel)]="progressValue"
+          [disabled]="isIndeterminate"
+        />
+      </label>
+      <mat-slide-toggle [(ngModel)]="isIndeterminate" color="primary">
+        Indeterminate Mode
+      </mat-slide-toggle>
+    </div>
+
+    <div class="progress-display-grid">
+      <div class="progress-box">
+        <span class="box-label">Progress Bar</span>
+        <mat-progress-bar
+          [mode]="isIndeterminate ? 'indeterminate' : 'determinate'"
+          [value]="progressValue"
+          color="primary"
+        />
+      </div>
+
+      <div class="progress-box">
+        <span class="box-label">Progress Spinner</span>
+        <mat-progress-spinner
+          [mode]="isIndeterminate ? 'indeterminate' : 'determinate'"
+          [value]="progressValue"
+          diameter="48"
+          color="accent"
+        />
+      </div>
+    </div>
+
+    <div class="tooltip-demo-row">
+      <span class="muted">Tooltip Position:</span>
+      <mat-form-field appearance="outline" class="tooltip-pos-field">
+        <mat-select [(ngModel)]="tooltipPosition">
+          @for (pos of tooltipPositions; track pos) {
+            <mat-option [value]="pos">{{ pos }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <button
+        mat-stroked-button
+        [matTooltip]="'I am positioned ' + tooltipPosition + '!'"
+        [matTooltipPosition]="tooltipPosition"
+        aria-label="Button with interactive tooltip"
+      >
+        <mat-icon>help_outline</mat-icon> Hover or Focus Me
+      </button>
+    </div>
+
+    <app-lesson-syntax
+      [templateCode]="progressTpl"
+      [typescriptCode]="progressTs"
+      [typescriptModal]="progressModal"
+      modalTitle="Progress & Tooltips — Full TypeScript"
+    />
+  </div>
+</section>

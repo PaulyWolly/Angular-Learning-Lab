@@ -1,0 +1,52 @@
+@use '../core/lesson-shared';
+
+.back {
+  margin: 0 0 0.75rem;
+
+  a {
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.list {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+
+  li {
+    display: grid;
+    gap: 0.2rem;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    background: #fff;
+  }
+
+  .muted {
+    margin: 0 !important;
+    font-size: 0.85rem;
+  }
+}
+
+.preview {
+  margin-top: 0.65rem;
+  display: grid;
+  gap: 0.25rem;
+
+  p {
+    margin: 0.25rem 0 0;
+  }
+}
+
+.btn--primary {
+  border-color: transparent;
+  background: var(--teal);
+  color: #fff;
+}

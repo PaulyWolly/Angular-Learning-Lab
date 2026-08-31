@@ -1,0 +1,50 @@
+<section class="concepts" aria-label="Producer, Observable, Observer">
+  <div class="flow" aria-hidden="true">
+    <span class="flow__piece flow__piece--producer">Producer</span>
+    <span class="flow__arrow">→</span>
+    <span class="flow__piece flow__piece--obs">Observable</span>
+    <span class="flow__arrow">→</span>
+    <span class="flow__piece flow__piece--observer">Observer</span>
+  </div>
+
+  <p class="flow-explain">
+    In this lab the <strong>producer</strong> is <code>HttpClient</code> fetching
+    <code>/users</code>. It does the real work and pushes the result out.
+    <code>users$</code> is the Observable recipe that describes that work.
+    The <strong>Observer</strong> is only the callbacks you pass to
+    <code>subscribe</code> — it listens; it does not fetch.
+  </p>
+
+  <div class="duo">
+    <article class="duo__panel duo__panel--obs">
+      <h2>Observable</h2>
+      <p class="duo__tagline">Lazy <strong>recipe</strong> — like an uncalled function.</p>
+      <ul>
+        <li>Holds / describes the producer’s work</li>
+        <li>Harmless until someone subscribes</li>
+        <li>Cold HTTP: work runs when subscribed (until shared)</li>
+      </ul>
+    </article>
+
+    <article class="duo__panel duo__panel--observer">
+      <h2>Observer</h2>
+      <p class="duo__tagline">Object you pass to <code>subscribe</code>.</p>
+      <ul>
+        <li><code>{{ '{' }} next, error, complete {{ '}' }}</code></li>
+        <li><code>next</code> — you receive each value the producer sends</li>
+        <li>
+          <code>complete</code> — you <em>register</em> this callback; the producer
+          <em>calls</em> it when finished (e.g. HTTP response done). You do not call
+          <code>complete</code> yourself.
+        </li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<aside class="sub-note" role="note">
+  <strong>Also: Subscription.</strong>
+  That is the active listening session between producer and Observer — what you
+  unsubscribe or tear down with <code>async</code> pipe /
+  <code>takeUntilDestroyed()</code>. Not the same as <code>ngOnDestroy</code> itself.
+</aside>

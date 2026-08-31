@@ -1,0 +1,86 @@
+@use '../lesson-shared';
+
+.callout {
+  margin-bottom: 0.85rem;
+  padding: 0.65rem 0.85rem;
+  border-left: 3px solid var(--teal);
+  background: color-mix(in srgb, var(--teal-soft) 55%, transparent);
+  border-radius: 0 0.35rem 0.35rem 0;
+}
+
+.subhead {
+  margin: 1.25rem 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.ngclass-compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.ngclass-compare__label {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  color: var(--muted, #6b7280);
+}
+
+.mod-swatch {
+  font-size: 1.75rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* High contrast on cream preview (#faf8f4) — text + tinted fill so the flip is obvious */
+.green {
+  color: #047857;
+  background: #d1fae5 !important;
+  border-color: #059669;
+}
+
+.red {
+  color: #b91c1c;
+  background: #fecaca !important;
+  border-color: #dc2626;
+}
+
+.tone--calm {
+  border-color: color-mix(in srgb, var(--teal) 35%, var(--line));
+}
+
+.tone--alert {
+  background: var(--amber-soft);
+  border-color: color-mix(in srgb, var(--amber) 40%, var(--line));
+  color: var(--amber);
+}
+
+.parity-readout {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 1.05rem;
+
+  strong {
+    font-size: 1.35rem;
+  }
+}
+
+.even-swatch {
+  color: var(--teal);
+}
+
+.odd-swatch {
+  color: var(--danger);
+}
+
+.invalid-example {
+  font-weight: 700;
+  color: var(--danger);
+}

@@ -1,0 +1,24 @@
+<section class="routes-shell">
+  <header class="routes-shell__head">
+    <p class="routes-shell__eyebrow">Nested route shell</p>
+    <p class="routes-shell__hint">
+      This parent stays mounted. Child labs render below in
+      <code>&lt;router-outlet&gt;</code>.
+    </p>
+    <nav class="routes-shell__nav" aria-label="Routing lessons">
+      @for (link of links; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: link.exact }"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </nav>
+  </header>
+
+  <div class="routes-shell__outlet">
+    <router-outlet />
+  </div>
+</section>

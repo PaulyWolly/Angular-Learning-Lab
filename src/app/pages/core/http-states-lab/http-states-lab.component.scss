@@ -1,0 +1,60 @@
+@use '../lesson-shared';
+
+.state-panel {
+  margin: 0.75rem 0 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: #fff;
+  min-height: 5rem;
+
+  &[data-status='loading'] {
+    border-color: color-mix(in srgb, var(--teal) 45%, var(--line));
+    background: color-mix(in srgb, var(--teal-soft) 40%, #fff);
+  }
+
+  &[data-status='error'] {
+    border-color: color-mix(in srgb, var(--danger) 40%, var(--line));
+  }
+
+  &[data-status='empty'] {
+    border-color: color-mix(in srgb, var(--amber) 50%, var(--line));
+    background: color-mix(in srgb, var(--amber-soft) 50%, #fff);
+  }
+
+  .btn {
+    margin-top: 0.65rem;
+  }
+}
+
+.chip--amber {
+  background: var(--amber-soft);
+  color: color-mix(in srgb, var(--amber) 70%, #000);
+}
+
+.chip--danger {
+  background: color-mix(in srgb, var(--danger) 18%, #fff);
+  color: var(--danger);
+}
+
+.list {
+  list-style: none;
+  margin: 0.65rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+
+  li {
+    display: grid;
+    gap: 0.1rem;
+    padding: 0.45rem 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: 0.4rem;
+    background: #faf8f4;
+  }
+
+  .muted {
+    margin: 0 !important;
+    font-size: 0.85rem;
+  }
+}

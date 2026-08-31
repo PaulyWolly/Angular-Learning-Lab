@@ -1,0 +1,77 @@
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__credit">
+      Data from
+      <a href="https://jsonplaceholder.typicode.com/users" target="_blank" rel="noopener noreferrer"
+        >JSONPlaceholder</a
+      >.
+      Freestanding Angular learning lab.
+    </p>
+
+    <nav class="site-footer__nav" aria-label="Footer">
+      @for (item of items; track $index) {
+        @if (item.kind === 'link') {
+          <a
+            [routerLink]="item.link.path"
+            routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{ exact: item.link.exact === true }"
+            [title]="item.link.hint ?? item.link.label"
+          >
+            {{ item.link.label }}
+          </a>
+        } @else {
+          <div
+            class="site-footer__dropdown"
+            [class.is-open]="isOpen(item.group)"
+            [class.is-active]="groupIsActive(item.group)"
+            [class.align-end]="menuAlignEnd(item)"
+            (mouseenter)="openOnHover(item.group)"
+            (mouseleave)="closeOnLeave()"
+            (click)="$event.stopPropagation()"
+          >
+            <button
+              type="button"
+              class="site-footer__dropdown-trigger"
+              [attr.aria-expanded]="isOpen(item.group)"
+              aria-haspopup="true"
+              (click)="toggleGroup(item.group, $event)"
+            >
+              {{ item.group.label }}
+              <span class="site-footer__caret" aria-hidden="true">▴</span>
+            </button>
+            @if (isOpen(item.group)) {
+              <div
+                class="site-footer__menu"
+                [class.site-footer__menu--wide]="item.group.children.length > 6"
+                role="menu"
+              >
+                @for (section of sectionsOf(item.group); track section.heading) {
+                  <div class="site-footer__section">
+                    @if (section.heading) {
+                      <p class="site-footer__section-title">{{ section.heading }}</p>
+                    }
+                    @for (child of section.links; track child.path) {
+                      <a
+                        role="menuitem"
+                        [routerLink]="child.path"
+                        routerLinkActive="is-active"
+                        [routerLinkActiveOptions]="{ exact: child.exact === true }"
+                        [title]="child.hint ?? child.label"
+                        (click)="openGroup.set(null)"
+                      >
+                        <span class="site-footer__menu-label">{{ child.label }}</span>
+                        @if (child.hint) {
+                          <span class="site-footer__menu-hint">{{ child.hint }}</span>
+                        }
+                      </a>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+      }
+    </nav>
+  </div>
+</footer>

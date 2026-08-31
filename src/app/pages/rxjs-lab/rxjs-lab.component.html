@@ -1,0 +1,237 @@
+<div class="lab">
+  <header class="lab-hero">
+    <app-lesson-breadcrumb [crumbs]="crumbs" />
+    <h1 class="lab-hero__title">RxJS — watch the data move</h1>
+    <p class="lab-hero__intro">
+      A visual, step-by-step walkthrough of Observables, operators, and subscriptions using a tiny
+      real API.
+    </p>
+    <a
+      class="lab-hero__link"
+      href="https://jsonplaceholder.typicode.com/users"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      JSONPlaceholder /users
+    </a>
+  </header>
+
+  <app-concept-duo />
+  <app-async-pipe-lesson />
+  <app-user-dataset />
+
+  <!-- Step 1 -->
+  <app-step-panel
+    [step]="1"
+    title="Observable + subscribe"
+    why="users$ is a lazy recipe. Subscribe starts the work. One emission = the whole array of 8 users, then complete. The producer is the source that creates values (here: HttpClient hitting /users) — not the Observer."
+    [pipeline]="['HttpClient (producer)', 'users$', 'subscribe', 'Observer']"
+    [narrate]="step1Narrate()"
+    [code]="step1Code"
+    [completeCode]="step1CompleteCode"
+    [running]="step1Running()"
+    (run)="runStep1()"
+  >
+    <p class="path-callout">
+      <strong>Producer ≠ Observer.</strong>
+      The producer <em>emits</em> (and calls <code>complete</code>). The Observer only
+      <em>receives</em> via <code>next</code> / <code>error</code> / <code>complete</code>.
+    </p>
+    <div class="stages">
+      <div class="stage" [class.stage--active]="step1Stage() === 'A'">A Setup</div>
+      <div class="stage" [class.stage--active]="step1Stage() === 'B'">B subscribe</div>
+      <div class="stage" [class.stage--active]="step1Stage() === 'C'">C Observer.next</div>
+      <div class="stage" [class.stage--active]="step1Stage() === 'D'">D Observer.complete</div>
+    </div>
+    @if (step1Users().length) {
+      <ul class="name-list">
+        @for (u of step1Users(); track u.id) {
+          <li>{{ u.name }}</li>
+        }
+      </ul>
+    }
+  </app-step-panel>
+
+  <!-- Step 2 -->
+  <app-step-panel
+    [step]="2"
+    title="map — nested → slim"
+    why="Operators live in pipe. The Observer only sees the slim objects after map — not the nested User shape."
+    [pipeline]="['users$', 'map(slim)', 'Observer']"
+    [narrate]="step2Narrate()"
+    [code]="step2Code"
+    [completeCode]="step2CompleteCode"
+    [running]="step2Running()"
+    (run)="runStep2()"
+  >
+    <div class="split">
+      <div class="panel-box">
+        <h3>Before (nested sample)</h3>
+        @if (step2Before(); as u) {
+          <pre>{{ { id: u.id, name: u.name, address: { city: u.address.city }, company: { name: u.company.name } } | json }}</pre>
+        } @else {
+          <p class="muted">Run to load a nested sample.</p>
+        }
+      </div>
+      <div class="panel-box">
+        <h3>After (flat SlimUser[])</h3>
+        @if (step2After().length) {
+          <pre>{{ step2After() | json }}</pre>
+        } @else {
+          <p class="muted">Waiting for map…</p>
+        }
+      </div>
+    </div>
+  </app-step-panel>
+
+  <!-- Step 3 -->
+  <app-step-panel
+    [step]="3"
+    title="Array filter on nested path"
+    why="Still one array emission. Use JS filter inside RxJS map. Keep users where Number(u.address.geo.lat) &lt; 0."
+    [pipeline]="['users$', 'map(filter lat)', 'Observer']"
+    [narrate]="step3Narrate()"
+    [code]="step3Code"
+    [completeCode]="step3CompleteCode"
+    [running]="step3Running()"
+    (run)="runStep3()"
+  >
+    <p class="path-callout">Path: <code>u.address.geo.lat</code></p>
+    <ul class="verdict-list">
+      @for (row of step3Rows(); track row.name) {
+        <li [class.keep]="row.verdict === 'KEEP'" [class.drop]="row.verdict === 'DROP'">
+          <span class="verdict">{{ row.verdict === 'pending' ? '…' : row.verdict }}</span>
+          <span>{{ row.name }}</span>
+          <code>lat {{ row.lat }}</code>
+        </li>
+      }
+    </ul>
+    @if (step3Result().length) {
+      <div class="panel-box">
+        <h3>Result array ({{ step3Result().length }})</h3>
+        <ul class="name-list">
+          @for (u of step3Result(); track u.id) {
+            <li>{{ u.name }} — {{ u.address.geo.lat }}</li>
+          }
+        </ul>
+      </div>
+    }
+  </app-step-panel>
+
+  <!-- Step 4 -->
+  <app-step-panel
+    [step]="4"
+    title="tap — side effects"
+    why="tap peeks without changing values. Pipe: tap → map(company.name) → tap → subscribe."
+    [pipeline]="['users$', 'tap', 'map(name)', 'tap', 'Observer']"
+    [narrate]="step4Narrate()"
+    [code]="step4Code"
+    [completeCode]="step4CompleteCode"
+    [running]="step4Running()"
+    (run)="runStep4()"
+  >
+    <div class="peepholes">
+      <div class="panel-box">
+        <h3>Peephole 1</h3>
+        <p>{{ step4Peek1() || '—' }}</p>
+      </div>
+      <div class="panel-box">
+        <h3>After map</h3>
+        @if (step4AfterMap().length) {
+          <ul class="name-list">
+            @for (n of step4AfterMap(); track n) {
+              <li>{{ n }}</li>
+            }
+          </ul>
+        } @else {
+          <p class="muted">—</p>
+        }
+      </div>
+      <div class="panel-box">
+        <h3>Peephole 2</h3>
+        <p>{{ step4Peek2() || '—' }}</p>
+      </div>
+    </div>
+  </app-step-panel>
+
+  <!-- Step 5 -->
+  <app-step-panel
+    [step]="5"
+    title="from + RxJS filter"
+    why="One array becomes many emissions. RxJS filter decides per item. Observer.next runs multiple times."
+    [pipeline]="['users$', 'switchMap(from)', 'filter(.net|.org)', 'Observer']"
+    [narrate]="step5Narrate()"
+    [code]="step5Code"
+    [completeCode]="step5CompleteCode"
+    [running]="step5Running()"
+    (run)="runStep5()"
+  >
+    <ul class="verdict-list">
+      @for (row of step5Rows(); track row.name) {
+        <li [class.keep]="row.verdict === 'PASS'" [class.drop]="row.verdict === 'BLOCK'">
+          <span class="verdict">{{ row.verdict === 'pending' ? '…' : row.verdict }}</span>
+          <span>{{ row.name }}</span>
+          <code>{{ row.website }}</code>
+        </li>
+      }
+    </ul>
+    @if (step5Kept().length) {
+      <div class="panel-box">
+        <h3>Kept (next × {{ step5NextCount() }})</h3>
+        <ul class="name-list">
+          @for (u of step5Kept(); track u.id) {
+            <li>{{ u.name }} — {{ u.website }}</li>
+          }
+        </ul>
+      </div>
+    }
+  </app-step-panel>
+
+  <!-- Step 6 -->
+  <app-step-panel
+    [step]="6"
+    title="Live search"
+    why="debounceTime(300), distinctUntilChanged, and switchMap cancel stale work. Match name, address.city, company.name."
+    [pipeline]="['valueChanges', 'debounceTime', 'distinctUntilChanged', 'switchMap', 'matches']"
+    narrate="Type to watch the live board. Try Lebsack, Gwenborough, or Romaguera."
+    [code]="step6Code"
+    [completeCode]="step6CompleteCode"
+    [showRun]="false"
+  >
+    <label class="search-label">
+      Search
+      <input
+        type="search"
+        [formControl]="searchCtrl"
+        placeholder="Lebsack · Gwenborough · Romaguera"
+        autocomplete="off"
+      />
+    </label>
+
+    <div class="live-board">
+      <div class="panel-box">
+        <h3>Raw input</h3>
+        <p><code>{{ rawInput() || '(empty)' }}</code></p>
+      </div>
+      <div class="panel-box">
+        <h3>After debounce</h3>
+        <p><code>{{ debouncedQuery() || '(empty)' }}</code></p>
+      </div>
+      <div class="panel-box">
+        <h3>switchMap</h3>
+        <p>{{ switchMapActive() ? 'fetching / mapping…' : 'idle' }}</p>
+      </div>
+      <div class="panel-box">
+        <h3>Matches ({{ searchMatches().length }})</h3>
+        <ul class="name-list">
+          @for (u of searchMatches(); track u.id) {
+            <li>
+              {{ u.name }}
+              <span class="muted">· {{ u.address.city }} · {{ u.company.name }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </app-step-panel>
+</div>

@@ -11,6 +11,14 @@
   color: #1996f9;
 }
 
+.home__eyebrow-separator {
+  margin: 0 0.5rem;
+  color: var(--muted);
+}
+
+.home__eyebrow-title {
+  color: var(--emit);
+}
 h1 {
   margin: 0 0 0.55rem;
   font-size: clamp(1.55rem, 1vw, 1.4rem);

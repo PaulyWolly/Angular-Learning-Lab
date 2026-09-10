@@ -91,7 +91,9 @@ app-shell (app.html)
 |-----|-----------------|
 | `/` | Home hub cards |
 | `/rxjs` | Observable, operators, async pipe, live search |
+| `/core/setup` | **Start here** — NVM, Node LTS, Angular CLI, run this lab |
 | `/core/components` | Component anatomy, standalone + `imports`, `input()`, `output()`, `ng-content` |
+| `/core/constructors` | When to use `constructor()` vs `inject()`, field init, `super()` |
 | `/core/binding` | Interpolation, property, event, two-way |
 | `/core/templates` | `templateUrl` vs inline backtick `template` |
 | `/core/defer` | `@defer` / `@placeholder` / `@loading` vs `loadComponent` |
@@ -251,6 +253,9 @@ Use when the user asks “what next?” or to implement without re-brainstorming
 10. ~~HTTP interceptor + demo auth header~~ → `/core/interceptors`  
 10b. ~~XSS safety (escape / sanitize / bypass)~~ → `/core/xss`  
 10c. ~~Angular Material suite~~ → `/material` (Overview & Setup, Form Controls, Tables & Grids, Dialogs & Feedback, Navigation & Menus)  
+10d. ~~Third Party suite~~ → `/third-party` (Bootstrap, Tailwind, Storybook, Ag-Grid Community)  
+10e. ~~JavaScript Basics suite~~ → `/basics` (Variables, Functions, Arrays, Destructuring, Promises, Modules)  
+10f. ~~Ag-Grid editable + SQLite API~~ → `/third-party/ag-grid` + `server/index.js` (`npm run start:all`)  
 
 **UX polish**
 

@@ -3,7 +3,7 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/ro
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DemoAuthService } from '../../core/auth/demo-auth.service';
-import { NAV_ITEMS, navSections, NavGroup, NavItem } from '../../core/nav/nav-links';
+import { NAV_ITEMS, navSectionColumns, NavGroup, NavItem } from '../../core/nav/nav-links';
 
 @Component({
   selector: 'app-header',
@@ -21,9 +21,9 @@ export class HeaderComponent {
   readonly openGroup = signal<string | null>(null);
   readonly currentUrl = signal(this.router.url);
 
-  /** Sectioned children for mega-menu layout */
-  sectionsOf(group: NavGroup) {
-    return navSections(group.children);
+  /** Independent columns for mega-menu (avoids shared row stretch). */
+  sectionColumnsOf(group: NavGroup) {
+    return navSectionColumns(group.children, group.children.length > 6);
   }
 
   constructor() {

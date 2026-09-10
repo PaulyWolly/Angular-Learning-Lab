@@ -1,0 +1,40 @@
+@use '../../core/lesson-shared';
+
+.ag-demo {
+  display: block;
+  margin: 0.5rem 0 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  overflow: hidden;
+}
+
+.save-chip {
+  display: inline-block;
+  margin-left: 0.65rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: #d1fae5;
+  color: #065f46;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.api-banner {
+  margin: 0.5rem 0 0.85rem;
+  padding: 0.65rem 0.85rem;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 0.45rem;
+  color: #991b1b;
+  font-size: 0.9rem;
+}
+
+.ag-flow {
+  margin: 0.35rem 0 0.75rem;
+  padding-left: 1.2rem;
+  line-height: 1.55;
+
+  li {
+    margin: 0.35rem 0;
+  }
+}

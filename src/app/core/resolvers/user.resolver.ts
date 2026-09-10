@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { User } from '../../models/user.model';
-import { UsersService } from '../../services/users.service';
+import { UsersService } from '../../shared/services/users.service';
 import { ToastService } from '../../shared/toast/toast.service';
 
 /**

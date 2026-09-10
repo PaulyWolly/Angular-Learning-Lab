@@ -1,0 +1,50 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Basics · Variables &amp; Types</h1>
+  <p class="lesson__lead">
+    Use <code>let</code> and <code>const</code> — <strong>not</strong> <code>&nbsp;'var'</code>.
+    <code>typeof</code> tells you the runtime type. Angular component fields are the same idea
+    on a class.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Stop using <code>var</code> — use <code>let</code> (or <code>const</code>)</h2>
+    <p class="muted">
+      <code>var</code> is old JavaScript. It is function-scoped and gets hoisted in confusing ways.
+      Modern JS/TS (and every Angular app) uses <code>let</code> / <code>const</code> instead —
+      block-scoped and predictable.
+    </p>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="explainVar()">Why avoid var?</button>
+    </div>
+    <pre class="basics-out">{{ demoLog() }}</pre>
+    <app-lesson-syntax
+      [templateCode]="varAvoidTpl"
+      [typescriptCode]="varAvoidTs"
+      [typescriptModal]="varAvoidModal"
+      modalTitle="var vs let — Full Notes"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Live: let vs const</h2>
+    <p>Current name: <strong>{{ name }}</strong> · const pi = <strong>{{ pi }}</strong></p>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="bumpName()">Reassign name (let)</button>
+      <button type="button" class="btn" (click)="tryConst()">What about const?</button>
+      <button type="button" class="btn" (click)="showTypes()">Run typeof samples</button>
+    </div>
+    <pre class="basics-out">{{ demoLog() }}</pre>
+    <app-lesson-syntax
+      [templateCode]="varsTpl"
+      [typescriptCode]="varsTs"
+      [typescriptModal]="varsModal"
+      modalTitle="Variables — Full Notes"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>typeof cheat sheet</h2>
+    <app-lesson-syntax [typescriptCode]="typesTs" [templateCode]="varsTpl" />
+  </div>
+</section>

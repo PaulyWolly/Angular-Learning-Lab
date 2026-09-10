@@ -2,7 +2,7 @@ import { Component, HostListener, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NAV_ITEMS, navSections, NavGroup, NavItem } from '../../core/nav/nav-links';
+import { NAV_ITEMS, navSectionColumns, NavGroup, NavItem } from '../../core/nav/nav-links';
 
 @Component({
   selector: 'app-footer',
@@ -19,8 +19,8 @@ export class FooterComponent {
   readonly openGroup = signal<string | null>(null);
   readonly currentUrl = signal(this.router.url);
 
-  sectionsOf(group: NavGroup) {
-    return navSections(group.children);
+  sectionColumnsOf(group: NavGroup) {
+    return navSectionColumns(group.children, group.children.length > 6);
   }
 
   constructor() {

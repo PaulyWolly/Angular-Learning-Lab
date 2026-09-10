@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CanLeaveDirtyForm } from '../../core/guards/unsaved-changes.guard';
-import { CRUMB_HOME, CRUMB_ROUTES } from '../../shared/lesson-breadcrumb/crumb-presets';
-import { LessonBreadcrumbComponent } from '../../shared/lesson-breadcrumb/lesson-breadcrumb.component';
+import { CRUMB_HOME, CRUMB_ROUTES } from '../../shared/directives/lesson-breadcrumb/crumb-presets';
+import { LessonBreadcrumbComponent } from '../../shared/directives/lesson-breadcrumb/lesson-breadcrumb.component';
 import { LessonSyntaxComponent } from '../../shared/lesson-syntax/lesson-syntax.component';
 import { ToastService } from '../../shared/toast/toast.service';
 

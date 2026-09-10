@@ -1,0 +1,33 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Basics · Promises &amp; async/await</h1>
+  <p class="lesson__lead">
+    A <strong>Promise</strong> is a value that arrives later. Angular HTTP uses
+    <strong>Observables</strong>, but Promises are the foundation — and many APIs still return them.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live async demo</h2>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="runThen()" [disabled]="loading()">
+        .then()
+      </button>
+      <button type="button" class="btn" (click)="runAwait()" [disabled]="loading()">
+        async / await
+      </button>
+      <button type="button" class="btn" (click)="runFail()" [disabled]="loading()">
+        Force error
+      </button>
+      @if (loading()) {
+        <span class="muted">Loading…</span>
+      }
+    </div>
+    <pre class="basics-out">{{ demoLog() }}</pre>
+    <app-lesson-syntax
+      [templateCode]="asyncTpl"
+      [typescriptCode]="asyncTs"
+      [typescriptModal]="asyncModal"
+      modalTitle="Promises — Full Notes"
+    />
+  </div>
+</section>

@@ -1,0 +1,11 @@
+@use '../../core/lesson-shared';
+
+.basics-out {
+  margin: 0.75rem 0 1rem;
+  padding: 0.65rem 0.85rem;
+  background: var(--code);
+  color: #e2e8f0;
+  border-radius: 0.45rem;
+  font-size: 0.82rem;
+  overflow-x: auto;
+}

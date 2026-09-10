@@ -9,7 +9,7 @@
         alt=""
       />
       <span class="site-header__brand-text">
-        <span class="site-header__brand-mark">Angular</span>
+        <span class="site-header__brand-mark">Angular & JS</span>
         <span class="site-header__brand-name">Learning Lab</span>
       </span>
     </a>
@@ -48,25 +48,29 @@
                 [class.site-header__menu--wide]="item.group.children.length > 6"
                 role="menu"
               >
-                @for (section of sectionsOf(item.group); track section.heading) {
-                  <div class="site-header__section">
-                    @if (section.heading) {
-                      <p class="site-header__section-title">{{ section.heading }}</p>
-                    }
-                    @for (child of section.links; track child.path) {
-                      <a
-                        role="menuitem"
-                        [routerLink]="child.path"
-                        routerLinkActive="is-active"
-                        [routerLinkActiveOptions]="{ exact: child.exact === true }"
-                        [title]="child.hint ?? child.label"
-                        (click)="openGroup.set(null)"
-                      >
-                        <span class="site-header__menu-label">{{ child.label }}</span>
-                        @if (child.hint) {
-                          <span class="site-header__menu-hint">{{ child.hint }}</span>
+                @for (col of sectionColumnsOf(item.group); track $index) {
+                  <div class="site-header__col">
+                    @for (section of col; track section.heading) {
+                      <div class="site-header__section">
+                        @if (section.heading) {
+                          <p class="site-header__section-title">{{ section.heading }}</p>
                         }
-                      </a>
+                        @for (child of section.links; track child.path) {
+                          <a
+                            role="menuitem"
+                            [routerLink]="child.path"
+                            routerLinkActive="is-active"
+                            [routerLinkActiveOptions]="{ exact: child.exact === true }"
+                            [title]="child.hint ?? child.label"
+                            (click)="openGroup.set(null)"
+                          >
+                            <span class="site-header__menu-label">{{ child.label }}</span>
+                            @if (child.hint) {
+                              <span class="site-header__menu-hint">{{ child.hint }}</span>
+                            }
+                          </a>
+                        }
+                      </div>
                     }
                   </div>
                 }

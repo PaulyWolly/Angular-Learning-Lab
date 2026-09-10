@@ -1,0 +1,44 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Third Party · Bootstrap</h1>
+  <p class="lesson__lead">
+    <strong>Bootstrap</strong> is a CSS (and optional JS) framework. In Angular you mostly
+    install the CSS and put Bootstrap <em>class names</em> on your template elements.
+  </p>
+
+  <div class="lesson__card">
+    <h2>What it is</h2>
+    <p class="muted">
+      Not an Angular library by default — it’s HTML + classes (<code>btn</code>,
+      <code>row</code>, <code>col-md-6</code>). Optional
+      <a href="https://ng-bootstrap.github.io/" target="_blank" rel="noopener noreferrer"
+        >ng-bootstrap</a
+      >
+      wraps widgets as Angular components.
+    </p>
+    <div class="bs-preview" aria-hidden="true">
+      <span class="bs-fake-btn">.btn .btn-primary</span>
+      <span class="bs-fake-alert">.alert .alert-info</span>
+      <span class="bs-fake-grid">.row → .col-md-6 × 2</span>
+    </div>
+  </div>
+
+  <div class="lesson__card">
+    <h2>Install &amp; wire into Angular</h2>
+    <app-lesson-syntax
+      [typescriptCode]="installTs"
+      [templateCode]="installTpl"
+      [typescriptModal]="installModal"
+      modalTitle="Bootstrap install — Full Notes"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>When to pick Bootstrap</h2>
+    <app-lesson-syntax [typescriptCode]="whenTs" [templateCode]="installTpl" />
+    <p class="muted callout">
+      This Learning Lab keeps Bootstrap <strong>out</strong> of global styles so Material and
+      the cream/teal shell stay consistent. Use the commands above in a separate practice app.
+    </p>
+  </div>
+</section>

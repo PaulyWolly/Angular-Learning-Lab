@@ -1,0 +1,47 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Third Party · Storybook</h1>
+  <p class="lesson__lead">
+    <strong>Storybook</strong> is a <em>development tool</em> — a separate UI where you open one
+    component at a time, flip props, and document variants. It is not a CSS framework and not
+    shipped to end users.
+  </p>
+
+  <div class="lesson__card">
+    <h2>What it is</h2>
+    <p class="muted">
+      Think “component museum”: each <strong>story</strong> is one state of a component
+      (Primary button, Disabled button, Error form…). Runs beside your app, usually on port
+      <code>6006</code>.
+    </p>
+    <div class="sb-preview" aria-hidden="true">
+      <div class="sb-chrome">
+        <span class="sb-dot"></span><span class="sb-dot"></span><span class="sb-dot"></span>
+        <span class="sb-url">localhost:6006 — UI / Button / Primary</span>
+      </div>
+      <div class="sb-canvas">
+        <button type="button" class="sb-demo-btn">Save</button>
+        <p class="sb-args">args: &#123; label: 'Save', variant: 'primary' &#125;</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson__card">
+    <h2>Install &amp; first story</h2>
+    <app-lesson-syntax
+      [typescriptCode]="installTs"
+      [templateCode]="installTpl"
+      [typescriptModal]="installModal"
+      modalTitle="Storybook setup — Full Notes"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>When to pick Storybook</h2>
+    <app-lesson-syntax [typescriptCode]="whenTs" [templateCode]="installTpl" />
+    <p class="muted callout">
+      Storybook is not embedded in this Learning Lab UI — run
+      <code>npx storybook@latest init</code> in a practice repo when you want the real workshop.
+    </p>
+  </div>
+</section>

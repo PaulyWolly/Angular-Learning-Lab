@@ -1,0 +1,46 @@
+@use '../../core/lesson-shared';
+
+.bs-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 0.75rem 0 0.25rem;
+}
+
+.bs-fake-btn,
+.bs-fake-alert,
+.bs-fake-grid {
+  display: inline-block;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: ui-monospace, Consolas, monospace;
+}
+
+.bs-fake-btn {
+  background: #0d6efd;
+  color: #fff;
+}
+
+.bs-fake-alert {
+  background: #cff4fc;
+  color: #055160;
+  border: 1px solid #9eeaf9;
+}
+
+.bs-fake-grid {
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px dashed #adb5bd;
+}
+
+.callout {
+  margin: 0.85rem 0 0;
+  padding: 0.65rem 0.85rem;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 0.45rem;
+  color: #9a3412;
+  font-size: 0.9rem;
+}

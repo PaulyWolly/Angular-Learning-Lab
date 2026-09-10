@@ -1,0 +1,129 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Setup · Node · NVM · Angular CLI</h1>
+  <p class="lesson__lead">
+    Before any Angular lab: install a <strong>Node version manager (NVM)</strong>, a supported
+    <strong>Node.js</strong> LTS, then the <strong>Angular CLI</strong>. Use the command blocks
+    below in a terminal — copy buttons are on each syntax card.
+  </p>
+
+  <div class="lesson__card story">
+    <h2>Roadmap</h2>
+    <ol class="setup-roadmap">
+      <li><strong>NVM</strong> — switch Node versions without breaking other projects</li>
+      <li><strong>Node + npm</strong> — runtime that runs Angular’s build tools</li>
+      <li><strong>Angular CLI (<code>ng</code>)</strong> — create, serve, and build apps</li>
+      <li><strong>Run this lab</strong> — <code>npm install</code> + <code>npm start</code></li>
+    </ol>
+    <p class="muted callout">
+      You are on Windows in this workspace. Use <strong>nvm-windows</strong> there.
+      macOS/Linux use the classic <strong>nvm-sh</strong> install — both paths are covered.
+    </p>
+  </div>
+
+  <div class="lesson__card">
+    <h2>1. Why NVM (not “one global Node forever”)</h2>
+    <p class="muted">
+      Angular 20 expects a modern Node (typically <strong>20</strong> or <strong>22</strong> LTS).
+      NVM lets you install several Node versions and flip between them per project.
+    </p>
+    <app-lesson-syntax
+      [typescriptCode]="whyTs"
+      [templateCode]="whyTpl"
+      modalTitle="Why NVM — Full Notes"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>2. Install NVM — Windows (<code>nvm-windows</code>)</h2>
+    <p class="muted">
+      Download the latest <code>nvm-setup.exe</code> from the
+      <a
+        href="https://github.com/coreybutler/nvm-windows/releases"
+        target="_blank"
+        rel="noopener noreferrer"
+        >nvm-windows releases</a
+      >
+      page. Close and reopen your terminal after install.
+    </p>
+    <app-lesson-syntax
+      [typescriptCode]="nvmWinTs"
+      [templateCode]="nvmWinTpl"
+      [typescriptModal]="nvmModal"
+      modalTitle="NVM commands — Full Notes"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>3. Install NVM — macOS / Linux (<code>nvm-sh</code>)</h2>
+    <p class="muted">
+      Same idea, different installer. After the curl install, open a new shell (or
+      <code>source ~/.bashrc</code> / <code>~/.zshrc</code>).
+    </p>
+    <app-lesson-syntax
+      [typescriptCode]="nvmUnixTs"
+      [templateCode]="nvmUnixTpl"
+      [typescriptModal]="nvmModal"
+      modalTitle="NVM commands — Full Notes"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>4. Angular CLI</h2>
+    <p class="muted">
+      The CLI (<code>ng</code>) scaffolds projects and runs the dev server. Install globally while
+      learning, or call it via <code>npx</code> so you never fight global versions.
+    </p>
+    <app-lesson-syntax
+      [typescriptCode]="cliTs"
+      [templateCode]="cliTpl"
+      [typescriptModal]="cliModal"
+      modalTitle="Angular CLI — Full Notes"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>5. Create &amp; run a new Angular app</h2>
+    <p class="muted">
+      Practice the happy path once so <code>ng new</code> / <code>ng serve</code> feel familiar
+      before diving into labs.
+    </p>
+    <app-lesson-syntax
+      [typescriptCode]="newAppTs"
+      [templateCode]="newAppTpl"
+      modalTitle="ng new — Full Notes"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>6. Run <em>this</em> Learning Lab</h2>
+    <p class="muted">
+      Working branch for this repo is <code>dev</code>. Dev server port is
+      <strong>4201</strong> (see <code>package.json</code>).
+    </p>
+    <app-lesson-syntax
+      [typescriptCode]="thisLabTs"
+      [templateCode]="thisLabTpl"
+      [typescriptModal]="thisLabModal"
+      modalTitle="Run this lab — Full Notes"
+    />
+    <p class="next-links muted">
+      Next up:
+      <a routerLink="/core/components">Components</a>
+      ·
+      <a routerLink="/rxjs">RxJS Lab</a>
+      ·
+      <a routerLink="/material/overview">Material Overview</a>
+    </p>
+  </div>
+
+  <div class="lesson__card">
+    <h2>7. Ready checklist</h2>
+    <p class="muted">If all of these print versions without errors, you are ready for the labs.</p>
+    <app-lesson-syntax
+      [typescriptCode]="checklistTs"
+      [templateCode]="checklistTpl"
+      modalTitle="Ready checklist"
+    />
+  </div>
+</section>

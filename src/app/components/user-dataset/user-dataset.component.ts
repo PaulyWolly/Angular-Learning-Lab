@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { UsersService } from '../../services/users.service';
+import { UsersService } from '../../shared/services/users.service';
 
 @Component({
   selector: 'app-user-dataset',

@@ -1,30 +1,99 @@
 <section class="lesson">
   <app-lesson-breadcrumb [crumbs]="crumbs" />
-  <h1>Routes</h1>
+  <h1>Routes · <code>&lt;router-outlet&gt;</code></h1>
   <p class="lesson__lead">
-    Routes map a URL path to a component. Everything under
-    <code>/routes/*</code> sits inside a <strong>parent shell</strong> with its own
-    <code>&lt;router-outlet&gt;</code> — the shell stays mounted while child labs swap.
-    Each card shows Template + TypeScript.
+    A route config maps a URL to a component. The outlet is the
+    <strong>slot</strong> where that component is inserted. Knowing
+    <em>where</em> to put the outlet is as important as writing the route table —
+    it decides what stays mounted (header, section nav) and what swaps.
   </p>
+
+  <div class="lesson__card">
+    <h2>What <code>&lt;router-outlet&gt;</code> does</h2>
+    <p>
+      It is not a page and not a layout by itself. It is a placeholder: when the
+      router activates a route, Angular creates that route’s component and projects
+      it into the outlet. No matching outlet → the page has nowhere to appear.
+    </p>
+    <ul>
+      <li>Sibling chrome (header, footer) lives <em>outside</em> the outlet and stays up.</li>
+      <li>Whatever is <em>inside</em> the outlet is destroyed and recreated on navigate.</li>
+      <li>Nested routes need a second outlet on the parent that owns those children.</li>
+    </ul>
+    <app-lesson-syntax [templateCode]="outletWhatTpl" [typescriptCode]="outletWhatTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Where to put it · 1 — App shell (required)</h2>
+    <p>
+      Put <strong>one primary outlet</strong> in the layout that wraps every screen —
+      the piece that should never unmount when you change pages. In this lab that is
+      <code>app-content</code>, between header and footer.
+    </p>
+    <ul>
+      <li><code>app.html</code> → header · content · footer (no outlet here).</li>
+      <li><code>content.component.html</code> → <code>&lt;router-outlet /&gt;</code> (primary).</li>
+      <li>Home, RxJS, Core, Users, Material… all render in that one slot.</li>
+    </ul>
+    <app-lesson-syntax [templateCode]="appShellTpl" [typescriptCode]="appShellTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Where to put it · 2 — Componentless parent (no extra outlet)</h2>
+    <p>
+      Sections like <code>/core/*</code> and <code>/basics/*</code> group URLs under a
+      path prefix but do <strong>not</strong> need their own sub-nav chrome. The parent
+      route has <code>children</code> and <em>no</em> component — a
+      <strong>componentless</strong> route. Children activate in the nearest ancestor
+      outlet (the app shell). You do <em>not</em> add another outlet for that prefix.
+    </p>
+    <app-lesson-syntax [templateCode]="componentlessTpl" [typescriptCode]="componentlessTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Where to put it · 3 — Feature shell (nested outlet)</h2>
+    <p>
+      Use a parent component + child outlet when a URL family should share UI that
+      stays mounted — section title, sub-nav, filters, side rail. Look above this
+      lesson: the <strong>Routes</strong> strip (Overview · Lazy · Guards…) is that shell.
+      Click Lazy or Guards — the strip stays; only the body below swaps.
+    </p>
+    <ul>
+      <li>Parent route → <code>loadComponent</code> (the shell) + <code>children</code>.</li>
+      <li>Shell template → must include <code>&lt;router-outlet /&gt;</code> for those children.</li>
+      <li>Activation stack: shell → app outlet; child lab → shell outlet.</li>
+    </ul>
+    <app-lesson-syntax [templateCode]="nestedShellTpl" [typescriptCode]="nestedShellTs" />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Decision cheat sheet</h2>
+    <ul>
+      <li><strong>Whole-app chrome</strong> (header/footer) → primary outlet in the app layout.</li>
+      <li><strong>Shared section chrome</strong> (sub-nav that must stay) → parent shell + nested outlet.</li>
+      <li><strong>Path prefix only</strong> (no shared UI) → componentless parent; no extra outlet.</li>
+      <li><strong>Leaf page</strong> (no children) → do not add an outlet.</li>
+      <li><strong>Side panel / aux route</strong> → named outlet (advanced; rare).</li>
+    </ul>
+    <app-lesson-syntax [templateCode]="whereRulesTpl" [typescriptCode]="whereRulesTs" />
+  </div>
 
   <div class="lesson__card">
     <h2>What you’re using in this app</h2>
     <ul>
-      <li><code>/</code> → Home</li>
-      <li><code>/rxjs</code> → RxJS lab</li>
-      <li><code>/routes</code> → this overview</li>
-      <li><code>/routes/lazy</code> · <code>/routes/guards</code> · <code>/routes/protected</code></li>
+      <li><code>/</code> → Home · <code>/rxjs</code> → RxJS (app outlet only)</li>
+      <li><code>/core/*</code> · <code>/basics/*</code> · <code>/material/*</code> — componentless parents → app outlet</li>
+      <li><code>/routes/*</code> — <code>RoutesShell</code> in app outlet + child labs in shell outlet</li>
       <li><code>path: '**'</code> → wildcard fallback to Home</li>
     </ul>
-    <app-lesson-syntax [templateCode]="routesTpl" [typescriptCode]="routesTs" />
   </div>
 
   <div class="lesson__card">
     <h2>RouterLink (nav)</h2>
     <p>
       Header and Footer use <code>routerLink</code> instead of plain
-      <code>href</code>, so the app navigates without a full page reload. Try the links in the footer.
+      <code>href</code>, so the app navigates without a full page reload. Try the links in the footer —
+      and the Routes sub-nav above, which targets children of this shell.
     </p>
     <app-lesson-syntax [templateCode]="linkTpl" [typescriptCode]="linkTs" />
   </div>

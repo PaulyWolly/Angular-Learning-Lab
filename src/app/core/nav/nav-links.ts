@@ -312,7 +312,7 @@ export const NAV_ITEMS: NavItem[] = [
         {
           label: 'Overview',
           path: '/routes',
-          hint: 'Path config & routerLink',
+          hint: 'router-outlet · where to put it',
           exact: true,
           section: 'Routing',
         },

@@ -4,6 +4,7 @@ import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DemoAuthService } from '../../core/auth/demo-auth.service';
 import { NAV_ITEMS, navSectionColumns, NavGroup, NavItem } from '../../core/nav/nav-links';
+import { LessonBreadcrumbService } from '../../shared/directives/lesson-breadcrumb/lesson-breadcrumb.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ import { NAV_ITEMS, navSectionColumns, NavGroup, NavItem } from '../../core/nav/
 })
 export class HeaderComponent {
   readonly auth = inject(DemoAuthService);
+  readonly breadcrumb = inject(LessonBreadcrumbService);
   private readonly router = inject(Router);
 
   readonly items = NAV_ITEMS;

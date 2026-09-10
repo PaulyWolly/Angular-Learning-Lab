@@ -90,4 +90,29 @@
       {{ auth.loggedIn() ? 'Logged in' : 'Logged out' }}
     </button>
   </div>
+
+  @if (breadcrumb.crumbs().length) {
+    <div class="site-header__crumbs">
+      <nav class="site-header__crumb-nav" aria-label="Breadcrumb">
+        <ol class="site-header__crumb-list">
+          @for (c of breadcrumb.crumbs(); track c.label; let last = $last) {
+            <li class="site-header__crumb-item">
+              @if (!last && c.path) {
+                <a class="site-header__crumb-link" [routerLink]="c.path">{{ c.label }}</a>
+              } @else {
+                <span
+                  class="site-header__crumb-current"
+                  [attr.aria-current]="last ? 'page' : null"
+                  >{{ c.label }}</span
+                >
+              }
+              @if (!last) {
+                <span class="site-header__crumb-sep" aria-hidden="true">·</span>
+              }
+            </li>
+          }
+        </ol>
+      </nav>
+    </div>
+  }
 </header>

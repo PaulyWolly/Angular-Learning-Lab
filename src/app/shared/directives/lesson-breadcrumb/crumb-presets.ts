@@ -1,4 +1,4 @@
-import { LessonCrumb } from './lesson-breadcrumb.component';
+import { LessonCrumb } from './lesson-breadcrumb.service';
 
 /** Shared ancestors for lesson breadcrumbs. */
 export const CRUMB_HOME: LessonCrumb = { label: 'Home', path: '/' };

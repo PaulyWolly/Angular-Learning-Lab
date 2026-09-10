@@ -1,0 +1,69 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Third Party · Ag-Grid Community</h1>
+  <p class="lesson__lead">
+    <strong>Inline editing</strong> is free in Community. This lab loads rows from a local
+    <strong>SQLite</strong> API and <code>PATCH</code>es each cell change back to the database.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live editable grid (SQLite-backed)</h2>
+    <p class="muted">
+      Double-click a cell (or press Enter) to edit. Leave the cell to save.
+      Sort / filter still work. Rows: <strong>{{ rowCount() }}</strong>
+      @if (lastSaved(); as saved) {
+        <span class="save-chip">Last save: {{ saved }}</span>
+      }
+    </p>
+
+    @if (!apiUp()) {
+      <p class="api-banner">
+        API is offline. In a second terminal run <code>npm run api</code>, or use
+        <code>npm run start:all</code> (API + Angular together).
+      </p>
+    }
+
+    <div class="demo-row">
+      <button type="button" class="btn" (click)="reload()" [disabled]="loading()">
+        Reload from SQLite
+      </button>
+      <button type="button" class="btn" (click)="resetSeed()" [disabled]="loading() || !apiUp()">
+        Reset seed data
+      </button>
+      @if (loading()) {
+        <span class="muted">Loading…</span>
+      }
+    </div>
+
+    <ag-grid-angular
+      class="ag-demo"
+      style="width: 100%; height: 320px"
+      [theme]="theme"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      (gridReady)="onGridReady($event)"
+      (cellValueChanged)="onCellValueChanged($event)"
+    />
+
+    <app-lesson-syntax
+      [templateCode]="installTpl"
+      [typescriptCode]="installTs"
+      [typescriptModal]="installModal"
+      modalTitle="Editable Ag-Grid + SQLite — Full Notes"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>How the pieces connect</h2>
+    <ol class="ag-flow">
+      <li><code>ag-grid</code> cell edited → <code>cellValueChanged</code></li>
+      <li><code>ProductsService.update()</code> → <code>PATCH /api/products/:id</code></li>
+      <li>Express + <code>better-sqlite3</code> → <code>server/data/lab.db</code></li>
+    </ol>
+    <p class="muted">
+      Postgres would use the same Angular service and REST shape — only the server SQL driver
+      changes. SQLite keeps this lab zero-config.
+    </p>
+  </div>
+</section>

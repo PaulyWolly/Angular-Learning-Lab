@@ -1,0 +1,56 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Third Party · Overview</h1>
+  <p class="lesson__lead">
+    Angular apps often mix the framework with <strong>third-party</strong> UI and tooling.
+    This section covers four you will see in interviews and real teams:
+    <strong>Bootstrap</strong>, <strong>Tailwind</strong>, <strong>Storybook</strong>, and
+    <strong>Ag-Grid (Community)</strong>.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Choose by job</h2>
+    <div class="tp-grid">
+      <a class="tp-card" routerLink="/third-party/bootstrap">
+        <h3>Bootstrap</h3>
+        <p>Class-based CSS + JS components. Fast layouts, familiar markup.</p>
+        <span class="tp-cta">Open Bootstrap →</span>
+      </a>
+      <a class="tp-card" routerLink="/third-party/tailwind">
+        <h3>Tailwind CSS</h3>
+        <p>Utility classes in the template. Great for custom design systems.</p>
+        <span class="tp-cta">Open Tailwind →</span>
+      </a>
+      <a class="tp-card" routerLink="/third-party/storybook">
+        <h3>Storybook</h3>
+        <p>Dev tool to build, document, and test UI pieces in isolation.</p>
+        <span class="tp-cta">Open Storybook →</span>
+      </a>
+      <a class="tp-card" routerLink="/third-party/ag-grid">
+        <h3>Ag-Grid Community</h3>
+        <p>Enterprise-grade data grid (free Community features) for Angular.</p>
+        <span class="tp-cta">Open Ag-Grid →</span>
+      </a>
+    </div>
+    <app-lesson-syntax
+      [typescriptCode]="compareTs"
+      [templateCode]="compareTpl"
+      [typescriptModal]="installTs"
+      modalTitle="Install commands — Full Notes"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>How this lab approaches them</h2>
+    <ul class="tp-list">
+      <li>
+        <strong>Bootstrap / Tailwind / Storybook</strong> — teach install + wiring without
+        taking over this app’s global CSS (Material already themes the shell).
+      </li>
+      <li>
+        <strong>Ag-Grid Community</strong> — live demo installed here so you can click a real
+        grid (sort, filter, resize).
+      </li>
+    </ul>
+  </div>
+</section>

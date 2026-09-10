@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, shareReplay, tap, throwError } from 'rxjs';
-import { Post } from '../models/post.model';
-import { User } from '../models/user.model';
-import { ToastService } from '../shared/toast/toast.service';
+import { Post } from '../../models/post.model';
+import { User } from '../../models/user.model';
+import { ToastService } from '../toast/toast.service';
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {

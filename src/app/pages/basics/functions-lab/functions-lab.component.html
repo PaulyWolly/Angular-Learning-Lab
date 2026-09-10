@@ -1,0 +1,24 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Basics · Functions &amp; Arrow Functions</h1>
+  <p class="lesson__lead">
+    Functions do work. Arrow functions (<code>=&gt;</code>) are short and capture
+    <code>this</code> lexically. Angular event handlers are usually <strong>class methods</strong>.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live demos</h2>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="runGreet()">greet('Ada')</button>
+      <button type="button" class="btn" (click)="runArrow()">arrow double(7)</button>
+      <button type="button" class="btn" (click)="runMethod()">class method + this</button>
+    </div>
+    <pre class="basics-out">{{ demoLog() }}</pre>
+    <app-lesson-syntax
+      [templateCode]="fnTpl"
+      [typescriptCode]="fnTs"
+      [typescriptModal]="fnModal"
+      modalTitle="Functions — Full Notes"
+    />
+  </div>
+</section>

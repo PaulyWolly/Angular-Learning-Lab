@@ -45,25 +45,29 @@
                 [class.site-footer__menu--wide]="item.group.children.length > 6"
                 role="menu"
               >
-                @for (section of sectionsOf(item.group); track section.heading) {
-                  <div class="site-footer__section">
-                    @if (section.heading) {
-                      <p class="site-footer__section-title">{{ section.heading }}</p>
-                    }
-                    @for (child of section.links; track child.path) {
-                      <a
-                        role="menuitem"
-                        [routerLink]="child.path"
-                        routerLinkActive="is-active"
-                        [routerLinkActiveOptions]="{ exact: child.exact === true }"
-                        [title]="child.hint ?? child.label"
-                        (click)="openGroup.set(null)"
-                      >
-                        <span class="site-footer__menu-label">{{ child.label }}</span>
-                        @if (child.hint) {
-                          <span class="site-footer__menu-hint">{{ child.hint }}</span>
+                @for (col of sectionColumnsOf(item.group); track $index) {
+                  <div class="site-footer__col">
+                    @for (section of col; track section.heading) {
+                      <div class="site-footer__section">
+                        @if (section.heading) {
+                          <p class="site-footer__section-title">{{ section.heading }}</p>
                         }
-                      </a>
+                        @for (child of section.links; track child.path) {
+                          <a
+                            role="menuitem"
+                            [routerLink]="child.path"
+                            routerLinkActive="is-active"
+                            [routerLinkActiveOptions]="{ exact: child.exact === true }"
+                            [title]="child.hint ?? child.label"
+                            (click)="openGroup.set(null)"
+                          >
+                            <span class="site-footer__menu-label">{{ child.label }}</span>
+                            @if (child.hint) {
+                              <span class="site-footer__menu-hint">{{ child.hint }}</span>
+                            }
+                          </a>
+                        }
+                      </div>
                     }
                   </div>
                 }

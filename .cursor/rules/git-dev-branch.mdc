@@ -1,0 +1,12 @@
+---
+description: Always use `dev` as the working branch; keep `main` stable
+alwaysApply: true
+---
+
+# Git branch workflow
+
+- **Working branch is always `dev`.** Do day-to-day work, commits, and feature work on `dev`.
+- At session start (or before commits/pushes), if the current branch is not `dev`, switch to `dev` (`git checkout dev` / `git switch dev`). Create it from `main` and push with `-u` if it does not exist yet.
+- **Do not commit directly to `main`** unless the user explicitly asks.
+- Prefer merging or opening a PR **into `main`** only when the user asks to promote/release work from `dev`.
+- When creating new feature branches, base them off `dev` (not `main`), unless the user says otherwise.

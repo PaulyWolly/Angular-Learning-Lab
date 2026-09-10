@@ -1,0 +1,30 @@
+@use '../lesson-shared';
+
+.setup-roadmap {
+  margin: 0.35rem 0 0.85rem;
+  padding-left: 1.25rem;
+  line-height: 1.55;
+
+  li {
+    margin: 0.35rem 0;
+  }
+}
+
+.callout {
+  margin: 0.75rem 0 0;
+  padding: 0.65rem 0.85rem;
+  background: #ecfdf5;
+  border: 1px solid #99f6e4;
+  border-radius: 0.45rem;
+  color: #115e59;
+  font-size: 0.9rem;
+}
+
+.next-links {
+  margin: 0.85rem 0 0;
+  font-size: 0.9rem;
+
+  a {
+    font-weight: 600;
+  }
+}

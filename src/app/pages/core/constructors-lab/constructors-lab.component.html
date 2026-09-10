@@ -1,0 +1,136 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Constructors — when you need one (and when you don’t)</h1>
+  <p class="lesson__lead">
+    A <strong>constructor</strong> runs once when Angular creates your component or service class.
+    In modern Angular you often <em>skip it entirely</em> — but interviews still ask why.
+  </p>
+
+  <div class="lesson__card story">
+    <h2>Start here — plain English</h2>
+    <div class="story__grid">
+      <div class="story__panel story__panel--skip">
+        <p class="story__label">Usually skip it</p>
+        <p>
+          Put dependencies in <code>inject()</code>, state in class fields
+          (<code>title = 'Home'</code>), and inputs in <code>input()</code>. Angular builds the
+          class without you writing <code>constructor() &#123; &#125;</code>.
+        </p>
+      </div>
+      <div class="story__panel story__panel--use">
+        <p class="story__label">Still need it sometimes</p>
+        <p>
+          Subclassing (<code>super()</code>), one-time setup that chains off injected deps, or a
+          team that standardizes on <code>constructor(private http: HttpClient)</code>.
+        </p>
+      </div>
+    </div>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Pattern</th>
+          <th>Constructor?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>inject(CounterService)</code></td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td><code>name = 'Ada'</code></td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td><code>readonly count = signal(0)</code></td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td><code>extends BasePageComponent</code></td>
+          <td>Yes — call <code>super()</code></td>
+        </tr>
+        <tr>
+          <td>Build <code>FormGroup</code> from injected <code>FormBuilder</code></td>
+          <td>Optional — field + <code>inject()</code> is enough</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="lesson__card">
+    <h2>1. No constructor — <code>inject()</code> + field initializers</h2>
+    <p class="muted">
+      This card’s counter and timestamp were set up with <strong>no</strong>
+      <code>constructor()</code> in the class below.
+    </p>
+    <div class="demo-row">
+      <p>
+        Shared count: <strong>{{ counter.value() }}</strong>
+        <span class="muted"> — {{ counter.label() }}</span>
+      </p>
+      <button type="button" class="btn btn--primary" (click)="counter.increment()">+1</button>
+      <button type="button" class="btn" (click)="counter.reset()">Reset</button>
+    </div>
+    <p class="muted demo-note">{{ createdLabel }}</p>
+    <app-lesson-syntax
+      [templateCode]="skipTpl"
+      [typescriptCode]="skipTs"
+      [typescriptModal]="skipModal"
+      modalTitle="No constructor — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>2. <code>inject()</code> vs <code>constructor()</code> for DI</h2>
+    <p class="muted">
+      Same injector, two syntaxes. Prefer <code>inject()</code> in new Angular 20 code; recognize
+      constructor injection in legacy apps.
+    </p>
+    <app-lesson-syntax
+      [templateCode]="injectVsCtorTpl"
+      [typescriptCode]="injectVsCtorTs"
+      [typescriptModal]="injectVsCtorModal"
+      modalTitle="inject vs constructor — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>3. When a constructor is still useful — reactive form setup</h2>
+    <p class="muted">
+      Below, <code>loginForm</code> is built inside <code>constructor()</code> using injected
+      <code>FormBuilder</code>. The same result works with <code>inject(FormBuilder)</code> at a
+      field — constructor is a style choice here, not a requirement.
+    </p>
+    <form class="login-demo" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+      <label class="login-demo__field">
+        Email
+        <input type="email" formControlName="email" placeholder="you@example.com" />
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+          <span class="login-demo__error">Valid email required.</span>
+        }
+      </label>
+      <label class="login-demo__check">
+        <input type="checkbox" formControlName="remember" />
+        Remember me
+      </label>
+      <button type="submit" class="btn btn--primary" [disabled]="loginForm.invalid">
+        Sign in (demo)
+      </button>
+    </form>
+    <app-lesson-syntax
+      [templateCode]="needCtorTpl"
+      [typescriptCode]="needCtorTs"
+      [typescriptModal]="needCtorModal"
+      modalTitle="Constructor + FormBuilder — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>4. Cheat sheet</h2>
+    <app-lesson-syntax
+      [templateCode]="rulesTpl"
+      [typescriptCode]="rulesTs"
+      modalTitle="Constructor cheat sheet"
+    />
+  </div>
+</section>

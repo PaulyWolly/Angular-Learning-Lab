@@ -1,0 +1,41 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Third Party · Tailwind CSS</h1>
+  <p class="lesson__lead">
+    <strong>Tailwind</strong> is a utility-first CSS toolkit. You style by composing small
+    classes in the template (<code>flex</code>, <code>px-4</code>, <code>text-teal-700</code>)
+    instead of writing large custom SCSS files.
+  </p>
+
+  <div class="lesson__card">
+    <h2>What it is</h2>
+    <p class="muted">
+      Build-time CSS: Tailwind scans your templates and emits only the utilities you used.
+      It is <em>not</em> a set of Angular components — just classes.
+    </p>
+    <div class="tw-preview" aria-hidden="true">
+      <span class="tw-chip tw-chip--teal">bg-teal-700 text-white</span>
+      <span class="tw-chip">grid grid-cols-2 gap-3</span>
+      <span class="tw-chip">rounded border p-3</span>
+    </div>
+  </div>
+
+  <div class="lesson__card">
+    <h2>Install &amp; wire into Angular</h2>
+    <app-lesson-syntax
+      [typescriptCode]="installTs"
+      [templateCode]="installTpl"
+      [typescriptModal]="installModal"
+      modalTitle="Tailwind install — Full Notes"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>When to pick Tailwind</h2>
+    <app-lesson-syntax [typescriptCode]="whenTs" [templateCode]="installTpl" />
+    <p class="muted callout">
+      Not enabled globally in this Learning Lab (would fight Material + our tokens). Practice
+      Tailwind in a fresh <code>ng new</code> app using the steps above.
+    </p>
+  </div>
+</section>

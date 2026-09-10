@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DemoAuthService } from '../../core/auth/demo-auth.service';
-import { CRUMB_HOME, CRUMB_ROUTES } from '../../shared/lesson-breadcrumb/crumb-presets';
-import { LessonBreadcrumbComponent } from '../../shared/lesson-breadcrumb/lesson-breadcrumb.component';
+import { CRUMB_HOME, CRUMB_ROUTES } from '../../shared/directives/lesson-breadcrumb/crumb-presets';
+import { LessonBreadcrumbComponent } from '../../shared/directives/lesson-breadcrumb/lesson-breadcrumb.component';
 
 @Component({
   selector: 'app-protected-lab',

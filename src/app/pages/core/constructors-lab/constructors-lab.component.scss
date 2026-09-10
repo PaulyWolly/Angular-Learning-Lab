@@ -1,0 +1,100 @@
+@use '../lesson-shared';
+
+.story__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.story__panel {
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--line);
+  background: #fff;
+
+  &--skip {
+    border-color: #99f6e4;
+    background: #f0fdfa;
+  }
+
+  &--use {
+    border-color: #fde68a;
+    background: #fffbeb;
+  }
+}
+
+.story__label {
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--teal);
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+
+  th,
+  td {
+    padding: 0.45rem 0.6rem;
+    border: 1px solid var(--line);
+    text-align: left;
+  }
+
+  th {
+    background: #f4f1eb;
+    font-weight: 700;
+  }
+
+  code {
+    font-size: 0.82rem;
+  }
+}
+
+.demo-note {
+  margin: 0.5rem 0 0.85rem;
+  font-size: 0.85rem;
+}
+
+.login-demo {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 22rem;
+  margin: 0.5rem 0 1rem;
+  padding: 0.85rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+}
+
+.login-demo__field {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  input[type='email'] {
+    padding: 0.45rem 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: 0.35rem;
+    font: inherit;
+  }
+}
+
+.login-demo__check {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.login-demo__error {
+  color: var(--danger);
+  font-size: 0.75rem;
+  font-weight: 600;
+}

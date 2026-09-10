@@ -4,8 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-import { CRUMB_HOME, CRUMB_MATERIAL } from '../../../shared/lesson-breadcrumb/crumb-presets';
-import { LessonBreadcrumbComponent } from '../../../shared/lesson-breadcrumb/lesson-breadcrumb.component';
+import { CRUMB_HOME, CRUMB_MATERIAL } from '../../../shared/directives/lesson-breadcrumb/crumb-presets';
+import { LessonBreadcrumbComponent } from '../../../shared/directives/lesson-breadcrumb/lesson-breadcrumb.component';
 import { LessonSyntaxComponent } from '../../../shared/lesson-syntax/lesson-syntax.component';
 import { ToastService } from '../../../shared/toast/toast.service';
 

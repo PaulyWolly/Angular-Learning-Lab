@@ -1,0 +1,46 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Basics · JavaScript for Angular</h1>
+  <p class="lesson__lead">
+    Before deep Angular: the <strong>JavaScript</strong> pieces you will see every day in
+    components, services, and RxJS. This section is a quick, interview-friendly refresh — not a
+    full JS course.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Roadmap</h2>
+    <div class="basics-grid">
+      <a class="basics-card" routerLink="/basics/variables">
+        <h3>Variables &amp; Types</h3>
+        <p><code>let</code> / <code>const</code>, primitives, and why TypeScript cares.</p>
+        <span class="basics-cta">Open →</span>
+      </a>
+      <a class="basics-card" routerLink="/basics/functions">
+        <h3>Functions &amp; Arrows</h3>
+        <p>Declarations, arrow functions, and <code>this</code> in class methods.</p>
+        <span class="basics-cta">Open →</span>
+      </a>
+      <a class="basics-card" routerLink="/basics/arrays">
+        <h3>Arrays &amp; Objects</h3>
+        <p><code>map</code>, <code>filter</code>, <code>find</code> — data for templates.</p>
+        <span class="basics-cta">Open →</span>
+      </a>
+      <a class="basics-card" routerLink="/basics/destructuring">
+        <h3>Destructuring &amp; Spread</h3>
+        <p>Unpack props, clone objects, and merge configs safely.</p>
+        <span class="basics-cta">Open →</span>
+      </a>
+      <a class="basics-card" routerLink="/basics/async">
+        <h3>Promises &amp; async/await</h3>
+        <p>Async work before Observables — then, catch, await.</p>
+        <span class="basics-cta">Open →</span>
+      </a>
+      <a class="basics-card" routerLink="/basics/modules">
+        <h3>Modules &amp; Classes</h3>
+        <p><code>import</code>/<code>export</code> and class fields — Angular’s file shape.</p>
+        <span class="basics-cta">Open →</span>
+      </a>
+    </div>
+    <app-lesson-syntax [typescriptCode]="whyTs" [templateCode]="whyTpl" />
+  </div>
+</section>

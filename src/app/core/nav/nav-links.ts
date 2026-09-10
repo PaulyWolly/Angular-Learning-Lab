@@ -40,11 +40,77 @@ export function navSections(children: NavLink[]): NavSection[] {
   }));
 }
 
+/**
+ * Split sections into independent vertical columns (no shared row heights).
+ * Even indices → left, odd → right. Single-column menus get one list.
+ */
+export function navSectionColumns(children: NavLink[], wide: boolean): NavSection[][] {
+  const sections = navSections(children);
+  if (!wide || sections.length <= 1) {
+    return [sections];
+  }
+  const left: NavSection[] = [];
+  const right: NavSection[] = [];
+  sections.forEach((section, i) => (i % 2 === 0 ? left : right).push(section));
+  return [left, right];
+}
+
 /** Compact primary nav — dropdowns keep the header short. */
 export const NAV_ITEMS: NavItem[] = [
   {
     kind: 'link',
     link: { label: 'Home', path: '/', hint: 'Start here', exact: true },
+  },
+  {
+    kind: 'group',
+    group: {
+      label: 'Basics',
+      basePath: '/basics',
+      children: [
+        {
+          label: 'Overview',
+          path: '/basics/overview',
+          hint: 'JS roadmap for Angular',
+          section: 'Start',
+        },
+        {
+          label: 'Variables & Types',
+          path: '/basics/variables',
+          hint: 'let, const, typeof',
+          section: 'Language',
+        },
+        {
+          label: 'Functions & Arrows',
+          path: '/basics/functions',
+          hint: 'Functions, arrows, this',
+          section: 'Language',
+        },
+        {
+          label: 'Arrays & Objects',
+          path: '/basics/arrays',
+          hint: 'map, filter, find',
+          section: 'Data',
+        },
+        {
+          label: 'Destructuring & Spread',
+          path: '/basics/destructuring',
+          hint: 'Unpack and copy',
+          section: 'Data',
+        },
+        {
+          label: 'Promises & async',
+          path: '/basics/async',
+          hint: 'then, await, errors',
+          section: 'Async',
+        },
+        {
+          label: 'Modules & Classes',
+          path: '/basics/modules',
+          hint: 'import/export + class',
+          section: 'Structure',
+        },
+      ],
+    },
   },
   {
     kind: 'link',
@@ -61,9 +127,21 @@ export const NAV_ITEMS: NavItem[] = [
       basePath: '/core',
       children: [
         {
+          label: 'Setup · Node · NVM · CLI',
+          path: '/core/setup',
+          hint: 'Install Node, NVM, Angular CLI, run this lab',
+          section: 'Start here',
+        },
+        {
           label: 'Components',
           path: '/core/components',
           hint: 'Anatomy, standalone, inputs, outputs',
+          section: 'Fundamentals',
+        },
+        {
+          label: 'Constructors',
+          path: '/core/constructors',
+          hint: 'When you need constructor() vs inject()',
           section: 'Fundamentals',
         },
         {
@@ -182,6 +260,45 @@ export const NAV_ITEMS: NavItem[] = [
           path: '/material/navigation',
           hint: 'Toolbar, menus, tabs, accordions',
           section: 'Navigation',
+        },
+      ],
+    },
+  },
+  {
+    kind: 'group',
+    group: {
+      label: 'Third Party',
+      basePath: '/third-party',
+      children: [
+        {
+          label: 'Overview',
+          path: '/third-party/overview',
+          hint: 'Bootstrap, Tailwind, Storybook, Ag-Grid',
+          section: 'Hub',
+        },
+        {
+          label: 'Bootstrap',
+          path: '/third-party/bootstrap',
+          hint: 'CSS framework + class-based UI',
+          section: 'CSS & UI',
+        },
+        {
+          label: 'Tailwind',
+          path: '/third-party/tailwind',
+          hint: 'Utility-first CSS for Angular',
+          section: 'CSS & UI',
+        },
+        {
+          label: 'Storybook',
+          path: '/third-party/storybook',
+          hint: 'Component workshop & docs',
+          section: 'Tooling',
+        },
+        {
+          label: 'Ag-Grid Community',
+          path: '/third-party/ag-grid',
+          hint: 'Live high-performance data grid',
+          section: 'Data grids',
         },
       ],
     },

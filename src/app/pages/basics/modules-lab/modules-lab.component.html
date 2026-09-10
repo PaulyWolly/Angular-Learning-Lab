@@ -1,0 +1,33 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Basics · Modules &amp; Classes</h1>
+  <p class="lesson__lead">
+    Every Angular file is an <strong>ES module</strong> (<code>import</code> /
+    <code>export</code>). Most UI pieces are a <strong>class</strong> with a
+    <code>@Component</code> decorator on top.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live: plain class</h2>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="runClass()">
+        new Greeter('Angular Lab').hello()
+      </button>
+    </div>
+    <pre class="basics-out">{{ demoLog() }}</pre>
+    <app-lesson-syntax
+      [templateCode]="modTpl"
+      [typescriptCode]="modTs"
+      [typescriptModal]="modModal"
+      modalTitle="Modules & Classes — Full Notes"
+    />
+    <p class="next-link muted">
+      Next in Angular:
+      <a routerLink="/core/components">Components</a>
+      ·
+      <a routerLink="/core/constructors">Constructors</a>
+      ·
+      <a routerLink="/core/services">Services</a>
+    </p>
+  </div>
+</section>

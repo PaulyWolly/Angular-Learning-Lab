@@ -14,7 +14,9 @@ export class HomeComponent {
 
   /** Core lab pack — open by default so labs stay discoverable. */
   readonly coreOpen = signal(true);
+  readonly basicsOpen = signal(true);
   readonly materialOpen = signal(true);
+  readonly thirdPartyOpen = signal(true);
   readonly progressOpen = signal(true);
 
   readonly progressGroups = this.progress.groups();
@@ -23,8 +25,16 @@ export class HomeComponent {
     this.coreOpen.update((open) => !open);
   }
 
+  toggleBasics(): void {
+    this.basicsOpen.update((open) => !open);
+  }
+
   toggleMaterial(): void {
     this.materialOpen.update((open) => !open);
+  }
+
+  toggleThirdParty(): void {
+    this.thirdPartyOpen.update((open) => !open);
   }
 
   toggleProgress(): void {

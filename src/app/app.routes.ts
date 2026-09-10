@@ -22,9 +22,77 @@ export const routes: Routes = [
     title: 'RxJS Lab',
   },
   {
+    path: 'basics',
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'overview' },
+      {
+        path: 'overview',
+        loadComponent: () =>
+          import('./pages/basics/overview-lab/overview-lab.component').then(
+            (m) => m.BasicsOverviewLabComponent,
+          ),
+        title: 'Basics Overview',
+      },
+      {
+        path: 'variables',
+        loadComponent: () =>
+          import('./pages/basics/variables-lab/variables-lab.component').then(
+            (m) => m.BasicsVariablesLabComponent,
+          ),
+        title: 'Variables & Types',
+      },
+      {
+        path: 'functions',
+        loadComponent: () =>
+          import('./pages/basics/functions-lab/functions-lab.component').then(
+            (m) => m.BasicsFunctionsLabComponent,
+          ),
+        title: 'Functions & Arrows',
+      },
+      {
+        path: 'arrays',
+        loadComponent: () =>
+          import('./pages/basics/arrays-lab/arrays-lab.component').then(
+            (m) => m.BasicsArraysLabComponent,
+          ),
+        title: 'Arrays & Objects',
+      },
+      {
+        path: 'destructuring',
+        loadComponent: () =>
+          import('./pages/basics/destructuring-lab/destructuring-lab.component').then(
+            (m) => m.BasicsDestructuringLabComponent,
+          ),
+        title: 'Destructuring & Spread',
+      },
+      {
+        path: 'async',
+        loadComponent: () =>
+          import('./pages/basics/async-lab/async-lab.component').then(
+            (m) => m.BasicsAsyncLabComponent,
+          ),
+        title: 'Promises & async',
+      },
+      {
+        path: 'modules',
+        loadComponent: () =>
+          import('./pages/basics/modules-lab/modules-lab.component').then(
+            (m) => m.BasicsModulesLabComponent,
+          ),
+        title: 'Modules & Classes',
+      },
+    ],
+  },
+  {
     path: 'core',
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'components' },
+      { path: '', pathMatch: 'full', redirectTo: 'setup' },
+      {
+        path: 'setup',
+        loadComponent: () =>
+          import('./pages/core/setup-lab/setup-lab.component').then((m) => m.SetupLabComponent),
+        title: 'Setup · Node · NVM · CLI',
+      },
       {
         path: 'components',
         loadComponent: () =>
@@ -32,6 +100,14 @@ export const routes: Routes = [
             (m) => m.ComponentsLabComponent,
           ),
         title: 'Components',
+      },
+      {
+        path: 'constructors',
+        loadComponent: () =>
+          import('./pages/core/constructors-lab/constructors-lab.component').then(
+            (m) => m.ConstructorsLabComponent,
+          ),
+        title: 'Constructors',
       },
       {
         path: 'binding',
@@ -193,6 +269,52 @@ export const routes: Routes = [
             (m) => m.MaterialNavigationLabComponent,
           ),
         title: 'Material Navigation & Menus',
+      },
+    ],
+  },
+  {
+    path: 'third-party',
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'overview' },
+      {
+        path: 'overview',
+        loadComponent: () =>
+          import('./pages/third-party/overview-lab/overview-lab.component').then(
+            (m) => m.ThirdPartyOverviewLabComponent,
+          ),
+        title: 'Third Party Overview',
+      },
+      {
+        path: 'bootstrap',
+        loadComponent: () =>
+          import('./pages/third-party/bootstrap-lab/bootstrap-lab.component').then(
+            (m) => m.BootstrapLabComponent,
+          ),
+        title: 'Bootstrap',
+      },
+      {
+        path: 'tailwind',
+        loadComponent: () =>
+          import('./pages/third-party/tailwind-lab/tailwind-lab.component').then(
+            (m) => m.TailwindLabComponent,
+          ),
+        title: 'Tailwind CSS',
+      },
+      {
+        path: 'storybook',
+        loadComponent: () =>
+          import('./pages/third-party/storybook-lab/storybook-lab.component').then(
+            (m) => m.StorybookLabComponent,
+          ),
+        title: 'Storybook',
+      },
+      {
+        path: 'ag-grid',
+        loadComponent: () =>
+          import('./pages/third-party/ag-grid-lab/ag-grid-lab.component').then(
+            (m) => m.AgGridLabComponent,
+          ),
+        title: 'Ag-Grid Community',
       },
     ],
   },

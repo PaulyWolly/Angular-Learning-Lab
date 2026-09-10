@@ -5,10 +5,10 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError, combineLatest, map, of, switchMap, tap } from 'rxjs';
 import { Post } from '../../models/post.model';
 import { User } from '../../models/user.model';
-import { CRUMB_HOME, CRUMB_USERS } from '../../shared/lesson-breadcrumb/crumb-presets';
-import { LessonBreadcrumbComponent } from '../../shared/lesson-breadcrumb/lesson-breadcrumb.component';
+import { CRUMB_HOME, CRUMB_USERS } from '../../shared/directives/lesson-breadcrumb/crumb-presets';
+import { LessonBreadcrumbComponent } from '../../shared/directives/lesson-breadcrumb/lesson-breadcrumb.component';
 import { LessonSyntaxComponent } from '../../shared/lesson-syntax/lesson-syntax.component';
-import { UsersService } from '../../services/users.service';
+import { UsersService } from '../../shared/services/users.service';
 import { ToastService } from '../../shared/toast/toast.service';
 
 @Component({

@@ -7,6 +7,18 @@
   </p>
 
   <div class="home__grid">
+    <a class="home__card" routerLink="/basics/overview">
+      <h2>Basics · JavaScript</h2>
+      <p>Variables, functions, arrays, destructuring, promises, modules — JS you need for Angular.</p>
+      <span class="home__cta">Open Basics →</span>
+    </a>
+
+    <a class="home__card" routerLink="/core/setup">
+      <h2>Setup · Node · NVM · CLI</h2>
+      <p>Install Node with NVM, Angular CLI, create an app, and run this Learning Lab.</p>
+      <span class="home__cta">Open setup →</span>
+    </a>
+
     <a class="home__card" routerLink="/rxjs">
       <h2>RxJS Lab</h2>
       <p>Observables, operators, async pipe, and live search with JSONPlaceholder users.</p>
@@ -24,6 +36,72 @@
       <p>Nested paths, lazy loading, CanActivate, CanDeactivate, and a protected page.</p>
       <span class="home__cta">Open routes →</span>
     </a>
+
+    <a class="home__card" routerLink="/material/overview">
+      <h2>Angular Material</h2>
+      <p>Setup, form controls, tables &amp; grids, dialogs, snackbars, tooltips, and navigation menus.</p>
+      <span class="home__cta">Open Material →</span>
+    </a>
+
+    <a class="home__card" routerLink="/third-party/overview">
+      <h2>Third Party</h2>
+      <p>Bootstrap, Tailwind CSS, Storybook, and Ag-Grid Community — when and how to add them.</p>
+      <span class="home__cta">Open Third Party →</span>
+    </a>
+  </div>
+
+  <div class="home__fold" [class.is-open]="basicsOpen()">
+    <button
+      type="button"
+      class="home__fold-toggle"
+      (click)="toggleBasics()"
+      [attr.aria-expanded]="basicsOpen()"
+      aria-controls="home-basics-labs"
+    >
+      <span class="home__fold-title">Basics · JavaScript</span>
+      <span class="home__fold-meta">7 labs · variables, functions, arrays, async, modules…</span>
+      <span class="home__fold-chevron" aria-hidden="true">{{ basicsOpen() ? '▾' : '▸' }}</span>
+    </button>
+
+    @if (basicsOpen()) {
+      <div class="home__grid home__grid--nested" id="home-basics-labs">
+        <a class="home__card" routerLink="/basics/overview">
+          <h2>Overview</h2>
+          <p>Why these JS topics matter before Angular components and RxJS.</p>
+          <span class="home__cta">Open overview →</span>
+        </a>
+        <a class="home__card" routerLink="/basics/variables">
+          <h2>Variables &amp; Types</h2>
+          <p>let vs const, primitives, and typeof quirks.</p>
+          <span class="home__cta">Open variables →</span>
+        </a>
+        <a class="home__card" routerLink="/basics/functions">
+          <h2>Functions &amp; Arrows</h2>
+          <p>Declarations, arrow functions, and this in class methods.</p>
+          <span class="home__cta">Open functions →</span>
+        </a>
+        <a class="home__card" routerLink="/basics/arrays">
+          <h2>Arrays &amp; Objects</h2>
+          <p>map, filter, find — reshape data for templates.</p>
+          <span class="home__cta">Open arrays →</span>
+        </a>
+        <a class="home__card" routerLink="/basics/destructuring">
+          <h2>Destructuring &amp; Spread</h2>
+          <p>Unpack props and clone/merge objects immutably.</p>
+          <span class="home__cta">Open destructuring →</span>
+        </a>
+        <a class="home__card" routerLink="/basics/async">
+          <h2>Promises &amp; async</h2>
+          <p>then/catch and async/await — bridge toward Observables.</p>
+          <span class="home__cta">Open async →</span>
+        </a>
+        <a class="home__card" routerLink="/basics/modules">
+          <h2>Modules &amp; Classes</h2>
+          <p>import/export and class shape — the skeleton of Angular files.</p>
+          <span class="home__cta">Open modules →</span>
+        </a>
+      </div>
+    }
   </div>
 
   <div class="home__fold" [class.is-open]="coreOpen()">
@@ -35,16 +113,28 @@
       aria-controls="home-core-labs"
     >
       <span class="home__fold-title">Core</span>
-      <span class="home__fold-meta">14 labs · components, binding, forms, HTTP, XSS…</span>
+      <span class="home__fold-meta">16 labs · setup, components, constructors, forms, HTTP…</span>
       <span class="home__fold-chevron" aria-hidden="true">{{ coreOpen() ? '▾' : '▸' }}</span>
     </button>
 
     @if (coreOpen()) {
       <div class="home__grid home__grid--nested" id="home-core-labs">
+        <a class="home__card" routerLink="/core/setup">
+          <h2>Setup · Node · NVM · CLI</h2>
+          <p>NVM, Node LTS, Angular CLI, ng new, and how to run this repo on port 4201.</p>
+          <span class="home__cta">Open setup →</span>
+        </a>
+
         <a class="home__card" routerLink="/core/components">
           <h2>Components</h2>
           <p>Anatomy, standalone + imports, inputs, outputs, and ng-content.</p>
           <span class="home__cta">Open components →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/constructors">
+          <h2>Constructors</h2>
+          <p>When you need <code>constructor()</code> vs <code>inject()</code>, fields, and <code>super()</code>.</p>
+          <span class="home__cta">Open constructors →</span>
         </a>
 
         <a class="home__card" routerLink="/core/binding">
@@ -171,6 +261,54 @@
           <h2>Navigation &amp; Menus</h2>
           <p>MatToolbar, MatMenu dropdowns, MatTabs with badge counts, and MatExpansion accordion.</p>
           <span class="home__cta">Open navigation →</span>
+        </a>
+      </div>
+    }
+  </div>
+
+  <div class="home__fold" [class.is-open]="thirdPartyOpen()">
+    <button
+      type="button"
+      class="home__fold-toggle"
+      (click)="toggleThirdParty()"
+      [attr.aria-expanded]="thirdPartyOpen()"
+      aria-controls="home-third-party-labs"
+    >
+      <span class="home__fold-title">Third Party</span>
+      <span class="home__fold-meta">4 labs · Bootstrap, Tailwind, Storybook, Ag-Grid Community…</span>
+      <span class="home__fold-chevron" aria-hidden="true">{{ thirdPartyOpen() ? '▾' : '▸' }}</span>
+    </button>
+
+    @if (thirdPartyOpen()) {
+      <div class="home__grid home__grid--nested" id="home-third-party-labs">
+        <a class="home__card" routerLink="/third-party/overview">
+          <h2>Overview</h2>
+          <p>Compare Bootstrap, Tailwind, Storybook, and Ag-Grid — pick by job to be done.</p>
+          <span class="home__cta">Open overview →</span>
+        </a>
+
+        <a class="home__card" routerLink="/third-party/bootstrap">
+          <h2>Bootstrap</h2>
+          <p>Class-based CSS framework — install, wire styles, when to use vs Material.</p>
+          <span class="home__cta">Open Bootstrap →</span>
+        </a>
+
+        <a class="home__card" routerLink="/third-party/tailwind">
+          <h2>Tailwind CSS</h2>
+          <p>Utility-first CSS for Angular templates — config, content paths, trade-offs.</p>
+          <span class="home__cta">Open Tailwind →</span>
+        </a>
+
+        <a class="home__card" routerLink="/third-party/storybook">
+          <h2>Storybook</h2>
+          <p>Component workshop for docs and isolated UI states — not a runtime CSS kit.</p>
+          <span class="home__cta">Open Storybook →</span>
+        </a>
+
+        <a class="home__card" routerLink="/third-party/ag-grid">
+          <h2>Ag-Grid Community</h2>
+          <p>Live high-performance data grid — sort, filter, resize with the free Community edition.</p>
+          <span class="home__cta">Open Ag-Grid →</span>
         </a>
       </div>
     }

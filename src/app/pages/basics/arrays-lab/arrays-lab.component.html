@@ -1,0 +1,29 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Basics · Arrays &amp; Objects</h1>
+  <p class="lesson__lead">
+    Lists and records are how Angular moves data into templates.
+    Master <code>map</code>, <code>filter</code>, and <code>find</code> — you will use them constantly.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live data</h2>
+    <ul class="basics-list">
+      @for (u of users; track u.id) {
+        <li><strong>{{ u.name }}</strong> — {{ u.role }}</li>
+      }
+    </ul>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="runMap()">map → names</button>
+      <button type="button" class="btn" (click)="runFilter()">filter → devs</button>
+      <button type="button" class="btn" (click)="runFind()">find → Ada</button>
+    </div>
+    <pre class="basics-out">{{ demoLog() }}</pre>
+    <app-lesson-syntax
+      [templateCode]="arrTpl"
+      [typescriptCode]="arrTs"
+      [typescriptModal]="arrModal"
+      modalTitle="Arrays & Objects — Full Notes"
+    />
+  </div>
+</section>

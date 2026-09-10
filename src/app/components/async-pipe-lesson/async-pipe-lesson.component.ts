@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { CodeModalComponent } from '../code-modal/code-modal.component';
-import { UsersService } from '../../services/users.service';
+import { UsersService } from '../../shared/services/users.service';
 
 @Component({
   selector: 'app-async-pipe-lesson',

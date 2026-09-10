@@ -1,0 +1,24 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Basics · Destructuring &amp; Spread</h1>
+  <p class="lesson__lead">
+    Unpack values from objects/arrays in one line, and copy/merge with
+    <code>...</code> (spread) without mutating the original.
+  </p>
+
+  <div class="lesson__card">
+    <h2>Live demos</h2>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="runObject()">Object unpack</button>
+      <button type="button" class="btn" (click)="runArray()">Array unpack</button>
+      <button type="button" class="btn" (click)="runSpread()">Spread merge</button>
+    </div>
+    <pre class="basics-out">{{ demoLog() }}</pre>
+    <app-lesson-syntax
+      [templateCode]="destTpl"
+      [typescriptCode]="destTs"
+      [typescriptModal]="destModal"
+      modalTitle="Destructuring — Full Notes"
+    />
+  </div>
+</section>

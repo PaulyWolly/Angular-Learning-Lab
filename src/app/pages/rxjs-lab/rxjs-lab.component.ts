@@ -19,9 +19,9 @@ import { AsyncPipeLessonComponent } from '../../components/async-pipe-lesson/asy
 import { StepPanelComponent } from '../../components/step-panel/step-panel.component';
 import { UserDatasetComponent } from '../../components/user-dataset/user-dataset.component';
 import { SlimUser, User } from '../../models/user.model';
-import { UsersService } from '../../services/users.service';
-import { CRUMB_HOME } from '../../shared/lesson-breadcrumb/crumb-presets';
-import { LessonBreadcrumbComponent } from '../../shared/lesson-breadcrumb/lesson-breadcrumb.component';
+import { UsersService } from '../../shared/services/users.service';
+import { CRUMB_HOME } from '../../shared/directives/lesson-breadcrumb/crumb-presets';
+import { LessonBreadcrumbComponent } from '../../shared/directives/lesson-breadcrumb/lesson-breadcrumb.component';
 import {
   STEP1_COMPLETE_CODE,
   STEP2_COMPLETE_CODE,

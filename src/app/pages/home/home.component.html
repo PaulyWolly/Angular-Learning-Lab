@@ -2,8 +2,8 @@
   <span class="home__eyebrow">Angular & JS<span class="home__eyebrow-separator">•</span>  <span class="home__eyebrow-title">Learning Lab</span></span>
   <h1>Learn by watching the pieces move</h1>
   <p class="home__lead">
-    Interview-ready Angular skills: templates, DI, forms, signals, RxJS, routing, and a users
-    capstone — on Angular v20.
+    Interview-ready Angular skills: templates, DI, forms, signals, NgRx, RxJS, routing, and a
+    users capstone — on Angular v20.
   </p>
 
   <div class="home__grid">
@@ -23,6 +23,12 @@
       <h2>RxJS Lab</h2>
       <p>Observables, operators, async pipe, and live search with JSONPlaceholder users.</p>
       <span class="home__cta">Open lab →</span>
+    </a>
+
+    <a class="home__card" routerLink="/core/ngrx">
+      <h2>NgRx</h2>
+      <p>Classic Store, effects, selectors, and SignalStore — a live snack cart on Angular 20.</p>
+      <span class="home__cta">Open NgRx →</span>
     </a>
 
     <a class="home__card" routerLink="/users">
@@ -116,7 +122,7 @@
       aria-controls="home-core-labs"
     >
       <span class="home__fold-title">Core</span>
-      <span class="home__fold-meta">16 labs · setup, components, constructors, forms, HTTP…</span>
+      <span class="home__fold-meta">17 labs · setup, components, constructors, forms, HTTP, NgRx…</span>
       <span class="home__fold-chevron" aria-hidden="true">{{ coreOpen() ? '▾' : '▸' }}</span>
     </button>
 
@@ -204,6 +210,12 @@
           <h2>Subjects · BehaviorSubject</h2>
           <p>Subject vs BehaviorSubject — multicast bus and late-join replay.</p>
           <span class="home__cta">Open subjects →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/ngrx">
+          <h2>NgRx</h2>
+          <p>Store, effects, selectors, and SignalStore — a live snack cart.</p>
+          <span class="home__cta">Open NgRx →</span>
         </a>
 
         <a class="home__card" routerLink="/core/interceptors">

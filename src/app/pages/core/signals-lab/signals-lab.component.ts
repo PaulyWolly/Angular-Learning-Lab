@@ -1,4 +1,5 @@
 import { Component, computed, effect, signal, untracked } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { CRUMB_CORE, CRUMB_HOME } from '../../../shared/directives/lesson-breadcrumb/crumb-presets';
 import { LessonBreadcrumbComponent } from '../../../shared/directives/lesson-breadcrumb/lesson-breadcrumb.component';
 import { LessonSyntaxComponent } from '../../../shared/lesson-syntax/lesson-syntax.component';
@@ -6,7 +7,7 @@ import { LessonSyntaxComponent } from '../../../shared/lesson-syntax/lesson-synt
 @Component({
   selector: 'app-signals-lab',
   standalone: true,
-  imports: [LessonBreadcrumbComponent, LessonSyntaxComponent],
+  imports: [RouterLink, LessonBreadcrumbComponent, LessonSyntaxComponent],
   templateUrl: './signals-lab.component.html',
   styleUrl: './signals-lab.component.scss',
 })

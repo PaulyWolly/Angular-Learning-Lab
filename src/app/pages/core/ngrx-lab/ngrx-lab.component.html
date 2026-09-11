@@ -1,0 +1,246 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>NgRx</h1>
+  <p class="lesson__lead">
+    <strong>NgRx</strong> is a store for shared app state. You
+    <em>dispatch actions</em> (events), a <em>reducer</em> returns a new state, and
+    <em>selectors</em> read slices for the template. <code>@ngrx/signals</code> is the modern
+    SignalStore path — same idea, fewer files. Local UI still belongs in
+    <a routerLink="/core/signals">signals</a>; a tiny shared counter still belongs in a
+    <a routerLink="/core/services">service</a>.
+  </p>
+
+  <div class="lesson__card story">
+    <h2>Start here — one-way traffic</h2>
+    <p class="story__why">
+      <strong>Why a store at all?</strong> When five distant screens need the same cart, user
+      session, or feature flags, passing inputs down and outputs up gets noisy. A store is a
+      single source of truth: the view never patches state in place — it asks, by dispatching.
+    </p>
+
+    <div class="flow" aria-label="Unidirectional data flow">
+      <span class="flow__step">View</span>
+      <span class="flow__arrow">dispatch</span>
+      <span class="flow__step">Action</span>
+      <span class="flow__arrow">reduce</span>
+      <span class="flow__step">Store</span>
+      <span class="flow__arrow">select</span>
+      <span class="flow__step">View</span>
+    </div>
+    <p class="muted flow-note">
+      Side work (HTTP, timers) lives in an <strong>effect</strong>: it hears an action, does the
+      async job, then dispatches a <em>success / failure</em> action. The reducer stays a pure
+      function.
+    </p>
+
+    <table class="story__table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Use</th>
+          <th>Skip</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Component signals</th>
+          <td>Toggle, form draft, local UI</td>
+          <td>State many routes must share</td>
+        </tr>
+        <tr>
+          <th scope="row">Service + signals</th>
+          <td>Small shared state (this lab’s CounterService)</td>
+          <td>Many features, time-travel, interceptable events</td>
+        </tr>
+        <tr>
+          <th scope="row">NgRx Store</th>
+          <td>App-wide cart, auth, complex flows, DevTools</td>
+          <td>A single page’s checkbox</td>
+        </tr>
+        <tr>
+          <th scope="row">SignalStore</th>
+          <td>New NgRx code — less boilerplate, signal-first</td>
+          <td>You already have a large action/reducer graph to extend</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="story__try">
+      <strong>Try this:</strong> Add snacks in the classic cart, then add snacks in SignalStore —
+      two independent baskets. Load seed (effect) fills only the classic cart after a short delay.
+      Optional: Redux DevTools in the browser shows every <code>[Lab Cart]</code> action.
+    </p>
+  </div>
+
+  <div class="lesson__card">
+    <h2>Install &amp; wire (Angular 20 · NgRx 20)</h2>
+    <p class="muted">
+      Root <code>provideStore()</code> is empty on purpose. This lab’s slice is registered on the
+      route with <code>provideState('labCart', cartReducer)</code> — a feature store, not a
+      god-object.
+    </p>
+    <app-lesson-syntax
+      [templateCode]="installTpl"
+      [typescriptCode]="installTs"
+      [typescriptModal]="installModal"
+      modalTitle="NgRx providers — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Live: classic Store — actions · reducer · selectors</h2>
+    <p class="muted">
+      Buttons <strong>dispatch</strong>. The template reads
+      <code>store.selectSignal(...)</code> — no <code>async</code> pipe needed. Count
+      <strong>{{ itemCount() }}</strong> · total
+      <strong>{{ total() | currency: 'USD' : 'symbol-narrow' }}</strong>
+      · status <span class="chip" [attr.data-status]="status()">{{ status() }}</span>
+    </p>
+
+    <div class="catalog" aria-label="Snack catalog">
+      @for (product of catalog; track product.id) {
+        <button type="button" class="btn catalog__btn" (click)="add(product)">
+          Add {{ product.name }}
+          <span class="muted">{{ product.price | currency: 'USD' : 'symbol-narrow' }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="demo-row">
+      <button
+        type="button"
+        class="btn btn--primary"
+        (click)="loadSeed()"
+        [disabled]="status() === 'loading'"
+      >
+        Load seed (effect)
+      </button>
+      <button type="button" class="btn" (click)="clear()" [disabled]="items().length === 0">
+        Clear cart
+      </button>
+    </div>
+
+    @if (error(); as message) {
+      <p class="muted">{{ message }}</p>
+    }
+
+    <div class="preview">
+      @if (items().length === 0) {
+        <p class="muted" style="margin: 0">Cart is empty — add a snack or load the seed.</p>
+      } @else {
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Qty</th>
+              <th>Line</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of items(); track item.id) {
+              <tr>
+                <td>{{ item.name }}</td>
+                <td>
+                  <div class="demo-row" style="margin: 0">
+                    <button type="button" class="btn" (click)="decrement(item.id)">−</button>
+                    <strong>{{ item.qty }}</strong>
+                    <button type="button" class="btn" (click)="add(item)">+</button>
+                  </div>
+                </td>
+                <td>{{ item.price * item.qty | currency: 'USD' : 'symbol-narrow' }}</td>
+                <td>
+                  <button type="button" class="btn" (click)="remove(item.id)">Remove</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+
+    <ul class="feed">
+      @if (actionLog().length === 0) {
+        <li class="muted">No dispatches yet — every click below logs the action type.</li>
+      } @else {
+        @for (row of actionLog(); track $index) {
+          <li><code>{{ row }}</code></li>
+        }
+      }
+    </ul>
+
+    <app-lesson-syntax
+      [templateCode]="storeTpl"
+      [typescriptCode]="storeTs"
+      [typescriptModal]="storeModal"
+      modalTitle="Classic Store — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Effects — async without dirtying the reducer</h2>
+    <p class="muted">
+      <code>Load Seed</code> above dispatches <code>[Lab Cart] Load Seed</code>. The effect waits
+      700ms (fake HTTP) then dispatches <code>Load Seed Success</code> with chips ×2 and soda ×1.
+      Extra clicks while loading are ignored (<code>exhaustMap</code>).
+    </p>
+    <app-lesson-syntax
+      [templateCode]="effectsTpl"
+      [typescriptCode]="effectsTs"
+      [typescriptModal]="effectsModal"
+      modalTitle="NgRx effects — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Live: SignalStore — same cart, no actions</h2>
+    <p class="muted">
+      Methods call <code>patchState</code>. This store is
+      <code>providers: [LabCartSignalStore]</code> on the component, so it does
+      <em>not</em> share the classic basket. Count
+      <strong>{{ signalCart.itemCount() }}</strong> · total
+      <strong>{{ signalCart.total() | currency: 'USD' : 'symbol-narrow' }}</strong>
+    </p>
+
+    <div class="catalog" aria-label="SignalStore snack catalog">
+      @for (product of catalog; track product.id) {
+        <button type="button" class="btn catalog__btn" (click)="signalCart.add(product)">
+          Add {{ product.name }}
+        </button>
+      }
+    </div>
+    <div class="demo-row">
+      <button
+        type="button"
+        class="btn"
+        (click)="signalCart.clear()"
+        [disabled]="signalCart.items().length === 0"
+      >
+        Clear SignalStore cart
+      </button>
+    </div>
+
+    <div class="preview">
+      @if (signalCart.items().length === 0) {
+        <p class="muted" style="margin: 0">SignalStore cart is empty.</p>
+      } @else {
+        <ul class="list">
+          @for (item of signalCart.items(); track item.id) {
+            <li>
+              {{ item.name }} × {{ item.qty }}
+              <button type="button" class="btn" (click)="signalCart.decrement(item.id)">−</button>
+              <button type="button" class="btn" (click)="signalCart.remove(item.id)">Remove</button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    <app-lesson-syntax
+      [templateCode]="signalTpl"
+      [typescriptCode]="signalTs"
+      [typescriptModal]="signalModal"
+      modalTitle="SignalStore — Full TypeScript"
+    />
+  </div>
+</section>

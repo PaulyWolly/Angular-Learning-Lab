@@ -217,6 +217,12 @@ export const NAV_ITEMS: NavItem[] = [
           section: 'Reactivity',
         },
         {
+          label: 'NgRx',
+          path: '/core/ngrx',
+          hint: 'Store, effects, SignalStore',
+          section: 'Reactivity',
+        },
+        {
           label: 'Change Detection',
           path: '/core/change-detection',
           hint: 'Default vs OnPush',

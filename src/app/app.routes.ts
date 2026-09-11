@@ -192,6 +192,11 @@ export const routes: Routes = [
         title: 'Subjects · BehaviorSubject',
       },
       {
+        path: 'ngrx',
+        loadChildren: () =>
+          import('./pages/core/ngrx-lab/ngrx.routes').then((m) => m.NGRX_ROUTES),
+      },
+      {
         path: 'interceptors',
         loadComponent: () =>
           import('./pages/core/interceptors-lab/interceptors-lab.component').then(

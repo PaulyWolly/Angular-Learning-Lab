@@ -24,6 +24,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.3.29",
     "@angular/cdk": "^20.0.0",
     "@angular/common": "^20.3.0",
     "@angular/compiler": "^20.3.0",
@@ -32,6 +33,10 @@
     "@angular/material": "^20.0.0",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
+    "@ngrx/effects": "^20.1.0",
+    "@ngrx/signals": "^20.1.0",
+    "@ngrx/store": "^20.1.0",
+    "@ngrx/store-devtools": "^20.1.0",
     "ag-grid-angular": "^36.1.0",
     "ag-grid-community": "^36.1.0",
     "better-sqlite3": "^12.11.1",

@@ -40,7 +40,7 @@ Working branch: **`dev`** (keep `main` for stable releases).
 | `/rxjs` | RxJS lab (Steps 1–6) |
 | `/users` | Users list + `?q=` filter |
 | `/users/:id` | Resolver + switchMap posts + combineLatest |
-| `/core/*` | Components, binding, pipes, directives, services, forms, HTTP, CD, signals, subjects, interceptors, XSS |
+| `/core/*` | Components, binding, pipes, directives, services, forms, HTTP, CD, signals, subjects, **NgRx**, interceptors, XSS |
 | `/material/*` | Overview, forms, tables/grids, dialogs, navigation |
 | `/third-party/*` | Bootstrap, Tailwind, Storybook, Ag-Grid Community |
 | `/routes/*` | Nested shell, lazy, guards, protected, CanDeactivate |
@@ -49,4 +49,4 @@ Footer mirrors header (dropdowns pop **upward**). Shell width **80%**; only **Co
 
 ## Stack
 
-Standalone components, `loadComponent`, signals, functional guards, `inject()`, RxJS, Angular Material, `provideHttpClient(withInterceptors([...]))`.
+Standalone components, `loadComponent`, signals, NgRx Store + SignalStore, functional guards, `inject()`, RxJS, Angular Material, `provideHttpClient(withInterceptors([...]))`.

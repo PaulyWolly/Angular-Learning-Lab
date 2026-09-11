@@ -122,7 +122,7 @@
       aria-controls="home-core-labs"
     >
       <span class="home__fold-title">Core</span>
-      <span class="home__fold-meta">17 labs · setup, components, constructors, forms, HTTP, NgRx…</span>
+      <span class="home__fold-meta">18 labs · setup, components, constructors, lifecycle, forms, HTTP…</span>
       <span class="home__fold-chevron" aria-hidden="true">{{ coreOpen() ? '▾' : '▸' }}</span>
     </button>
 
@@ -144,6 +144,12 @@
           <h2>Constructors</h2>
           <p>When you need <code>constructor()</code> vs <code>inject()</code>, fields, and <code>super()</code>.</p>
           <span class="home__cta">Open constructors →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/lifecycle">
+          <h2>Lifecycle Hooks</h2>
+          <p>import + implements: OnInit, OnChanges, AfterViewInit, OnDestroy, DestroyRef.</p>
+          <span class="home__cta">Open lifecycle →</span>
         </a>
 
         <a class="home__card" routerLink="/core/binding">

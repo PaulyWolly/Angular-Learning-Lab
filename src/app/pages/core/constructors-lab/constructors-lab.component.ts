@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CRUMB_CORE, CRUMB_HOME } from '../../../shared/directives/lesson-breadcrumb/crumb-presets';
 import { LessonBreadcrumbComponent } from '../../../shared/directives/lesson-breadcrumb/lesson-breadcrumb.component';
@@ -9,7 +10,7 @@ import { ToastService } from '../../../shared/toast/toast.service';
 @Component({
   selector: 'app-constructors-lab',
   standalone: true,
-  imports: [ReactiveFormsModule, LessonBreadcrumbComponent, LessonSyntaxComponent],
+  imports: [RouterLink, ReactiveFormsModule, LessonBreadcrumbComponent, LessonSyntaxComponent],
   templateUrl: './constructors-lab.component.html',
   styleUrl: './constructors-lab.component.scss',
 })
@@ -51,13 +52,15 @@ export class ConstructorsLabComponent {
 <p class="muted">{{ createdLabel }}</p>`;
 
   readonly skipTs = `// No constructor — Angular still creates the class for you.
+private readonly http = inject(HttpClient);
 readonly counter = inject(CounterService);
 readonly createdLabel = \`Component created \${new Date().toLocaleTimeString()}\`;
 
-// Field initializers run when the instance is built.
-// inject() must run in an injection context (field, constructor, or factory).`;
+// inject() must run in an injection context (field, constructor, or factory).
+// New Angular: put HttpClient / services on fields, not constructor params.`;
 
   readonly skipModal = `import { Component, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { CounterService } from './counter.service';
 
 @Component({
@@ -69,6 +72,7 @@ import { CounterService } from './counter.service';
   \`,
 })
 export class DashboardComponent {
+  private readonly http = inject(HttpClient);
   readonly counter = inject(CounterService);
   title = 'Dashboard'; // plain field — no constructor required
 }`;
@@ -76,49 +80,54 @@ export class DashboardComponent {
   readonly injectVsCtorTpl = `<!-- Template is identical either way -->
 <p>{{ counter.value() }}</p>`;
 
-  readonly injectVsCtorTs = `// ✅ Modern (preferred in new Angular)
+  readonly injectVsCtorTs = `// ✅ New Angular (preferred)
+private readonly http = inject(HttpClient);
+
+// ✅ Same idea — any injectable
 readonly counter = inject(CounterService);
 
-// ✅ Classic (still common in older codebases)
-constructor(private counter: CounterService) {}
+// Older style you will still read in interviews
+constructor(private http: HttpClient) {}
 
-// Both ask Angular's injector for CounterService.
-// Pick one style per class — don't mix both for the same dependency.`;
+// Same injector. Don't mix both styles for the same dependency.`;
 
   readonly injectVsCtorModal = `import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-// inject() at field — easy to read, works with private readonly
+// New default — field + inject() + private readonly
 export class ModernComponent {
   private readonly http = inject(HttpClient);
+
+  // Angular calls ngOnInit() by method name — no import / implements required.
+  // implements OnInit is optional TypeScript (catches a missing/misspelled method).
+  ngOnInit() {
+    this.http.get('/api/me').subscribe();
+  }
 }
 
-// constructor() — fine when the whole team still uses this style
+// Classic constructor injection — same HttpClient, older syntax
 export class ClassicComponent {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 }
 
-// Angular creates ONE instance of your component class per placement in the template.
-// The constructor (if you write one) runs once at creation time.`;
+// Angular creates ONE instance per placement in the template.
+// A constructor (if you write one) runs once at creation — it is not required for DI.`;
 
   readonly needCtorTpl = `<form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
   <input formControlName="email" placeholder="Email" />
   <button type="submit">Sign in</button>
 </form>`;
 
-  readonly needCtorTs = `loginForm;
+  readonly needCtorTs = `// Prefer this (no constructor):
+private readonly fb = inject(FormBuilder);
+readonly loginForm = this.fb.nonNullable.group({
+  email: ['', [Validators.required, Validators.email]],
+  remember: [true],
+});
 
-constructor(private fb: FormBuilder) {
-  this.loginForm = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    remember: [true],
-  });
-}
-
-// You could also write:
-// private readonly fb = inject(FormBuilder);
-// readonly loginForm = this.fb.nonNullable.group({ ... });
-// → then you still might not need an explicit constructor().`;
+// This lab's live form still uses the older constructor style
+// so you can recognize it:
+// constructor(private fb: FormBuilder) { this.loginForm = this.fb.group(...) }`;
 
   readonly needCtorModal = `import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -146,15 +155,17 @@ export class ProfileComponent {
   readonly rulesTpl = `<!-- Angular builds the class → binds template → runs change detection.
 You only add constructor() when you have a specific reason. -->`;
 
-  readonly rulesTs = `// SKIP constructor when:
-// • inject() handles DI
+  readonly rulesTs = `// NEW DEFAULT
+private readonly http = inject(HttpClient);
+
+// SKIP constructor when:
+// • inject() handles DI (HttpClient, your services)
 // • Fields hold state: name = 'Ada'
 // • input(), signal(), computed() at class field
 
 // USE constructor when:
 // • class extends another → super() required
-// • One-time setup that must run before fields use each other
-// • You prefer classic constructor(private svc: MyService) style
+// • You are reading older constructor(private http: HttpClient) code
 
 // Angular does NOT require an empty constructor(). Omit it.`;
 }

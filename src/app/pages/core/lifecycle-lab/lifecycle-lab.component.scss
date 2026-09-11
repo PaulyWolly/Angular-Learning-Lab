@@ -1,0 +1,80 @@
+@use '../lesson-shared';
+
+.story__why {
+  margin: 0 0 1rem;
+  padding: 0.75rem 0.9rem;
+  border-left: 3px solid var(--amber);
+  background: var(--amber-soft);
+  border-radius: 0 0.4rem 0.4rem 0;
+  line-height: 1.5;
+  font-size: 0.92rem;
+}
+
+.hook-order {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+  line-height: 1.55;
+  font-size: 0.92rem;
+
+  code {
+    font-size: 0.82rem;
+  }
+}
+
+.story__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin: 0 0 0.85rem;
+
+  th,
+  td {
+    border: 1px solid var(--line);
+    padding: 0.5rem 0.65rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  thead th {
+    background: #f4f1eb;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  tbody th {
+    background: color-mix(in srgb, var(--teal-soft) 25%, #fff);
+    font-weight: 600;
+    width: 28%;
+  }
+}
+
+.story__try {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border-left: 3px solid var(--teal);
+  background: color-mix(in srgb, var(--teal-soft) 40%, transparent);
+  border-radius: 0 0.4rem 0.4rem 0;
+  line-height: 1.5;
+  font-size: 0.92rem;
+}
+
+.feed {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+
+  li {
+    padding: 0.5rem 0.65rem;
+    border: 1px solid var(--line);
+    border-radius: 0.45rem;
+    background: #fff;
+    font-size: 0.85rem;
+  }
+
+  code {
+    font-size: 0.78rem;
+  }
+}

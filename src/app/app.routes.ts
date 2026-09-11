@@ -110,6 +110,14 @@ export const routes: Routes = [
         title: 'Constructors',
       },
       {
+        path: 'lifecycle',
+        loadComponent: () =>
+          import('./pages/core/lifecycle-lab/lifecycle-lab.component').then(
+            (m) => m.LifecycleLabComponent,
+          ),
+        title: 'Lifecycle Hooks',
+      },
+      {
         path: 'binding',
         loadComponent: () =>
           import('./pages/core/binding-lab/binding-lab.component').then(

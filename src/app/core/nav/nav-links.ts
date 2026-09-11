@@ -145,6 +145,12 @@ export const NAV_ITEMS: NavItem[] = [
           section: 'Fundamentals',
         },
         {
+          label: 'Lifecycle Hooks',
+          path: '/core/lifecycle',
+          hint: 'OnInit, OnChanges, OnDestroy, DestroyRef',
+          section: 'Fundamentals',
+        },
+        {
           label: 'Data Binding',
           path: '/core/binding',
           hint: 'Interpolation, property, event, two-way',

@@ -3,7 +3,10 @@
   <h1>Constructors — when you need one (and when you don’t)</h1>
   <p class="lesson__lead">
     A <strong>constructor</strong> runs once when Angular creates your component or service class.
-    In modern Angular you often <em>skip it entirely</em> — but interviews still ask why.
+    In Angular 16+ you usually <em>skip it</em> and write
+    <code>private readonly http = inject(HttpClient)</code> as a class field. Interviews still ask
+    why. After the instance exists, Angular runs
+    <a routerLink="/core/lifecycle">lifecycle hooks</a> (<code>ngOnInit</code>, destroy, …).
   </p>
 
   <div class="lesson__card story">
@@ -12,16 +15,17 @@
       <div class="story__panel story__panel--skip">
         <p class="story__label">Usually skip it</p>
         <p>
-          Put dependencies in <code>inject()</code>, state in class fields
-          (<code>title = 'Home'</code>), and inputs in <code>input()</code>. Angular builds the
-          class without you writing <code>constructor() &#123; &#125;</code>.
+          Put dependencies on fields with <code>inject()</code>:
+          <code>private readonly http = inject(HttpClient)</code>. Same for any service. State
+          stays in fields (<code>title = 'Home'</code>); inputs use <code>input()</code>. No
+          <code>constructor()</code> required.
         </p>
       </div>
       <div class="story__panel story__panel--use">
         <p class="story__label">Still need it sometimes</p>
         <p>
-          Subclassing (<code>super()</code>), one-time setup that chains off injected deps, or a
-          team that standardizes on <code>constructor(private http: HttpClient)</code>.
+          Subclassing (<code>super()</code>), or reading older code that still uses
+          <code>constructor(private http: HttpClient)</code> — same injector, older syntax.
         </p>
       </div>
     </div>
@@ -34,8 +38,12 @@
       </thead>
       <tbody>
         <tr>
+          <td><code>private readonly http = inject(HttpClient)</code></td>
+          <td>No — this is the new default</td>
+        </tr>
+        <tr>
           <td><code>inject(CounterService)</code></td>
-          <td>No</td>
+          <td>No — any service, same pattern</td>
         </tr>
         <tr>
           <td><code>name = 'Ada'</code></td>
@@ -81,10 +89,11 @@
   </div>
 
   <div class="lesson__card">
-    <h2>2. <code>inject()</code> vs <code>constructor()</code> for DI</h2>
+    <h2>2. New default — field <code>inject()</code> (not constructor params)</h2>
     <p class="muted">
-      Same injector, two syntaxes. Prefer <code>inject()</code> in new Angular 20 code; recognize
-      constructor injection in legacy apps.
+      Same injector, two syntaxes. New code:
+      <code>private readonly http = inject(HttpClient)</code>. Old code:
+      <code>constructor(private http: HttpClient)</code>. Do not mix both for the same dependency.
     </p>
     <app-lesson-syntax
       [templateCode]="injectVsCtorTpl"
@@ -95,11 +104,12 @@
   </div>
 
   <div class="lesson__card">
-    <h2>3. When a constructor is still useful — reactive form setup</h2>
+    <h2>3. Form setup — still no constructor needed</h2>
     <p class="muted">
-      Below, <code>loginForm</code> is built inside <code>constructor()</code> using injected
-      <code>FormBuilder</code>. The same result works with <code>inject(FormBuilder)</code> at a
-      field — constructor is a style choice here, not a requirement.
+      This form is built with <code>constructor(private fb: FormBuilder)</code> so you can
+      <em>recognize</em> the old style. Prefer
+      <code>private readonly fb = inject(FormBuilder)</code> and build the group on a field (see
+      Full TypeScript).
     </p>
     <form class="login-demo" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
       <label class="login-demo__field">
@@ -132,5 +142,11 @@
       [typescriptCode]="rulesTs"
       modalTitle="Constructor cheat sheet"
     />
+    <p class="muted">
+      Next:
+      <a routerLink="/core/lifecycle">Lifecycle hooks</a>
+      — import <code>OnInit</code>, <code>implements OnInit</code>, then write
+      <code>ngOnInit()</code>.
+    </p>
   </div>
 </section>

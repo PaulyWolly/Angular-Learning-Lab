@@ -14,10 +14,27 @@
   max-width: 24rem;
 }
 
+.toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
 .count-badge {
   font-size: 0.82rem;
   color: var(--muted);
   font-weight: 600;
+}
+
+.api-banner {
+  margin: 0.5rem 0 0.85rem;
+  padding: 0.65rem 0.85rem;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 0.45rem;
+  color: #991b1b;
+  font-size: 0.9rem;
 }
 
 .table-container {
@@ -26,6 +43,17 @@
   overflow: hidden;
   border: 1px solid var(--line);
   margin-bottom: 0.85rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  :is(.mat-mdc-header-row, .mat-header-row),
+  :is(.mat-mdc-header-cell, .mat-header-cell) {
+    background: #e4eff3;
+  }
+
+  mat-paginator,
+  :is(.mat-mdc-paginator, .mat-paginator) {
+    background: #e4eff3;
+  }
 }
 
 table {
@@ -81,6 +109,14 @@ table {
   }
 }
 
+.action-edit {
+  color: #2563eb;
+}
+
+.action-delete {
+  color: #dc2626;
+}
+
 .contrib-num {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -109,6 +145,10 @@ table {
 
   span {
     font-size: 0.8rem;
+  }
+
+  button {
+    margin-left: auto;
   }
 }
 

@@ -49,6 +49,7 @@ readonly counter = inject(CounterService);`;
 @if (users$ | async; as users) {
   {{ users.length }} users
 }`;
-  readonly injectTs = `readonly users$ = inject(UsersService).users$;
+  readonly injectTs = `private readonly http = inject(HttpClient);
+readonly users$ = inject(UsersService).users$;
 readonly auth = inject(DemoAuthService);`;
 }

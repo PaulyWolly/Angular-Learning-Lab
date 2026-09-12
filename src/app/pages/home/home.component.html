@@ -3,7 +3,7 @@
   <h1>Learn by watching the pieces move</h1>
   <p class="home__lead">
     Interview-ready Angular skills: templates, DI, forms, signals, NgRx, RxJS, routing, and a
-    users capstone — on Angular v20.
+    users capstone — on <span class="home__angular-title">Angular v20</span>.
   </p>
 
   <div class="home__grid">
@@ -125,7 +125,7 @@
       aria-controls="home-core-labs"
     >
       <span class="home__fold-title">Core</span>
-      <span class="home__fold-meta">17 labs · setup, components, constructors, forms, HTTP, NgRx…</span>
+      <span class="home__fold-meta">18 labs · setup, components, constructors, lifecycle, forms, HTTP…</span>
       <span class="home__fold-chevron" aria-hidden="true">{{ coreOpen() ? '▾' : '▸' }}</span>
     </button>
 
@@ -147,6 +147,12 @@
           <h2>Constructors</h2>
           <p>When you need <code>constructor()</code> vs <code>inject()</code>, fields, and <code>super()</code>.</p>
           <span class="home__cta">Open constructors →</span>
+        </a>
+
+        <a class="home__card" routerLink="/core/lifecycle">
+          <h2>Lifecycle Hooks</h2>
+          <p>import + implements: OnInit, OnChanges, AfterViewInit, OnDestroy, DestroyRef.</p>
+          <span class="home__cta">Open lifecycle →</span>
         </a>
 
         <a class="home__card" routerLink="/core/binding">
@@ -267,7 +273,7 @@
 
         <a class="home__card" routerLink="/material/table">
           <h2>Tables &amp; Grids</h2>
-          <p>MatTable, MatSort, MatPaginator, live search filter, row selection, and MatGridList.</p>
+          <p>MatTable with a reactive-form edit modal, SQLite persist, seed buttons, sort, filter, and MatGridList.</p>
           <span class="home__cta">Open tables &amp; grids →</span>
         </a>
 
@@ -321,7 +327,7 @@
 
         <a class="home__card" routerLink="/third-party/storybook">
           <h2>Storybook</h2>
-          <p>Component workshop for docs and isolated UI states — not a runtime CSS kit.</p>
+          <p>Live Storybook UI — stories, Controls, Actions, Docs, and a guided tutorial.</p>
           <span class="home__cta">Open Storybook →</span>
         </a>
 

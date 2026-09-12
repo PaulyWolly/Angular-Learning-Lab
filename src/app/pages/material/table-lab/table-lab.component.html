@@ -4,14 +4,22 @@
   <p class="lesson__lead">
     <code>MatTable</code> is a high-performance data table component with built-in sorting (<code>MatSort</code>),
     pagination (<code>MatPaginator</code>), and client-side filtering via <code>MatTableDataSource</code>.
+    Rows persist in SQLite — edit them through a reactive-form <code>MatDialog</code>.
   </p>
 
   <!-- Interactive Data Table Card -->
   <div class="lesson__card">
-    <h2>1. Interactive Data Table (Filter + Sort + Pagination + Selection)</h2>
+    <h2>1. Interactive Data Table (Filter + Sort + Pagination + SQLite)</h2>
     <p class="muted">
-      Try searching for a name/department, clicking column headers to sort, or clicking a row to see details:
+      Search, sort, paginate, then <strong>Add</strong> or <strong>Edit</strong> a row. Saves go to
+      <code>PATCH /api/developers/:id</code> (SQLite via Express).
     </p>
+
+    @if (!apiUp()) {
+      <div class="api-banner">
+        SQLite API is offline. Run <code>npm run api</code> or <code>npm run start:all</code>, then click Reload.
+      </div>
+    }
 
     <!-- Filter input bar -->
     <div class="table-toolbar">
@@ -30,13 +38,31 @@
           </button>
         }
       </mat-form-field>
-      <span class="count-badge">
-        Showing {{ dataSource.filteredData.length }} of 10 records
-      </span>
+      <div class="toolbar-actions">
+        <button mat-stroked-button type="button" (click)="reload()">
+          <mat-icon>refresh</mat-icon>
+          Reload
+        </button>
+        <button mat-stroked-button type="button" (click)="seed()">
+          <mat-icon>spa</mat-icon>
+          Seed
+        </button>
+        <button mat-stroked-button type="button" (click)="resetSeed()">
+          <mat-icon>restart_alt</mat-icon>
+          Reset seed
+        </button>
+        <button mat-flat-button color="primary" type="button" (click)="openAdd()">
+          <mat-icon>person_add</mat-icon>
+          Add
+        </button>
+        <span class="count-badge">
+          Showing {{ dataSource.filteredData.length }} of {{ dataSource.data.length }} records
+        </span>
+      </div>
     </div>
 
     <!-- The Mat Table -->
-    <div class="table-container mat-elevation-z1">
+    <div class="table-container">
       <table mat-table [dataSource]="dataSource" matSort aria-label="Developer directory table">
         <!-- ID Column -->
         <ng-container matColumnDef="id">
@@ -82,6 +108,30 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Edit</th>
+          <td mat-cell *matCellDef="let dev">
+            <button
+              mat-icon-button
+              class="action-edit"
+              type="button"
+              aria-label="Edit developer"
+              (click)="openEdit(dev, $event)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              class="action-delete"
+              type="button"
+              aria-label="Delete developer"
+              (click)="remove(dev, $event)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr
           mat-row
@@ -94,7 +144,13 @@
         <!-- Row shown when no data matches filter -->
         <tr class="mat-row" *matNoDataRow>
           <td class="mat-cell empty-table-cell" [attr.colspan]="displayedColumns.length">
-            No developers matching "{{ filterValue }}"
+            @if (loading()) {
+              Loading developers from SQLite…
+            } @else if (filterValue) {
+              No developers matching "{{ filterValue }}"
+            } @else {
+              No developers yet. Click Seed or Add.
+            }
           </td>
         </tr>
       </table>
@@ -115,6 +171,10 @@
           <strong>Selected: {{ dev.name }}</strong>
           <span>{{ dev.role }} &bull; {{ dev.department }} ({{ dev.contributions }} commits)</span>
         </div>
+        <button mat-stroked-button type="button" (click)="openEdit(dev)">
+          <mat-icon>edit</mat-icon>
+          Edit
+        </button>
       </div>
     }
 
@@ -126,9 +186,23 @@
     />
   </div>
 
-  <!-- Card 2: Sorting & Pagination Anatomy -->
   <div class="lesson__card">
-    <h2>2. Sorting &amp; Pagination Wiring</h2>
+    <h2>2. Reactive Form Modal + SQLite</h2>
+    <p class="muted">
+      <code>MatDialog</code> opens a standalone dialog with <code>FormBuilder</code> + validators.
+      Closing with a draft triggers <code>POST</code> or <code>PATCH</code> — not template <code>ngModel</code>.
+    </p>
+    <app-lesson-syntax
+      [templateCode]="editDialogTpl"
+      [typescriptCode]="editDialogTs"
+      [typescriptModal]="editDialogModal"
+      modalTitle="Reactive Form Dialog — Full TypeScript"
+    />
+  </div>
+
+  <!-- Card 3: Sorting & Pagination Anatomy -->
+  <div class="lesson__card">
+    <h2>3. Sorting &amp; Pagination Wiring</h2>
     <p class="muted">
       Connect <code>MatSort</code> and <code>MatPaginator</code> inside <code>ngAfterViewInit()</code> using <code>ViewChild</code>.
     </p>
@@ -140,9 +214,9 @@
     />
   </div>
 
-  <!-- Card 3: Grid List (mat-grid-list) -->
+  <!-- Card 4: Grid List (mat-grid-list) -->
   <div class="lesson__card">
-    <h2>3. Material Grid Layout (<code>mat-grid-list</code>)</h2>
+    <h2>4. Material Grid Layout (<code>mat-grid-list</code>)</h2>
     <p class="muted">
       2D grid system with customizable column spans (<code>colspan</code>) and row spans (<code>rowspan</code>).
     </p>

@@ -2,46 +2,197 @@
   <app-lesson-breadcrumb [crumbs]="crumbs" />
   <h1>Third Party · Storybook</h1>
   <p class="lesson__lead">
-    <strong>Storybook</strong> is a <em>development tool</em> — a separate UI where you open one
-    component at a time, flip props, and document variants. It is not a CSS framework and not
-    shipped to end users.
+    <strong>Storybook</strong> is a workshop — a separate UI (usually port <code>6006</code>) where
+    you open one component, flip <code>args</code>, and document variants. This lab embeds that
+    interface. Click a pane for <strong>context-sensitive help</strong>, or walk the tutorial.
   </p>
 
-  <div class="lesson__card">
-    <h2>What it is</h2>
-    <p class="muted">
-      Think “component museum”: each <strong>story</strong> is one state of a component
-      (Primary button, Disabled button, Error form…). Runs beside your app, usually on port
-      <code>6006</code>.
-    </p>
-    <div class="sb-preview" aria-hidden="true">
-      <div class="sb-chrome">
-        <span class="sb-dot"></span><span class="sb-dot"></span><span class="sb-dot"></span>
-        <span class="sb-url">localhost:6006 — UI / Button / Primary</span>
-      </div>
-      <div class="sb-canvas">
-        <button type="button" class="sb-demo-btn">Save</button>
-        <p class="sb-args">args: &#123; label: 'Save', variant: 'primary' &#125;</p>
+  <div class="workshop-wrap">
+    <div
+      class="sb"
+      [class.sb--tutor]="tutorialOn()"
+      [attr.data-region]="region()"
+    >
+      <header class="sb__top">
+        <span class="sb__mark" aria-hidden="true">S</span>
+        <strong>Storybook</strong>
+        <span class="sb__path">{{ story().group }} / {{ story().name }}</span>
+        <span class="sb__port">localhost:6006</span>
+      </header>
+
+      <div class="sb__body">
+        <aside
+          class="sb__side"
+          [class.is-focus]="region() === 'sidebar'"
+          (click)="focusRegion('sidebar')"
+        >
+          <p class="sb__side-label">Stories</p>
+          <p class="sb__group">{{ story().group }}</p>
+          <ul>
+            @for (s of stories; track s.id) {
+              <li>
+                <button
+                  type="button"
+                  [class.is-active]="s.id === storyId()"
+                  (click)="selectStory(s.id); $event.stopPropagation()"
+                >
+                  {{ s.name }}
+                </button>
+              </li>
+            }
+          </ul>
+        </aside>
+
+        <div class="sb__main">
+          <div
+            class="sb__canvas"
+            [class.is-focus]="region() === 'canvas'"
+            [class.is-dark]="canvasBg() === 'dark'"
+            [class.is-outline]="outline()"
+            (click)="focusRegion('canvas')"
+          >
+            <div class="sb__toolbar">
+              <button type="button" class="sb__tool" (click)="toggleCanvasBg(); $event.stopPropagation()">
+                {{ canvasBg() === 'light' ? 'Dark bg' : 'Light bg' }}
+              </button>
+              <button type="button" class="sb__tool" (click)="toggleOutline(); $event.stopPropagation()">
+                {{ outline() ? 'Hide outline' : 'Outline' }}
+              </button>
+            </div>
+            <div class="sb__stage" (click)="$event.stopPropagation()">
+              <app-sb-button
+                [label]="args().label"
+                [variant]="args().variant"
+                [size]="args().size"
+                [disabled]="args().disabled"
+                (clicked)="onClicked($event)"
+              />
+            </div>
+          </div>
+
+          <div class="sb__addons" [class.is-focus]="region() === addon()">
+            <div class="sb__tabs" role="tablist">
+              <button type="button" role="tab" [class.is-on]="addon() === 'controls'" (click)="setAddon('controls')">
+                Controls
+              </button>
+              <button type="button" role="tab" [class.is-on]="addon() === 'actions'" (click)="setAddon('actions')">
+                Actions
+                @if (actions().length) {
+                  <span class="sb__badge">{{ actions().length }}</span>
+                }
+              </button>
+              <button type="button" role="tab" [class.is-on]="addon() === 'docs'" (click)="setAddon('docs')">
+                Docs
+              </button>
+            </div>
+
+            @if (addon() === 'controls') {
+              <div class="sb__panel" role="tabpanel">
+                <label>
+                  label
+                  <input
+                    type="text"
+                    [ngModel]="args().label"
+                    (ngModelChange)="onLabelInput($event)"
+                  />
+                </label>
+                <label>
+                  variant
+                  <select [ngModel]="args().variant" (ngModelChange)="onVariantInput($event)">
+                    <option value="primary">primary</option>
+                    <option value="secondary">secondary</option>
+                    <option value="danger">danger</option>
+                  </select>
+                </label>
+                <label>
+                  size
+                  <select [ngModel]="args().size" (ngModelChange)="onSizeInput($event)">
+                    <option value="sm">sm</option>
+                    <option value="md">md</option>
+                    <option value="lg">lg</option>
+                  </select>
+                </label>
+                <label class="sb__check">
+                  <input
+                    type="checkbox"
+                    [ngModel]="args().disabled"
+                    (ngModelChange)="patchArg('disabled', $event)"
+                  />
+                  disabled
+                </label>
+              </div>
+            }
+
+            @if (addon() === 'actions') {
+              <div class="sb__panel sb__panel--log" role="tabpanel">
+                @if (actions().length === 0) {
+                  <p class="muted">No actions yet — click the button in the canvas.</p>
+                } @else {
+                  <ul>
+                    @for (row of actions(); track $index) {
+                      <li><code>{{ row }}</code></li>
+                    }
+                  </ul>
+                }
+              </div>
+            }
+
+            @if (addon() === 'docs') {
+              <div class="sb__panel sb__panel--docs" role="tabpanel">
+                <p>{{ story().docs }}</p>
+                <pre>{{ csf() }}</pre>
+              </div>
+            }
+          </div>
+        </div>
       </div>
     </div>
+
+    <aside class="coach" [class.coach--tour]="tutorialOn()">
+      <p class="coach__eyebrow">{{ help().source }}</p>
+      <h2>{{ help().title }}</h2>
+      <p>{{ help().body }}</p>
+
+      @if (tutorialOn()) {
+        <p class="coach__progress">
+          Step {{ tutorialIndex() + 1 }} / {{ tutorialSteps.length }}
+        </p>
+        <div class="demo-row">
+          <button type="button" class="btn" (click)="prevTutorial()" [disabled]="tutorialIndex() === 0">
+            Back
+          </button>
+          @if (tutorialIndex() < tutorialSteps.length - 1) {
+            <button type="button" class="btn btn--primary" (click)="nextTutorial()">Next</button>
+          } @else {
+            <button type="button" class="btn btn--primary" (click)="finishTutorial()">Finish</button>
+          }
+          <button type="button" class="btn" (click)="finishTutorial()">Skip</button>
+        </div>
+      } @else {
+        <div class="demo-row">
+          <button type="button" class="btn btn--primary" (click)="startTutorial()">
+            Restart tutorial
+          </button>
+        </div>
+        <p class="muted">
+          Click the sidebar, canvas, or Controls / Actions / Docs — this panel follows your
+          focus.
+        </p>
+      }
+    </aside>
   </div>
 
   <div class="lesson__card">
-    <h2>Install &amp; first story</h2>
+    <h2>Install the real tool later</h2>
+    <p class="muted">
+      This workshop is in-app so you can learn the panes. On a project you still run
+      <code>npx storybook@latest init</code> — Storybook is not shipped to end users.
+    </p>
     <app-lesson-syntax
       [typescriptCode]="installTs"
-      [templateCode]="installTpl"
+      [templateCode]="csf()"
       [typescriptModal]="installModal"
-      modalTitle="Storybook setup — Full Notes"
+      modalTitle="Storybook CSF — Full TypeScript"
     />
-  </div>
-
-  <div class="lesson__card">
-    <h2>When to pick Storybook</h2>
-    <app-lesson-syntax [typescriptCode]="whenTs" [templateCode]="installTpl" />
-    <p class="muted callout">
-      Storybook is not embedded in this Learning Lab UI — run
-      <code>npx storybook@latest init</code> in a practice repo when you want the real workshop.
-    </p>
   </div>
 </section>

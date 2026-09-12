@@ -1,0 +1,161 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Lifecycle hooks</h1>
+  <p class="lesson__lead">
+    Angular calls named methods as a component is created, updated, and destroyed. You
+    <strong>import</strong> the interface from <code>&#64;angular/core</code> and
+    <strong>implement</strong> it so TypeScript checks the method exists — the runtime only looks
+    for <code>ngOnInit()</code> by name. Contrast with
+    <a routerLink="/core/constructors">constructors</a> (create the instance) and
+    <a routerLink="/core/components">components</a> (the class + template).
+  </p>
+
+  <div class="lesson__card story">
+    <h2>Start here — import, then implement</h2>
+    <p class="story__why">
+      <strong>Two different imports.</strong> A template feature
+      (<code>ReactiveFormsModule</code>, a child component) goes on
+      <code>imports: []</code>. A lifecycle hook is a TypeScript interface:
+      <code>import &#123; OnInit &#125; from '&#64;angular/core'</code> then
+      <code>implements OnInit</code> and write <code>ngOnInit()</code>.
+    </p>
+
+    <ol class="hook-order" aria-label="Usual create order">
+      <li>
+        create instance — prefer
+        <code>private readonly http = inject(HttpClient)</code> (skip
+        <code>constructor()</code> unless you need <code>super()</code>)
+      </li>
+      <li><code>ngOnChanges</code> — first input bind (and later when inputs change)</li>
+      <li><code>ngOnInit</code> — inputs are set; start HTTP / subscriptions</li>
+      <li><code>ngAfterViewInit</code> — this view and <code>&#64;ViewChild</code> are ready</li>
+      <li><code>afterNextRender()</code> — browser painted; measure DOM here</li>
+      <li><code>ngOnDestroy</code> / <code>DestroyRef</code> — teardown</li>
+    </ol>
+
+    <table class="story__table">
+      <thead>
+        <tr>
+          <th>Hook</th>
+          <th>Import / implement</th>
+          <th>Use it for</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">create / DI</th>
+          <td><code>inject()</code> on a field</td>
+          <td>
+            <code>private readonly http = inject(HttpClient)</code> — not constructor params
+          </td>
+        </tr>
+        <tr>
+          <th scope="row"><code>ngOnChanges</code></th>
+          <td><code>OnChanges</code></td>
+          <td>React to <code>&#64;Input</code> changes (<code>SimpleChanges</code>)</td>
+        </tr>
+        <tr>
+          <th scope="row"><code>ngOnInit</code></th>
+          <td><code>OnInit</code></td>
+          <td>One-time start once inputs exist</td>
+        </tr>
+        <tr>
+          <th scope="row"><code>ngAfterViewInit</code></th>
+          <td><code>AfterViewInit</code></td>
+          <td>Read <code>&#64;ViewChild</code> / first paint of this template</td>
+        </tr>
+        <tr>
+          <th scope="row"><code>afterNextRender</code></th>
+          <td>function from <code>&#64;angular/core</code></td>
+          <td>Measure layout after the browser paints</td>
+        </tr>
+        <tr>
+          <th scope="row"><code>ngOnDestroy</code></th>
+          <td><code>OnDestroy</code></td>
+          <td>Unsubscribe, clear timers (classic)</td>
+        </tr>
+        <tr>
+          <th scope="row"><code>DestroyRef</code></th>
+          <td><code>inject(DestroyRef)</code></td>
+          <td>Same teardown, no <code>implements</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="story__try">
+      <strong>Try this:</strong> The probe below is already mounted — read the log (create
+      sequence). Click <strong>Rename guest</strong> — only <code>ngOnChanges</code> should fire.
+      Click <strong>Unmount</strong> — destroy hooks. Mount again for a fresh create sequence.
+    </p>
+  </div>
+
+  <div class="lesson__card">
+    <h2>Live: watch the hooks</h2>
+    <p class="muted">
+      Guest = <strong>{{ guest() }}</strong>
+      · mounted = <strong>{{ mounted() ? 'yes' : 'no' }}</strong>
+    </p>
+    <div class="demo-row">
+      <button type="button" class="btn btn--primary" (click)="toggleMount()">
+        {{ mounted() ? 'Unmount probe' : 'Mount probe' }}
+      </button>
+      <button type="button" class="btn" (click)="rename()" [disabled]="!mounted()">
+        Rename guest
+      </button>
+      <button type="button" class="btn" (click)="clearLog()">Clear log</button>
+    </div>
+
+    @if (mounted()) {
+      <app-lifecycle-probe [name]="guest()" />
+    } @else {
+      <p class="preview muted" style="margin-top: 0.75rem">Probe is unmounted — destroy hooks just ran.</p>
+    }
+
+    <ol class="feed">
+      @if (rows().length === 0) {
+        <li class="muted">Log is empty — mount the probe or rename the guest.</li>
+      } @else {
+        @for (row of rows(); track $index) {
+          <li><code>{{ row }}</code></li>
+        }
+      }
+    </ol>
+
+    <app-lesson-syntax
+      [templateCode]="liveTpl"
+      [typescriptCode]="liveTs"
+      [typescriptModal]="liveModal"
+      modalTitle="Lifecycle probe — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>import + implements (the TypeScript contract)</h2>
+    <p class="muted">
+      <code>implements OnInit</code> is a compile-time checklist. Forget the interface and keep
+      <code>ngOnInit()</code> — Angular still calls it. Forget the method and keep
+      <code>implements OnInit</code> — TypeScript errors. That is the whole trick.
+    </p>
+    <app-lesson-syntax
+      [templateCode]="implementTpl"
+      [typescriptCode]="implementTs"
+      [typescriptModal]="implementModal"
+      modalTitle="implements OnInit — Full TypeScript"
+    />
+  </div>
+
+  <div class="lesson__card">
+    <h2>Teardown — <code>OnDestroy</code> vs <code>DestroyRef</code></h2>
+    <p class="muted">
+      Unmount the probe and compare the last two lines. New Angular 20 code prefers
+      <code>DestroyRef</code> + <code>takeUntilDestroyed()</code> for RxJS. Interviews still list
+      <code>ngOnDestroy</code>.
+    </p>
+    <app-lesson-syntax
+      [templateCode]="destroyTpl"
+      [typescriptCode]="destroyTs"
+      [typescriptModal]="destroyModal"
+      modalTitle="DestroyRef — Full TypeScript"
+    />
+  </div>
+</section>

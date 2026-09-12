@@ -145,6 +145,12 @@ export const NAV_ITEMS: NavItem[] = [
           section: 'Fundamentals',
         },
         {
+          label: 'Lifecycle Hooks',
+          path: '/core/lifecycle',
+          hint: 'OnInit, OnChanges, OnDestroy, DestroyRef',
+          section: 'Fundamentals',
+        },
+        {
           label: 'Data Binding',
           path: '/core/binding',
           hint: 'Interpolation, property, event, two-way',
@@ -252,7 +258,7 @@ export const NAV_ITEMS: NavItem[] = [
         {
           label: 'Tables & Grids',
           path: '/material/table',
-          hint: 'MatTable, sort, pagination, filter, MatGridList',
+          hint: 'MatTable, edit modal, SQLite seed, sort, filter',
           section: 'Data & Layout',
         },
         {
@@ -297,7 +303,7 @@ export const NAV_ITEMS: NavItem[] = [
         {
           label: 'Storybook',
           path: '/third-party/storybook',
-          hint: 'Component workshop & docs',
+          hint: 'Live workshop, tutorial, context help',
           section: 'Tooling',
         },
         {

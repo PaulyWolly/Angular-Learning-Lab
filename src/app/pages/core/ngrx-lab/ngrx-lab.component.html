@@ -36,10 +36,49 @@
       <span class="flow__arrow">select</span>
       <span class="flow__step">View</span>
     </div>
+
+    <h3 class="flow-heading">What this pathway means (the data loop)</h3>
+    <p class="flow-intro">
+      The teal chips above are not a menu — they are one trip around the
+      <strong>NgRx data loop</strong>. UI and state talk in
+      <em>one direction</em> (the view never reaches in and mutates state). Read left to right;
+      the last View is the same UI after it refreshes.
+    </p>
+    <ol class="flow-steps">
+      <li>
+        <strong>View</strong> — your template / component (buttons, lists). Example: click
+        <em>Add Chips</em> in the demo below.
+      </li>
+      <li>
+        <strong>dispatch</strong> — the view does not change state itself; it sends an
+        <em>event</em> (“add chips”, “clear”, “load seed”).
+      </li>
+      <li>
+        <strong>Action</strong> — that event as a plain object
+        (<code>{{ '{' }} type: '…', …payload {{ '}' }}</code>). Meaning: “something happened.”
+      </li>
+      <li>
+        <strong>reduce</strong> — a pure function:
+        <code>(oldState, action) → newState</code>. Copy data; never mutate in place.
+      </li>
+      <li>
+        <strong>State</strong> — the single source of truth living in the Store (the
+        <em>state container</em>).
+      </li>
+      <li>
+        <strong>select</strong> — read a slice for the UI (<code>items</code>,
+        <code>total</code>, <code>status</code>…).
+      </li>
+      <li>
+        <strong>View</strong> — the template updates from what was selected. The next click
+        starts the loop again.
+      </li>
+    </ol>
     <p class="muted flow-note">
-      Side work (HTTP, timers) lives in an <strong>effect</strong>: it hears an action, does the
-      async job, then dispatches a <em>success / failure</em> action. The reducer stays a pure
-      function of <code>(state, action) → newState</code>.
+      <strong>Why it matters:</strong> one path in, one path out — easier to debug (DevTools
+      shows every action), and distant screens can share the same state without prop-drilling.
+      <strong>Effects</strong> (Load seed) sit off to the side: they hear an action, do async work
+      (fake HTTP), then dispatch success/failure — the reducer still only does step 4.
     </p>
 
     <table class="story__table">

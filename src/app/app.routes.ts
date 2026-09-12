@@ -88,6 +88,15 @@ export const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'setup' },
       {
+        path: 'style-guide',
+        loadComponent: () =>
+          import('./pages/core/foundations-lab/foundations-lab.component').then(
+            (m) => m.FoundationsLabComponent,
+          ),
+        title: 'Style Guide',
+      },
+      { path: 'foundations', redirectTo: 'style-guide', pathMatch: 'full' },
+      {
         path: 'setup',
         loadComponent: () =>
           import('./pages/core/setup-lab/setup-lab.component').then((m) => m.SetupLabComponent),
@@ -243,14 +252,7 @@ export const routes: Routes = [
     path: 'material',
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'overview' },
-      {
-        path: 'style-guide',
-        loadComponent: () =>
-          import('./pages/material/style-guide/style-guide.component').then(
-            (m) => m.StyleGuideComponent,
-          ),
-        title: 'Style Guide',
-      },
+      { path: 'style-guide', redirectTo: '/core/style-guide', pathMatch: 'full' },
       {
         path: 'overview',
         loadComponent: () =>

@@ -93,9 +93,11 @@ bumpClicks(): void {
   readonly twoWayModal = `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+// Angular 19+/20: standalone is the default — omit standalone: true.
+// Only set the flag for standalone: false (legacy NgModule).
+
 @Component({
   selector: 'app-binding-lab',
-  standalone: true,
   imports: [FormsModule],  // required for [(ngModel)]
   templateUrl: './binding-lab.component.html',
 })

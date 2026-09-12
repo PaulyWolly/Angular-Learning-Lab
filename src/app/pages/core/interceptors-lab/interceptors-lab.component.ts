@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { catchError, of } from 'rxjs';
 import { DemoAuthService } from '../../../core/auth/demo-auth.service';
+import { DEMO_AUTH_HEADER, jwtFromAuthorization } from '../../../core/http/demo-jwt';
 import { InterceptorProbeService } from '../../../core/http/interceptor-probe.service';
 import { CRUMB_CORE, CRUMB_HOME } from '../../../shared/directives/lesson-breadcrumb/crumb-presets';
 import { LessonBreadcrumbComponent } from '../../../shared/directives/lesson-breadcrumb/lesson-breadcrumb.component';
@@ -22,6 +23,7 @@ export class InterceptorsLabComponent {
   readonly probe = inject(InterceptorProbeService);
 
   readonly crumbs = [CRUMB_HOME, CRUMB_CORE, { label: 'Interceptors' }];
+  readonly jwtParts = computed(() => jwtFromAuthorization(this.probe.last()?.authorization ?? null));
 
   fireRequest(): void {
     this.http
@@ -38,7 +40,7 @@ export class InterceptorsLabComponent {
         if (snap?.authorization) {
           this.toast.success(
             'Header attached',
-            'demoAuthInterceptor added Authorization: Bearer demo-lab-token',
+            'demoAuthInterceptor added Authorization: Bearer <JWT>',
           );
         } else {
           this.toast.info(
@@ -50,10 +52,13 @@ export class InterceptorsLabComponent {
   }
 
   readonly ixTs = `// demo-auth.interceptor.ts
+import { DEMO_AUTH_HEADER } from './demo-jwt';
+// DEMO_AUTH_HEADER = 'Bearer ' + header.payload.signature
+
 export const demoAuthInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(DemoAuthService);
   const outgoing = auth.loggedIn()
-    ? req.clone({ setHeaders: { Authorization: 'Bearer demo-lab-token' } })
+    ? req.clone({ setHeaders: { Authorization: DEMO_AUTH_HEADER } })
     : req;
   return next(outgoing);
 };
@@ -66,11 +71,16 @@ provideHttpClient(withInterceptors([demoAuthInterceptor]))`;
 <button (click)="fireRequest()">Fire HTTP GET</button>
 
 @if (probe.last(); as snap) {
-  <pre>{{ snap.authorization ?? '(none)' }}</pre>
+  <pre>Authorization: {{ snap.authorization ?? '(none)' }}</pre>
 }`;
 
   readonly ixModal = `// Functional interceptors (Angular 15+) — no class required.
 // Clone the request; never mutate the original.
+
+const DEMO_AUTH_HEADER = \`${DEMO_AUTH_HEADER}\`;
+
+// JWT syntax: header.payload.signature (three Base64URL parts, dots)
+// Header / payload decode to JSON. The signature here is a placeholder.
 
 // Interview tips
 // - Order matters: withInterceptors([a, b]) runs a then b on the way out.

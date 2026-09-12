@@ -1,11 +1,12 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { DemoAuthService } from '../auth/demo-auth.service';
+import { DEMO_AUTH_HEADER } from './demo-jwt';
 import { InterceptorProbeService } from './interceptor-probe.service';
 
 /**
  * Demo auth header interceptor — not real security.
- * When logged in, clones the request with Authorization: Bearer demo-lab-token.
+ * When logged in, clones the request with Authorization: Bearer <demo JWT>.
  */
 export const demoAuthInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(DemoAuthService);
@@ -14,7 +15,7 @@ export const demoAuthInterceptor: HttpInterceptorFn = (req, next) => {
 
   const outgoing = loggedIn
     ? req.clone({
-        setHeaders: { Authorization: 'Bearer demo-lab-token' },
+        setHeaders: { Authorization: DEMO_AUTH_HEADER },
       })
     : req;
 

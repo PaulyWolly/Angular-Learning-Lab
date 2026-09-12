@@ -127,6 +127,12 @@ export const NAV_ITEMS: NavItem[] = [
       basePath: '/core',
       children: [
         {
+          label: 'Style Guide',
+          path: '/core/style-guide',
+          hint: 'Color, type, space, shell, Material',
+          section: 'Start here',
+        },
+        {
           label: 'Setup · Node · NVM · CLI',
           path: '/core/setup',
           hint: 'Install Node, NVM, Angular CLI, run this lab',
@@ -243,12 +249,6 @@ export const NAV_ITEMS: NavItem[] = [
       label: 'Material',
       basePath: '/material',
       children: [
-        {
-          label: 'Style Guide',
-          path: '/material/style-guide',
-          hint: 'Tokens: color, type, space, borders',
-          section: 'Foundations',
-        },
         {
           label: 'Overview & Setup',
           path: '/material/overview',

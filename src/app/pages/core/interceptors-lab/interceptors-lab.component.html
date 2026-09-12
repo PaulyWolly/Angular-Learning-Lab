@@ -14,7 +14,7 @@
       <strong [class.on]="auth.loggedIn()" [class.off]="!auth.loggedIn()">
         {{ auth.loggedIn() ? 'yes' : 'no' }}
       </strong>
-      — toggle, then fire a GET. The probe shows the outgoing Authorization header.
+      — toggle, then fire a GET. The probe shows every outgoing header and the full JWT.
     </p>
     <div class="demo-row">
       <button type="button" class="btn btn--primary" (click)="auth.login()">Log in</button>
@@ -30,10 +30,44 @@
           · {{ snap.method }}
         </p>
         <p class="probe__url"><code>{{ snap.url }}</code></p>
-        <p>
-          Authorization:
-          <strong>{{ snap.authorization ?? '(none)' }}</strong>
-        </p>
+        <h3 class="probe__label">Outgoing headers</h3>
+        @if (snap.headers.length) {
+          <dl class="probe__headers">
+            @for (header of snap.headers; track header.name) {
+              <dt>{{ header.name }}</dt>
+              <dd><code>{{ header.value }}</code></dd>
+            }
+          </dl>
+        } @else {
+          <p class="muted">No headers on this request (logged out — interceptor did not clone).</p>
+        }
+
+        <h3 class="probe__label">Authorization header</h3>
+        <pre class="probe__raw">{{ snap.authorization ? 'Authorization: ' + snap.authorization : '(none)' }}</pre>
+
+        @if (jwtParts(); as jwt) {
+          <h3 class="probe__label">JWT syntax · header.payload.signature</h3>
+          <p class="probe__jwt-line">
+            <code class="part-header">{{ jwt.header }}</code><span>.</span>
+            <code class="part-payload">{{ jwt.payload }}</code><span>.</span>
+            <code class="part-sig">{{ jwt.signature }}</code>
+          </p>
+          <div class="probe__jwt-grid">
+            <article>
+              <strong>Header (decoded)</strong>
+              <pre>{{ jwt.headerJson }}</pre>
+            </article>
+            <article>
+              <strong>Payload (decoded)</strong>
+              <pre>{{ jwt.payloadJson }}</pre>
+            </article>
+            <article>
+              <strong>Signature</strong>
+              <pre>{{ jwt.signature }}</pre>
+              <p class="muted">Placeholder only — this lab does not sign or verify.</p>
+            </article>
+          </div>
+        }
       </div>
     } @else {
       <p class="muted">No request probed yet — click Fire HTTP GET.</p>

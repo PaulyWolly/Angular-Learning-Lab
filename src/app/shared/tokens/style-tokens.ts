@@ -1,9 +1,9 @@
 /**
  * Style tokens — single source of truth for color, type, space, and borders.
  *
- * Extracted from the Figma file (Material Table & Grid captures) via MCP and
- * aligned with `:root` in `src/styles.scss`. New components should import from
- * here instead of inventing hex / rem values.
+ * Site-wide foundations (header, home, footer, lesson chrome) plus Material
+ * extras from the Figma table capture. Aligned with `:root` in `src/styles.scss`.
+ * New components should import from here instead of inventing hex / rem values.
  *
  * Figma: https://www.figma.com/design/fBg5ImBRY8j7KEqrSfOwXi/Untitled
  */
@@ -26,7 +26,7 @@ export interface ColorToken {
   cssVar: `--${string}` | null;
   hex: string;
   usage: string;
-  group: 'surface' | 'ink' | 'brand' | 'accent' | 'feedback' | 'material' | 'data';
+  group: 'surface' | 'ink' | 'brand' | 'shell' | 'accent' | 'feedback' | 'material' | 'data';
   source: TokenSource;
 }
 
@@ -118,15 +118,6 @@ export const COLOR_TOKENS: readonly ColorToken[] = [
     source: 'figma',
   },
   {
-    id: 'header-gold',
-    name: 'Header gold',
-    cssVar: null,
-    hex: '#e0bb5f',
-    usage: 'Site header gradient start',
-    group: 'surface',
-    source: 'both',
-  },
-  {
     id: 'ink',
     name: 'Ink',
     cssVar: '--ink',
@@ -197,6 +188,51 @@ export const COLOR_TOKENS: readonly ColorToken[] = [
     usage: 'Teal text on soft fills',
     group: 'brand',
     source: 'figma',
+  },
+  {
+    id: 'header-gold',
+    name: 'Header gold',
+    cssVar: null,
+    hex: '#e0bb5f',
+    usage: 'Site header gradient start → canvas',
+    group: 'shell',
+    source: 'both',
+  },
+  {
+    id: 'footer-cream',
+    name: 'Footer cream',
+    cssVar: null,
+    hex: '#fceabc',
+    usage: 'Site footer bar background',
+    group: 'shell',
+    source: 'css-root',
+  },
+  {
+    id: 'nav-link',
+    name: 'Nav section',
+    cssVar: null,
+    hex: '#186df8',
+    usage: 'Header/footer dropdown section titles',
+    group: 'shell',
+    source: 'css-root',
+  },
+  {
+    id: 'auth-out',
+    name: 'Logged out',
+    cssVar: null,
+    hex: '#f55656',
+    usage: 'Header auth button when logged out',
+    group: 'shell',
+    source: 'css-root',
+  },
+  {
+    id: 'auth-out-ink',
+    name: 'Logged-out ink',
+    cssVar: null,
+    hex: '#fffdfc',
+    usage: 'Text on the logged-out auth button',
+    group: 'shell',
+    source: 'css-root',
   },
   {
     id: 'amber',
@@ -375,6 +411,48 @@ export const TYPE_TOKENS: readonly TypeToken[] = [
     source: 'both',
   },
   {
+    id: 'home-eyebrow',
+    name: 'Home eyebrow',
+    family: "'Segoe UI', 'Source Sans 3', system-ui, sans-serif",
+    weight: 600,
+    size: '1.5rem',
+    lineHeight: '1.2',
+    letterSpacing: '0.04em',
+    usage: 'Home uppercase eyebrow (lab blue + emit title)',
+    source: 'css-root',
+  },
+  {
+    id: 'fold-title',
+    name: 'Fold title',
+    family: "'Segoe UI', 'Source Sans 3', system-ui, sans-serif",
+    weight: 700,
+    size: '1.2rem',
+    lineHeight: '1.2',
+    usage: 'Home fold headings (teal)',
+    source: 'css-root',
+  },
+  {
+    id: 'nav-item',
+    name: 'Nav item',
+    family: "'Segoe UI', 'Source Sans 3', system-ui, sans-serif",
+    weight: 600,
+    size: '0.9rem',
+    lineHeight: '1.2',
+    usage: 'Header nav links and dropdown triggers',
+    source: 'css-root',
+  },
+  {
+    id: 'brand-mark',
+    name: 'Brand mark',
+    family: "'Segoe UI', 'Source Sans 3', system-ui, sans-serif",
+    weight: 700,
+    size: '0.7rem',
+    lineHeight: '1.2',
+    letterSpacing: '0.06em',
+    usage: 'Header logo uppercase mark',
+    source: 'css-root',
+  },
+  {
     id: 'body',
     name: 'Body',
     family: "'Segoe UI', 'Source Sans 3', system-ui, sans-serif",
@@ -461,7 +539,8 @@ export const SPACE_TOKENS: readonly SpaceToken[] = [
 export const RADIUS_TOKENS: readonly RadiusToken[] = [
   { id: 'radius-sm', name: 'Small', px: 6, css: '0.4rem', usage: 'Inputs, nav pills (Figma ~5.6–6.4)' },
   { id: 'radius-md', name: 'Medium', px: 8, css: '0.5rem', usage: 'Buttons, pre blocks, table container' },
-  { id: 'radius-lg', name: 'Large', px: 12, css: '0.75rem', usage: 'Lesson cards' },
+  { id: 'radius-lg', name: 'Large', px: 12, css: '0.75rem', usage: 'Lesson cards, home cards' },
+  { id: 'radius-fold', name: 'Fold', px: 14, css: '0.85rem', usage: 'Home fold containers' },
   { id: 'radius-xl', name: 'XL', px: 20, css: '1.25rem', usage: 'Soft Material chips (Figma radius 20)' },
   { id: 'radius-pill', name: 'Pill', px: 999, css: '999px', usage: 'Level pills, chips, header logout' },
 ];
@@ -479,6 +558,18 @@ export const ELEVATION_TOKENS: readonly ElevationToken[] = [
     name: 'Table',
     css: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
     usage: 'MatTable container (captured from table lab)',
+  },
+  {
+    id: 'shadow-menu',
+    name: 'Header menu',
+    css: '0 12px 28px rgb(28 25 23 / 12%)',
+    usage: 'Header dropdown menus',
+  },
+  {
+    id: 'shadow-footer-menu',
+    name: 'Footer menu',
+    css: '0 -10px 28px rgb(28 25 23 / 14%)',
+    usage: 'Footer menus that open upward',
   },
 ];
 
@@ -515,12 +606,16 @@ export const USAGE_RULES = [
     body: 'Default stroke is 1px --line. Cards are radius-lg (12). Controls are radius-sm/md. Status chips are pills.',
   },
   {
+    title: 'Shell',
+    body: 'Header fades gold → canvas. Footer is footer-cream. Active nav is teal on teal-soft. Logged-out auth is auth-out — not danger.',
+  },
+  {
     title: 'Icons',
-    body: 'Material Icons only. Default 24px in content, 18px inside buttons. Recolor with the action tokens — do not ship grey edit/delete.',
+    body: 'Material Icons only, and only in Material labs. Default 24px in content, 18px inside buttons. Recolor with the action tokens.',
   },
   {
     title: 'Elevation',
-    body: 'Most surfaces are flat. The data table is the exception: use the table shadow so it reads as the primary interactive object.',
+    body: 'Lesson surfaces are flat. Raise only menus (header/footer shadows) and the data table.',
   },
 ] as const;
 
@@ -528,6 +623,7 @@ export const COLOR_GROUPS: { id: ColorToken['group']; label: string }[] = [
   { id: 'surface', label: 'Surfaces' },
   { id: 'ink', label: 'Ink & outline' },
   { id: 'brand', label: 'Brand' },
+  { id: 'shell', label: 'Shell · header / home / footer' },
   { id: 'accent', label: 'Accents' },
   { id: 'material', label: 'Material actions' },
   { id: 'data', label: 'Data & code' },

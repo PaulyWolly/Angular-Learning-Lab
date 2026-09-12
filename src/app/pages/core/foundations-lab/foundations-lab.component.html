@@ -1,24 +1,23 @@
 <section class="lesson">
   <app-lesson-breadcrumb [crumbs]="crumbs" />
-  <h1>Style Guide · Tokens</h1>
+  <h1>Style Guide</h1>
   <p class="lesson__lead">
-    Single source of truth for color, typography, spacing, and borders. Values were
-    extracted from the Figma MCP capture of
-    <strong>{{ figma.frames[1].name }}</strong>
-    and aligned with <code>:root</code> in <code>styles.scss</code>. Import
-    <code>style-tokens.ts</code> — do not invent new hex or rem values.
+    Single source of truth for the whole lab — header, home, footer, and lesson chrome —
+    plus a Material subsection from the Figma table capture. Import
+    <code>style-tokens.ts</code>; do not invent new hex or rem values.
   </p>
 
   <div class="lesson__banner">
-    <strong>Figma source</strong>
-    File <code>{{ figma.fileKey }}</code> · extracted {{ figma.extractedAt }} ·
-    frames {{ figma.frames[0].id }} (header) and {{ figma.frames[1].id }} (full page).
+    <strong>Sources</strong>
+    <code>:root</code> in <code>styles.scss</code> (site-wide) · header / home / footer SCSS ·
+    Figma <code>{{ figma.fileKey }}</code> frames {{ figma.frames[0].id }} and {{ figma.frames[1].id }}.
   </div>
 
   <div class="lesson__card">
     <h2>1. Color palette</h2>
     <p class="muted">
-      Semantic colors first. Soft + ink pairs stay together (teal-soft with teal, amber-soft with amber-ink).
+      Semantic colors first. Soft + ink pairs stay together (teal-soft with teal). Shell colors
+      are header gold, footer cream, nav-section blue, and the logged-out button.
     </p>
 
     @for (group of colorGroups; track group.id) {
@@ -29,12 +28,12 @@
             <div
               class="sg-swatch__chip"
               [style.background]="token.hex"
-              [class.sg-swatch__chip--lined]="token.group === 'surface'"
+              [class.sg-swatch__chip--lined]="token.group === 'surface' || token.group === 'shell'"
             ></div>
             <div class="sg-swatch__meta">
               <strong>{{ token.name }}</strong>
               <code>{{ token.hex }}</code>
-              <span class="sg-swatch__var">{{ token.cssVar ?? 'Figma-only' }}</span>
+              <span class="sg-swatch__var">{{ token.cssVar ?? 'literal' }}</span>
               <p>{{ token.usage }}</p>
             </div>
           </article>
@@ -46,7 +45,7 @@
   <div class="lesson__card">
     <h2>2. Typography</h2>
     <p class="muted">
-      Lesson pages use Segoe UI. Material widgets keep Roboto 14 from the azure-blue theme.
+      Lesson pages and the shell use Segoe UI. Material widgets keep Roboto 14 from azure-blue.
     </p>
     <div class="sg-type-list">
       @for (token of typeTokens; track token.id) {
@@ -72,7 +71,7 @@
 
   <div class="lesson__card">
     <h2>3. Spacing</h2>
-    <p class="muted">4px scale pulled from Figma auto-layout gaps (4, 8, 12, 16, 20) plus lesson rem steps.</p>
+    <p class="muted">4px scale from Figma gaps plus the rem steps used in header, home, and lessons.</p>
     <div class="sg-space-list">
       @for (token of spaceTokens; track token.id) {
         <div class="sg-space">
@@ -87,7 +86,9 @@
 
   <div class="lesson__card">
     <h2>4. Borders, radius &amp; elevation</h2>
-    <p class="muted">Default stroke is 1px. Cards are 12px. The data table is the only elevated surface.</p>
+    <p class="muted">
+      Default stroke is 1px. Cards are 12px. Home folds are 14px. Raise menus and the data table only.
+    </p>
 
     <div class="sg-radius-row">
       @for (token of radiusTokens; track token.id) {
@@ -125,9 +126,66 @@
   </div>
 
   <div class="lesson__card">
-    <h2>5. Icons</h2>
+    <h2>5. Shell specimens</h2>
     <p class="muted">
-      Material Icons from the table lab capture. 24px in content, 18px in buttons. Recolor edit/delete with action tokens.
+      Mini recreations of header, home, and footer using the same tokens — not live app chrome.
+    </p>
+
+    <h3 class="sg-subhead">Header</h3>
+    <div class="sg-header" aria-hidden="true">
+      <div class="sg-header__brand">
+        <span class="sg-header__mark">Angular &amp; JS</span>
+        <span class="sg-header__name">Learning Lab</span>
+      </div>
+      <span class="sg-header__link">Home</span>
+      <span class="sg-header__link is-active">Core</span>
+      <span class="sg-header__link">Material</span>
+      <span class="sg-header__auth">Logged out</span>
+    </div>
+    <p class="sg-note">
+      Gold <code>#e0bb5f</code> → canvas. Active nav is teal on teal-soft. Auth-out is
+      <code>#f55656</code>, not <code>--danger</code>.
+    </p>
+
+    <h3 class="sg-subhead">Home</h3>
+    <div class="sg-home" aria-hidden="true">
+      <p class="sg-home__eyebrow">
+        Angular &amp; JS <span>·</span> <em>Learning Lab</em>
+      </p>
+      <div class="sg-home__fold">
+        <strong class="sg-home__fold-title">Core</strong>
+        <span class="sg-home__fold-meta">Style guide first, then the labs</span>
+        <article class="sg-home__card">
+          <h3>Style Guide</h3>
+          <p>Tokens for the whole site — header, home, footer, then Material.</p>
+          <span>Open style guide →</span>
+        </article>
+      </div>
+    </div>
+    <p class="sg-note">
+      Eyebrow uses lab blue + emit. Fold wash is card mixed with teal-soft. Cards are
+      <code>--card</code> with teal titles.
+    </p>
+
+    <h3 class="sg-subhead">Footer</h3>
+    <div class="sg-footer" aria-hidden="true">
+      <p>Data from JSONPlaceholder. Freestanding Angular learning lab.</p>
+      <div class="sg-footer__nav">
+        <span>Home</span>
+        <span class="is-active">Core</span>
+        <span>Material</span>
+      </div>
+    </div>
+    <p class="sg-note">
+      Footer cream <code>#fceabc</code>. Links match header: muted, hover ink, active teal-soft.
+    </p>
+  </div>
+
+  <div class="lesson__card">
+    <h2>6. Material</h2>
+    <p class="muted">
+      Azure-blue theme extras from the table-lab Figma capture. Lesson pages stay on Segoe UI;
+      only Material widgets use Roboto and these icons.
     </p>
     <div class="sg-icon-grid">
       @for (token of iconTokens; track token.id) {
@@ -144,7 +202,7 @@
   </div>
 
   <div class="lesson__card">
-    <h2>6. Usage recommendations</h2>
+    <h2>7. Usage recommendations</h2>
     <div class="sg-rules">
       @for (rule of usageRules; track rule.title) {
         <article class="sg-rule">

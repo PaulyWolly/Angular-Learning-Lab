@@ -125,12 +125,18 @@
       aria-controls="home-core-labs"
     >
       <span class="home__fold-title">Core</span>
-      <span class="home__fold-meta">18 labs · setup, components, constructors, lifecycle, forms, HTTP…</span>
+      <span class="home__fold-meta">19 labs · style guide, setup, components, constructors, lifecycle…</span>
       <span class="home__fold-chevron" aria-hidden="true">{{ coreOpen() ? '▾' : '▸' }}</span>
     </button>
 
     @if (coreOpen()) {
       <div class="home__grid home__grid--nested" id="home-core-labs">
+        <a class="home__card" routerLink="/core/style-guide">
+          <h2>Style Guide</h2>
+          <p>Color, type, spacing, and shell tokens for the whole lab — plus a Material subsection.</p>
+          <span class="home__cta">Open style guide →</span>
+        </a>
+
         <a class="home__card" routerLink="/core/setup">
           <h2>Setup · Node · NVM · CLI</h2>
           <p>NVM, Node LTS, Angular CLI, ng new, and how to run this repo on port 4201.</p>
@@ -253,18 +259,12 @@
       aria-controls="home-material-labs"
     >
       <span class="home__fold-title">Angular Material</span>
-      <span class="home__fold-meta">6 labs · style guide, tables &amp; grids, form controls, dialogs…</span>
+      <span class="home__fold-meta">5 labs · tables &amp; grids, form controls, dialogs, navigation…</span>
       <span class="home__fold-chevron" aria-hidden="true">{{ materialOpen() ? '▾' : '▸' }}</span>
     </button>
 
     @if (materialOpen()) {
       <div class="home__grid home__grid--nested" id="home-material-labs">
-        <a class="home__card" routerLink="/material/style-guide">
-          <h2>Style Guide</h2>
-          <p>Color, type, spacing, and border tokens extracted from Figma — the source of truth for new components.</p>
-          <span class="home__cta">Open style guide →</span>
-        </a>
-
         <a class="home__card" routerLink="/material/overview">
           <h2>Overview &amp; Setup</h2>
           <p>Package install, animations provider, theme setup, buttons, cards, badges, and chips.</p>

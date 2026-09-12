@@ -244,6 +244,14 @@ export const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'overview' },
       {
+        path: 'style-guide',
+        loadComponent: () =>
+          import('./pages/material/style-guide/style-guide.component').then(
+            (m) => m.StyleGuideComponent,
+          ),
+        title: 'Style Guide',
+      },
+      {
         path: 'overview',
         loadComponent: () =>
           import('./pages/material/overview-lab/overview-lab.component').then(

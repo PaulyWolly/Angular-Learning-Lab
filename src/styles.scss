@@ -1,5 +1,6 @@
 @use '@angular/material/prebuilt-themes/azure-blue.css';
 
+/* Canonical token names live in src/app/shared/tokens/style-tokens.ts */
 :root {
   --bg: #f4f1eb;
   --ink: #1c1917;

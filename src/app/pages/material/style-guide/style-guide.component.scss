@@ -1,0 +1,273 @@
+@use '../../core/lesson-shared';
+
+.sg-subhead {
+  margin: 1.1rem 0 0.55rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sg-swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+  gap: 0.65rem;
+}
+
+.sg-swatch {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: #fff;
+}
+
+.sg-swatch__chip {
+  height: 3.4rem;
+
+  &--lined {
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 8%);
+  }
+}
+
+.sg-swatch__meta {
+  padding: 0.55rem 0.65rem 0.7rem;
+
+  strong {
+    display: block;
+    font-size: 0.85rem;
+  }
+
+  code {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.75rem;
+  }
+
+  p {
+    margin: 0.35rem 0 0;
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.35;
+  }
+}
+
+.sg-swatch__var {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.72rem;
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.sg-type-list {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.sg-type {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+.sg-type__sample {
+  margin: 0;
+  color: var(--ink);
+}
+
+.sg-type__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+
+  code {
+    font-size: 0.72rem;
+  }
+}
+
+.sg-space-list {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+}
+
+.sg-space {
+  display: grid;
+  grid-template-columns: 2rem minmax(2rem, 8rem) 7.5rem 1fr;
+  gap: 0.65rem;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.sg-space__label {
+  font-weight: 700;
+}
+
+.sg-space__bar {
+  height: 0.7rem;
+  background: var(--teal);
+  border-radius: 0.2rem;
+  min-width: 2px;
+}
+
+.sg-space__use {
+  color: var(--muted);
+}
+
+.sg-radius-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 0.65rem;
+  margin: 0.75rem 0 1rem;
+}
+
+.sg-radius {
+  display: grid;
+  gap: 0.3rem;
+  justify-items: start;
+  font-size: 0.75rem;
+  color: var(--muted);
+
+  strong {
+    color: var(--ink);
+    font-size: 0.82rem;
+  }
+
+  code {
+    font-size: 0.72rem;
+  }
+}
+
+.sg-radius__box {
+  width: 3.4rem;
+  height: 3.4rem;
+  background: var(--teal-soft);
+  border: 1px solid var(--teal);
+}
+
+.sg-border-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+
+  li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  p {
+    margin: 0.15rem 0 0;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  code {
+    display: block;
+    font-size: 0.72rem;
+  }
+}
+
+.sg-border-sample {
+  width: 3.4rem;
+  height: 2.2rem;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 0.35rem;
+}
+
+.sg-elev-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+
+.sg-elev {
+  padding: 0.85rem 1rem;
+  background: #fff;
+  border-radius: 0.5rem;
+
+  code {
+    display: block;
+    margin: 0.25rem 0;
+    font-size: 0.72rem;
+    word-break: break-all;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+}
+
+.sg-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+}
+
+.sg-icon {
+  display: grid;
+  gap: 0.2rem;
+  justify-items: center;
+  text-align: center;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: #fff;
+  font-size: 0.72rem;
+  color: var(--muted);
+
+  mat-icon {
+    color: var(--ink);
+  }
+
+  strong {
+    color: var(--ink);
+    font-size: 0.8rem;
+  }
+}
+
+.sg-rules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 0.65rem;
+  margin: 0.75rem 0 1rem;
+}
+
+.sg-rule {
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: #fff;
+
+  p {
+    margin: 0.35rem 0 0;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 720px) {
+  .sg-space {
+    grid-template-columns: 2rem 1fr;
+    grid-template-rows: auto auto auto;
+
+    code,
+    .sg-space__use {
+      grid-column: 1 / -1;
+    }
+  }
+}

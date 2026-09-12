@@ -116,6 +116,26 @@
               "src/styles.scss"
             ]
           }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "Angular-Learning-Lab:build",
+            "tsConfig": ".storybook/tsconfig.json",
+            "port": 6006,
+            "compodoc": false
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "Angular-Learning-Lab:build",
+            "tsConfig": ".storybook/tsconfig.json",
+            "outputDir": "storybook-static",
+            "compodoc": false
+          }
         }
       }
     }

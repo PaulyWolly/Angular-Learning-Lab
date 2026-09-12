@@ -244,6 +244,12 @@ export const NAV_ITEMS: NavItem[] = [
       basePath: '/material',
       children: [
         {
+          label: 'Style Guide',
+          path: '/material/style-guide',
+          hint: 'Tokens: color, type, space, borders',
+          section: 'Foundations',
+        },
+        {
           label: 'Overview & Setup',
           path: '/material/overview',
           hint: 'Setup, buttons, cards, badges, chips',

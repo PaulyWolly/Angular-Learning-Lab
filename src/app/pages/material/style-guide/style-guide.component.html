@@ -1,0 +1,162 @@
+<section class="lesson">
+  <app-lesson-breadcrumb [crumbs]="crumbs" />
+  <h1>Style Guide · Tokens</h1>
+  <p class="lesson__lead">
+    Single source of truth for color, typography, spacing, and borders. Values were
+    extracted from the Figma MCP capture of
+    <strong>{{ figma.frames[1].name }}</strong>
+    and aligned with <code>:root</code> in <code>styles.scss</code>. Import
+    <code>style-tokens.ts</code> — do not invent new hex or rem values.
+  </p>
+
+  <div class="lesson__banner">
+    <strong>Figma source</strong>
+    File <code>{{ figma.fileKey }}</code> · extracted {{ figma.extractedAt }} ·
+    frames {{ figma.frames[0].id }} (header) and {{ figma.frames[1].id }} (full page).
+  </div>
+
+  <div class="lesson__card">
+    <h2>1. Color palette</h2>
+    <p class="muted">
+      Semantic colors first. Soft + ink pairs stay together (teal-soft with teal, amber-soft with amber-ink).
+    </p>
+
+    @for (group of colorGroups; track group.id) {
+      <h3 class="sg-subhead">{{ group.label }}</h3>
+      <div class="sg-swatch-grid">
+        @for (token of colorsByGroup(group.id); track token.id) {
+          <article class="sg-swatch">
+            <div
+              class="sg-swatch__chip"
+              [style.background]="token.hex"
+              [class.sg-swatch__chip--lined]="token.group === 'surface'"
+            ></div>
+            <div class="sg-swatch__meta">
+              <strong>{{ token.name }}</strong>
+              <code>{{ token.hex }}</code>
+              <span class="sg-swatch__var">{{ token.cssVar ?? 'Figma-only' }}</span>
+              <p>{{ token.usage }}</p>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="lesson__card">
+    <h2>2. Typography</h2>
+    <p class="muted">
+      Lesson pages use Segoe UI. Material widgets keep Roboto 14 from the azure-blue theme.
+    </p>
+    <div class="sg-type-list">
+      @for (token of typeTokens; track token.id) {
+        <article class="sg-type">
+          <p
+            class="sg-type__sample"
+            [style.font-family]="token.family"
+            [style.font-weight]="token.weight"
+            [style.font-size]="token.size"
+            [style.line-height]="token.lineHeight"
+            [style.letter-spacing]="token.letterSpacing || null"
+          >
+            {{ token.name }} — The quick brown fox
+          </p>
+          <div class="sg-type__meta">
+            <code>{{ token.size }} / {{ token.weight }}</code>
+            <span>{{ token.usage }}</span>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+
+  <div class="lesson__card">
+    <h2>3. Spacing</h2>
+    <p class="muted">4px scale pulled from Figma auto-layout gaps (4, 8, 12, 16, 20) plus lesson rem steps.</p>
+    <div class="sg-space-list">
+      @for (token of spaceTokens; track token.id) {
+        <div class="sg-space">
+          <span class="sg-space__label">{{ token.name }}</span>
+          <div class="sg-space__bar" [style.width.px]="token.px"></div>
+          <code>{{ token.px }}px · {{ token.rem }}</code>
+          <span class="sg-space__use">{{ token.usage }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="lesson__card">
+    <h2>4. Borders, radius &amp; elevation</h2>
+    <p class="muted">Default stroke is 1px. Cards are 12px. The data table is the only elevated surface.</p>
+
+    <div class="sg-radius-row">
+      @for (token of radiusTokens; track token.id) {
+        <div class="sg-radius">
+          <div class="sg-radius__box" [style.border-radius]="token.css"></div>
+          <strong>{{ token.name }}</strong>
+          <code>{{ token.css }}</code>
+          <span>{{ token.usage }}</span>
+        </div>
+      }
+    </div>
+
+    <ul class="sg-border-list">
+      @for (token of borderTokens; track token.id) {
+        <li>
+          <span class="sg-border-sample" [style.border]="token.css"></span>
+          <div>
+            <strong>{{ token.name }}</strong>
+            <code>{{ token.css }}</code>
+            <p>{{ token.usage }}</p>
+          </div>
+        </li>
+      }
+    </ul>
+
+    <div class="sg-elev-row">
+      @for (token of elevationTokens; track token.id) {
+        <div class="sg-elev" [style.box-shadow]="token.css">
+          <strong>{{ token.name }}</strong>
+          <code>{{ token.css }}</code>
+          <p>{{ token.usage }}</p>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="lesson__card">
+    <h2>5. Icons</h2>
+    <p class="muted">
+      Material Icons from the table lab capture. 24px in content, 18px in buttons. Recolor edit/delete with action tokens.
+    </p>
+    <div class="sg-icon-grid">
+      @for (token of iconTokens; track token.id) {
+        <div class="sg-icon">
+          <mat-icon [style.font-size.px]="token.sizePx" [style.width.px]="token.sizePx" [style.height.px]="token.sizePx">
+            {{ token.ligature }}
+          </mat-icon>
+          <strong>{{ token.name }}</strong>
+          <code>{{ token.ligature }} · {{ token.sizePx }}</code>
+          <span>{{ token.usage }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="lesson__card">
+    <h2>6. Usage recommendations</h2>
+    <div class="sg-rules">
+      @for (rule of usageRules; track rule.title) {
+        <article class="sg-rule">
+          <strong>{{ rule.title }}</strong>
+          <p>{{ rule.body }}</p>
+        </article>
+      }
+    </div>
+    <app-lesson-syntax
+      [templateCode]="tokenCssTpl"
+      [typescriptCode]="tokenImportTs"
+      modalTitle="Using style-tokens.ts"
+    />
+  </div>
+</section>

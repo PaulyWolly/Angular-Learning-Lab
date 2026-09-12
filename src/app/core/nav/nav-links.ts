@@ -225,7 +225,7 @@ export const NAV_ITEMS: NavItem[] = [
         {
           label: 'NgRx',
           path: '/core/ngrx',
-          hint: 'Store, effects, SignalStore',
+          hint: 'Shared state · Store & SignalStore',
           section: 'Reactivity',
         },
         {

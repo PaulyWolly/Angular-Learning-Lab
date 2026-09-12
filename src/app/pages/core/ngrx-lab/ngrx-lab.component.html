@@ -1,21 +1,30 @@
 <section class="lesson">
   <app-lesson-breadcrumb [crumbs]="crumbs" />
-  <h1>NgRx</h1>
+  <h1>NgRx · shared state</h1>
   <p class="lesson__lead">
-    <strong>NgRx</strong> is a store for shared app state. You
-    <em>dispatch actions</em> (events), a <em>reducer</em> returns a new state, and
-    <em>selectors</em> read slices for the template. <code>@ngrx/signals</code> is the modern
-    SignalStore path — same idea, fewer files. Local UI still belongs in
+    <strong>NgRx</strong> is a library for managing <strong>application state</strong> — not a
+    shopping-cart product. The word <em>Store</em> here means a <em>state container</em> (Redux
+    vocabulary): a single place that holds data many parts of the app can read and update through
+    a clear flow. You <em>dispatch actions</em> (events), a <em>reducer</em> returns new state, and
+    <em>selectors</em> expose slices to the UI. <code>@ngrx/signals</code> (SignalStore) is the
+    modern, less-boilerplate path — same job. Local UI still belongs in
     <a routerLink="/core/signals">signals</a>; a tiny shared counter still belongs in a
     <a routerLink="/core/services">service</a>.
   </p>
 
   <div class="lesson__card story">
-    <h2>Start here — one-way traffic</h2>
+    <h2>Start here — state, not “a store”</h2>
     <p class="story__why">
-      <strong>Why a store at all?</strong> When five distant screens need the same cart, user
-      session, or feature flags, passing inputs down and outputs up gets noisy. A store is a
-      single source of truth: the view never patches state in place — it asks, by dispatching.
+      <strong>Why NgRx at all?</strong> When distant screens need the same data — auth session,
+      feature flags, filters, a notification list, or yes, a cart — prop-drilling inputs/outputs
+      gets noisy. You want one source of truth and a predictable update path: the view never patches
+      state in place; it asks, by dispatching.
+    </p>
+    <p class="muted">
+      <strong>Naming trap:</strong> In NgRx docs, “Store” ≠ retail store. It means
+      <em>where the state lives</em>. The snack cart below is only a
+      <em>demo domain</em> (a list of items + qty + async load). The same pattern applies to todos,
+      selected rows, or user preferences.
     </p>
 
     <div class="flow" aria-label="Unidirectional data flow">
@@ -23,14 +32,53 @@
       <span class="flow__arrow">dispatch</span>
       <span class="flow__step">Action</span>
       <span class="flow__arrow">reduce</span>
-      <span class="flow__step">Store</span>
+      <span class="flow__step">State</span>
       <span class="flow__arrow">select</span>
       <span class="flow__step">View</span>
     </div>
+
+    <h3 class="flow-heading">What this pathway means (the data loop)</h3>
+    <p class="flow-intro">
+      The teal chips above are not a menu — they are one trip around the
+      <strong>NgRx data loop</strong>. UI and state talk in
+      <em>one direction</em> (the view never reaches in and mutates state). Read left to right;
+      the last View is the same UI after it refreshes.
+    </p>
+    <ol class="flow-steps">
+      <li>
+        <strong>View</strong> — your template / component (buttons, lists). Example: click
+        <em>Add Chips</em> in the demo below.
+      </li>
+      <li>
+        <strong>dispatch</strong> — the view does not change state itself; it sends an
+        <em>event</em> (“add chips”, “clear”, “load seed”).
+      </li>
+      <li>
+        <strong>Action</strong> — that event as a plain object
+        (<code>{{ '{' }} type: '…', …payload {{ '}' }}</code>). Meaning: “something happened.”
+      </li>
+      <li>
+        <strong>reduce</strong> — a pure function:
+        <code>(oldState, action) → newState</code>. Copy data; never mutate in place.
+      </li>
+      <li>
+        <strong>State</strong> — the single source of truth living in the Store (the
+        <em>state container</em>).
+      </li>
+      <li>
+        <strong>select</strong> — read a slice for the UI (<code>items</code>,
+        <code>total</code>, <code>status</code>…).
+      </li>
+      <li>
+        <strong>View</strong> — the template updates from what was selected. The next click
+        starts the loop again.
+      </li>
+    </ol>
     <p class="muted flow-note">
-      Side work (HTTP, timers) lives in an <strong>effect</strong>: it hears an action, does the
-      async job, then dispatches a <em>success / failure</em> action. The reducer stays a pure
-      function.
+      <strong>Why it matters:</strong> one path in, one path out — easier to debug (DevTools
+      shows every action), and distant screens can share the same state without prop-drilling.
+      <strong>Effects</strong> (Load seed) sit off to the side: they hear an action, do async work
+      (fake HTTP), then dispatch success/failure — the reducer still only does step 4.
     </p>
 
     <table class="story__table">
@@ -54,7 +102,9 @@
         </tr>
         <tr>
           <th scope="row">NgRx Store</th>
-          <td>App-wide cart, auth, complex flows, DevTools</td>
+          <td>
+            Shared domain state (auth, filters, collections…), complex flows, DevTools
+          </td>
           <td>A single page’s checkbox</td>
         </tr>
         <tr>
@@ -66,18 +116,19 @@
     </table>
 
     <p class="story__try">
-      <strong>Try this:</strong> Add snacks in the classic cart, then add snacks in SignalStore —
-      two independent baskets. Load seed (effect) fills only the classic cart after a short delay.
-      Optional: Redux DevTools in the browser shows every <code>[Lab Cart]</code> action.
+      <strong>Try this:</strong> Treat the snack list as stand-in shared state. Add items in the
+      classic Store demo, then in SignalStore — two independent state containers. Load seed
+      (effect) fills only the classic slice after a short delay. Optional: Redux DevTools shows
+      every <code>[Lab Cart]</code> action (feature key name only — still just state).
     </p>
   </div>
 
   <div class="lesson__card">
     <h2>Install &amp; wire (Angular 20 · NgRx 20)</h2>
     <p class="muted">
-      Root <code>provideStore()</code> is empty on purpose. This lab’s slice is registered on the
-      route with <code>provideState('labCart', cartReducer)</code> — a feature store, not a
-      god-object.
+      Root <code>provideStore()</code> is empty on purpose. This lab’s <em>state slice</em> is
+      registered on the route with <code>provideState('labCart', cartReducer)</code> — a feature
+      slice, not a god-object. The key name could just as well be <code>labTodos</code>.
     </p>
     <app-lesson-syntax
       [templateCode]="installTpl"
@@ -88,9 +139,10 @@
   </div>
 
   <div class="lesson__card">
-    <h2>Live: classic Store — actions · reducer · selectors</h2>
+    <h2>Live demo: classic Store — actions · reducer · selectors</h2>
     <p class="muted">
-      Buttons <strong>dispatch</strong>. The template reads
+      Demo domain = a list of snacks (any “collection in shared state” would do). Buttons
+      <strong>dispatch</strong>. The template reads
       <code>store.selectSignal(...)</code> — no <code>async</code> pipe needed. Count
       <strong>{{ itemCount() }}</strong> · total
       <strong>{{ total() | currency: 'USD' : 'symbol-narrow' }}</strong>
@@ -116,7 +168,7 @@
         Load seed (effect)
       </button>
       <button type="button" class="btn" (click)="clear()" [disabled]="items().length === 0">
-        Clear cart
+        Clear state
       </button>
     </div>
 
@@ -126,7 +178,9 @@
 
     <div class="preview">
       @if (items().length === 0) {
-        <p class="muted" style="margin: 0">Cart is empty — add a snack or load the seed.</p>
+        <p class="muted" style="margin: 0">
+          State slice is empty — add a snack or load the seed.
+        </p>
       } @else {
         <table class="cart-table">
           <thead>
@@ -182,7 +236,8 @@
     <p class="muted">
       <code>Load Seed</code> above dispatches <code>[Lab Cart] Load Seed</code>. The effect waits
       700ms (fake HTTP) then dispatches <code>Load Seed Success</code> with chips ×2 and soda ×1.
-      Extra clicks while loading are ignored (<code>exhaustMap</code>).
+      Extra clicks while loading are ignored (<code>exhaustMap</code>). Same pattern for loading a
+      user profile, search results, or any remote slice of state.
     </p>
     <app-lesson-syntax
       [templateCode]="effectsTpl"
@@ -193,11 +248,11 @@
   </div>
 
   <div class="lesson__card">
-    <h2>Live: SignalStore — same cart, no actions</h2>
+    <h2>Live demo: SignalStore — same state shape, no actions</h2>
     <p class="muted">
-      Methods call <code>patchState</code>. This store is
+      Methods call <code>patchState</code>. This container is
       <code>providers: [LabCartSignalStore]</code> on the component, so it does
-      <em>not</em> share the classic basket. Count
+      <em>not</em> share the classic slice. Count
       <strong>{{ signalCart.itemCount() }}</strong> · total
       <strong>{{ signalCart.total() | currency: 'USD' : 'symbol-narrow' }}</strong>
     </p>
@@ -216,13 +271,13 @@
         (click)="signalCart.clear()"
         [disabled]="signalCart.items().length === 0"
       >
-        Clear SignalStore cart
+        Clear SignalStore state
       </button>
     </div>
 
     <div class="preview">
       @if (signalCart.items().length === 0) {
-        <p class="muted" style="margin: 0">SignalStore cart is empty.</p>
+        <p class="muted" style="margin: 0">SignalStore slice is empty.</p>
       } @else {
         <ul class="list">
           @for (item of signalCart.items(); track item.id) {

@@ -105,7 +105,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { cartReducer } from './store/cart.reducer';
 import { CartEffects } from './store/cart.effects';
 
-// Root (app.config.ts) — one Store for the app
+// Root (app.config.ts) — one state container for the app
 provideStore(),
 provideStoreDevtools({
   maxAge: 25,
@@ -113,7 +113,7 @@ provideStoreDevtools({
   connectInZone: true,
 }),
 
-// Feature (lazy /core/ngrx) — slice named 'labCart'
+// Feature (lazy /core/ngrx) — one state slice (demo key 'labCart')
 export const NGRX_ROUTES: Routes = [{
   path: '',
   providers: [
@@ -141,6 +141,7 @@ add(product: CatalogItem) {
 
   readonly storeModal = `import { createActionGroup, emptyProps, props, createReducer, on, Store } from '@ngrx/store';
 
+// Demo domain = snack list. Same pattern for todos, filters, auth session…
 export const CartActions = createActionGroup({
   source: 'Lab Cart',
   events: {
@@ -168,7 +169,7 @@ readonly items = inject(Store).selectSignal(selectCartItems);
 this.store.dispatch(CartActions.addItem(product));`;
 
   readonly effectsTpl = `<button (click)="loadSeed()" [disabled]="status() === 'loading'">
-  Load seed cart
+  Load seed (async state)
 </button>
 <span class="chip">{{ status() }}</span>`;
 
